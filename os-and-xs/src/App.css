@@ -2,11 +2,16 @@
   text-align: center;
 }
 
+.game {
+  display: flex;
+  justify-content: space-between;
+  margin: 50px;
+}
+
 .container {
-  margin: 100px;
   display: grid;
-  grid-template-columns: repeat(3, 200px);
-  grid-template-rows: repeat(3, 200px);
+  grid-template-columns: repeat(3, 180px);
+  grid-template-rows: repeat(3, 180px);
 }
 
 .box {

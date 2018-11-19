@@ -7,7 +7,6 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h2>Noughts and Crosses</h2>
         <GridContainer/>
       </div>
     );
