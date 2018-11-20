@@ -2,17 +2,18 @@ import React, { Component } from 'react';
 
 class Box extends Component {
 
-  select = () => {
-    if (this.props.myTurn && this.props.selected==="") {
-      this.props.selectBox(this.props.index, "me");
+  componentDidUpdate(prevProps) {
+    if (this.props.selectedBy!==prevProps.selectedBy) {
+      this.props.checkForThree("me");
+      this.props.checkForThree("computer");
     }
-    this.props.finishTurn();
   }
 
   render() {
     return (
-      <div className="box" onClick={this.select}>
-        {this.props.selected==="me" ? <span>{this.props.mySymbol}</span> : this.props.selected==="computer" ? <span className="symbol">{this.props.computerSymbol}</span> : null}
+      <div className="box" onClick={() => this.props.select(this.props.index, "me")}>
+        {this.props.box.selectedBy}
+        {this.props.selectedBy==="me" ? <span>{this.props.mySymbol}</span> : this.props.selectedBy==="computer" ? <span className="symbol">{this.props.computerSymbol}</span> : null}
       </div>
     );
   }
