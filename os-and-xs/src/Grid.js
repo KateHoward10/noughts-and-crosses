@@ -3,35 +3,45 @@ import Box from './Box';
 
 class Grid extends Component {
   state = {
+    gameHappening: true,
     mySymbol: "X",
     computerSymbol: "O",
     win: "",
     boxes: [
       {
+        index: 0,
         selectedBy: "",
       },
       {
+        index: 1,
         selectedBy: "",
       },
       {
+        index: 2,
         selectedBy: "",
       },
       {
+        index: 3,
         selectedBy: "",
       },
       {
+        index: 4,
         selectedBy: "",
       },
       {
+        index: 5,
         selectedBy: "",
       },
       {
+        index: 6,
         selectedBy: "",
       },
       {
+        index: 7,
         selectedBy: "",
       },
       {
+        index: 8,
         selectedBy: "",
       }
     ],
@@ -47,34 +57,40 @@ class Grid extends Component {
   }
 
   select = (index, player) => {
-    if (this.state.boxes[index].selectedBy==="") {
+    if (this.state.gameHappening && this.state.boxes[index].selectedBy==="") {
       const boxes = { ...this.state.boxes };
       boxes[index].selectedBy = player;
       this.setState({ boxes });
     }
-    console.log(this.state.boxes);
+
   }
 
   checkForThree = (player) => {
-    const playedBoxes = this.state.boxes.filter(box => box.selectedBy===player).map((box, index) => index);
-    if ((playedBoxes.indexOf(0)>-1 && playedBoxes.indexOf(1)>-1 && playedBoxes.indexOf(2)>-1)
-      || (playedBoxes.indexOf(3)>-1 && playedBoxes.indexOf(4)>-1 && playedBoxes.indexOf(5)>-1)
-      || (playedBoxes.indexOf(6)>-1 && playedBoxes.indexOf(7)>-1 && playedBoxes.indexOf(8)>-1)
-      || (playedBoxes.indexOf(0)>-1 && playedBoxes.indexOf(3)>-1 && playedBoxes.indexOf(6)>-1)
-      || (playedBoxes.indexOf(1)>-1 && playedBoxes.indexOf(4)>-1 && playedBoxes.indexOf(7)>-1)
-      || (playedBoxes.indexOf(2)>-1 && playedBoxes.indexOf(5)>-1 && playedBoxes.indexOf(8)>-1)
-      || (playedBoxes.indexOf(0)>-1 && playedBoxes.indexOf(4)>-1 && playedBoxes.indexOf(8)>-1)
-      || (playedBoxes.indexOf(2)>-1 && playedBoxes.indexOf(4)>-1 && playedBoxes.indexOf(6)>-1)) {
-      this.setState({ win: player })
+    const playedBoxes = Object.keys(this.state.boxes).filter(key => this.state.boxes[key]["selectedBy"]===player);
+    console.log(player, playedBoxes);
+    if ((playedBoxes.indexOf("0")>-1 && playedBoxes.indexOf("1")>-1 && playedBoxes.indexOf("2")>-1)
+      || (playedBoxes.indexOf("3")>-1 && playedBoxes.indexOf("4")>-1 && playedBoxes.indexOf("5")>-1)
+      || (playedBoxes.indexOf("6")>-1 && playedBoxes.indexOf("7")>-1 && playedBoxes.indexOf("8")>-1)
+      || (playedBoxes.indexOf("0")>-1 && playedBoxes.indexOf("3")>-1 && playedBoxes.indexOf("6")>-1)
+      || (playedBoxes.indexOf("1")>-1 && playedBoxes.indexOf("4")>-1 && playedBoxes.indexOf("7")>-1)
+      || (playedBoxes.indexOf("2")>-1 && playedBoxes.indexOf("5")>-1 && playedBoxes.indexOf("8")>-1)
+      || (playedBoxes.indexOf("0")>-1 && playedBoxes.indexOf("4")>-1 && playedBoxes.indexOf("8")>-1)
+      || (playedBoxes.indexOf("2")>-1 && playedBoxes.indexOf("4")>-1 && playedBoxes.indexOf("6")>-1)) {
+      this.setState({
+        win: player,
+        gameHappening: false
+      })
     }
   }
 
   finishTurn = () => {
-    const indices = this.state.boxes.filter(box => box.selectedBy==="").map((box, index) => index);
-    console.log(indices);
-    const computerChoice = indices[Math.floor(Math.random() * indices.length)];
-    this.select(computerChoice, "computer");
-    this.checkForThree("computer");
+    if (this.state.gameHappening) {
+      this.checkForThree("me");
+      const indices = Object.keys(this.state.boxes).filter(key => this.state.boxes[key]["selectedBy"]==="");
+      const computerChoice = indices[Math.floor(Math.random() * indices.length)];
+      this.select(computerChoice, "computer");
+      this.checkForThree("computer");
+    }
   }
 
   render() {
@@ -86,11 +102,11 @@ class Grid extends Component {
           <h1>{this.state.win==="me" ? "You win!" : this.state.win==="computer" ? "The computer wins!" : ""}</h1>
         </div>
         <div className="container">
-          {Object.keys(this.state.boxes).map((box, index) => <Box
-            index={index}
-            key={index}
+          {Object.keys(this.state.boxes).map(key => <Box
+            index={key}
+            key={key}
             myTurn={this.props.myTurn}
-            box={box}
+            box={this.state.boxes[key]}
             mySymbol={this.state.mySymbol}
             computerSymbol={this.state.computerSymbol}
             select={this.select}
