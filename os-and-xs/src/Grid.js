@@ -8,10 +8,12 @@ class Grid extends Component {
     win: "",
   }
 
-  chooseSymbol = (event) => {
+  changeSymbol = () => {
+    const mySymbol = this.state.mySymbol;
+    const computerSymbol = this.state.computerSymbol;
     this.setState({
-      mySymbol: event.target.value,
-      computerSymbol: event.target.value==="X" ? "O" : "X"
+      mySymbol: mySymbol==="X" ? "O" : "X",
+      computerSymbol: computerSymbol==="X" ? "O" : "X"
     });
   }
 
@@ -32,7 +34,6 @@ class Grid extends Component {
   finishTurn = () => {
     this.checkForThree("me");
     this.props.swapTurn();
-    console.log(this.props.boxes);
     const indices = this.props.boxes.filter(box => box.selected==="").map(box => box.index);
     const computerChoice = indices[Math.floor(Math.random() * indices.length)];
     this.props.selectBox(computerChoice, "computer");
@@ -44,13 +45,9 @@ class Grid extends Component {
     return (
       <div className="game">
         <div>
-          <h2>Noughts and Crosses</h2>
-          <p>Choose noughts or crosses...</p>
-          <select name="symbol" onChange={this.chooseSymbol} >
-            <option value="X">X</option>
-            <option value="O">O</option>
-          </select>
-          <h2>{this.state.win==="me" ? "You win!" : this.state.win==="computer" ? "The computer wins!" : null}</h2>
+          <p>You are: {this.state.mySymbol}s</p>
+          <button onClick={this.changeSymbol}>Choose {this.state.computerSymbol}s instead</button>
+          <h1>{this.state.win==="me" ? "You win!" : this.state.win==="computer" ? "The computer wins!" : ""}</h1>
           <h3>{this.props.myTurn ? "Your Turn" : "The Computer's Turn"}</h3>
           {this.props.myTurn ? <button onClick={this.finishTurn}>Finish Turn</button> : null}
         </div>
