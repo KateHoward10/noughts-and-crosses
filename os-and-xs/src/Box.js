@@ -6,12 +6,13 @@ class Box extends Component {
     if (this.props.myTurn && this.props.selected==="") {
       this.props.selectBox(this.props.index, "me");
     }
+    this.props.finishTurn();
   }
 
   render() {
     return (
       <div className="box" onClick={this.select}>
-        {this.props.selected==="me" ? this.props.mySymbol : this.props.selected==="computer" ? this.props.computerSymbol : null}
+        {this.props.selected==="me" ? <span>{this.props.mySymbol}</span> : this.props.selected==="computer" ? <span className="symbol">{this.props.computerSymbol}</span> : null}
       </div>
     );
   }

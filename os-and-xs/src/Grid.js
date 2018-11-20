@@ -48,11 +48,9 @@ class Grid extends Component {
           <p>You are: {this.state.mySymbol}s</p>
           <button onClick={this.changeSymbol}>Choose {this.state.computerSymbol}s instead</button>
           <h1>{this.state.win==="me" ? "You win!" : this.state.win==="computer" ? "The computer wins!" : ""}</h1>
-          <h3>{this.props.myTurn ? "Your Turn" : "The Computer's Turn"}</h3>
-          {this.props.myTurn ? <button onClick={this.finishTurn}>Finish Turn</button> : null}
         </div>
         <div className="container">
-          {this.props.boxes.map((box, index) => <Box index={index} key={index} myTurn={this.props.myTurn} selected={box.selected} mySymbol={this.state.mySymbol} computerSymbol={this.state.computerSymbol} selectBox={this.props.selectBox} />)}
+          {this.props.boxes.map((box, index) => <Box index={index} key={index} myTurn={this.props.myTurn} selected={box.selected} mySymbol={this.state.mySymbol} computerSymbol={this.state.computerSymbol} selectBox={this.props.selectBox} finishTurn={this.finishTurn} />)}
         </div>
       </div>
     );
