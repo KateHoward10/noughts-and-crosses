@@ -77,15 +77,15 @@ class Grid extends Component {
       || (playedBoxes.indexOf("0")>-1 && playedBoxes.indexOf("4")>-1 && playedBoxes.indexOf("8")>-1)
       || (playedBoxes.indexOf("2")>-1 && playedBoxes.indexOf("4")>-1 && playedBoxes.indexOf("6")>-1)) {
       this.setState({
-        win: player,
-        gameHappening: false
+        gameHappening: false,
+        win: player
       })
     }
   }
 
   finishTurn = () => {
+    this.checkForThree("me");
     if (this.state.gameHappening) {
-      this.checkForThree("me");
       const indices = Object.keys(this.state.boxes).filter(key => this.state.boxes[key]["selectedBy"]==="");
       const computerChoice = indices[Math.floor(Math.random() * indices.length)];
       this.select(computerChoice, "computer");

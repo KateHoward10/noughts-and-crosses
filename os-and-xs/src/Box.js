@@ -3,8 +3,10 @@ import React, { Component } from 'react';
 class Box extends Component {
 
   selectBox = () => {
-    this.props.select(this.props.index, "me");
-    this.props.finishTurn();
+    if (this.props.box["selectedBy"] === "") {
+      this.props.select(this.props.index, "me");
+      this.props.finishTurn();      
+    }
   }
 
   render() {
