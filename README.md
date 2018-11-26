@@ -1,1 +1,3 @@
-# noughts-and-crosses
+## Noughts & Crosses
+
+Soon to include Connect 4 too.
