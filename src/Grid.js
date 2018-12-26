@@ -3,7 +3,6 @@ import Box from './Box';
 
 class Grid extends Component {
   state = {
-    gameHappening: true,
     mySymbol: "X",
     computerSymbol: "O",
     win: "",
@@ -57,8 +56,8 @@ class Grid extends Component {
   }
 
   select = (index, player) => {
-    if (this.state.gameHappening && this.state.boxes[index].selectedBy==="") {
-      const boxes = { ...this.state.boxes };
+    if (this.state.win==="" && this.state.boxes[index]) {
+      const boxes = [ ...this.state.boxes ];
       boxes[index].selectedBy = player;
       this.setState({ boxes });
     }
@@ -66,7 +65,13 @@ class Grid extends Component {
 
   checkForThree = (player) => {
     const playedBoxes = Object.keys(this.state.boxes).filter(key => this.state.boxes[key]["selectedBy"]===player);
-    console.log(player, playedBoxes);
+    const fullBoxes = Object.keys(this.state.boxes).filter(key => this.state.boxes[key]["selectedBy"]!=="");
+    console.log(fullBoxes.length);
+    if (fullBoxes.length>8) {
+      this.setState({
+        win: "draw"
+      })
+    }
     if ((playedBoxes.indexOf("0")>-1 && playedBoxes.indexOf("1")>-1 && playedBoxes.indexOf("2")>-1)
       || (playedBoxes.indexOf("3")>-1 && playedBoxes.indexOf("4")>-1 && playedBoxes.indexOf("5")>-1)
       || (playedBoxes.indexOf("6")>-1 && playedBoxes.indexOf("7")>-1 && playedBoxes.indexOf("8")>-1)
@@ -76,7 +81,6 @@ class Grid extends Component {
       || (playedBoxes.indexOf("0")>-1 && playedBoxes.indexOf("4")>-1 && playedBoxes.indexOf("8")>-1)
       || (playedBoxes.indexOf("2")>-1 && playedBoxes.indexOf("4")>-1 && playedBoxes.indexOf("6")>-1)) {
       this.setState({
-        gameHappening: false,
         win: player
       })
     }
@@ -84,7 +88,7 @@ class Grid extends Component {
 
   finishTurn = () => {
     this.checkForThree("me");
-    if (this.state.gameHappening) {
+    if (this.state.win==="") {
       const indices = Object.keys(this.state.boxes).filter(key => this.state.boxes[key]["selectedBy"]==="");
       const computerChoice = indices[Math.floor(Math.random() * indices.length)];
       this.select(computerChoice, "computer");
@@ -98,7 +102,7 @@ class Grid extends Component {
         <div>
           <p>You are: {this.state.mySymbol}s</p>
           <button onClick={this.changeSymbol}>Choose {this.state.computerSymbol}s instead</button>
-          <h1>{this.state.win==="me" ? "You win!" : this.state.win==="computer" ? "The computer wins!" : ""}</h1>
+          <h1>{this.state.win==="draw" ? "It's a draw" : this.state.win==="me" ? "You win!" : this.state.win==="computer" ? "The computer wins!" : ""}</h1>
         </div>
         <div className="container">
           {Object.keys(this.state.boxes).map(key => <Box
