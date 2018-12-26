@@ -7,9 +7,10 @@ class Cell extends Component {
   }
 
   render() {
+    const colour = this.props.fill==="me" ? "red" : this.props.fill==="computer" ? "yellow" : "white";
     return (
       <div className="cell">
-        <div className="circle" onClick={this.selectCell} style={{backgroundColor: this.props.colour}}>{this.props.index}</div>
+        <div className="circle" onClick={this.selectCell} style={{backgroundColor: colour}}>{this.props.index}</div>
       </div>
     );
   }

@@ -7,14 +7,17 @@ class Board extends Component {
   }
 
   selectColumn = (columnNumber) => {
-    console.log(columnNumber);
+    const fillNumber = 41 - 6 + columnNumber;
+    const cells = [ ...this.state.cells ];
+    cells[fillNumber] = "me";
+    this.setState({ cells });
   }
 
   render() {
     return (
       <div className="game">
         <div className="board">
-          {Object.keys(this.state.cells).map(key => <Cell index={key} key={key} colour={"white"} selectColumn={this.selectColumn}/>)}
+          {Object.keys(this.state.cells).map(key => <Cell index={key} key={key} fill={this.state.cells[key]} selectColumn={this.selectColumn}/>)}
         </div>
       </div>
     );
