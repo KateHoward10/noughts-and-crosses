@@ -35,3 +35,25 @@
     to { opacity: 0; }
     to   { opacity: 1; }
 }
+
+/*Connect 4*/
+.board {
+  display: grid;
+  grid-template-rows: repeat(6, 80px);
+  grid-template-columns: repeat(7, 80px);
+}
+
+.cell {
+  background-color: blue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circle {
+  background-color: white;
+  width: 60px;
+  height: 60px;
+  border: 1px solid grey;
+  border-radius: 50%;
+}

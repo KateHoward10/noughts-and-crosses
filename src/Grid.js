@@ -62,7 +62,6 @@ class Grid extends Component {
       boxes[index].selectedBy = player;
       this.setState({ boxes });
     }
-
   }
 
   checkForThree = (player) => {
