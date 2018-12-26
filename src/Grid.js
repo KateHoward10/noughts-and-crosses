@@ -66,7 +66,6 @@ class Grid extends Component {
   checkForThree = (player) => {
     const playedBoxes = Object.keys(this.state.boxes).filter(key => this.state.boxes[key]["selectedBy"]===player);
     const fullBoxes = Object.keys(this.state.boxes).filter(key => this.state.boxes[key]["selectedBy"]!=="");
-    console.log(fullBoxes.length);
     if (fullBoxes.length>8) {
       this.setState({
         win: "draw"
@@ -84,11 +83,11 @@ class Grid extends Component {
         win: player
       })
     }
+    return this.state.win;
   }
 
   finishTurn = () => {
-    this.checkForThree("me");
-    if (this.state.win==="") {
+    if (this.checkForThree("me")==="") {
       const indices = Object.keys(this.state.boxes).filter(key => this.state.boxes[key]["selectedBy"]==="");
       const computerChoice = indices[Math.floor(Math.random() * indices.length)];
       this.select(computerChoice, "computer");

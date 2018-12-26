@@ -5,7 +5,7 @@ import Board from './Board';
 
 class App extends Component {
   state = {
-	connect4: false,
+	connect4: true,
   }
   switch = () => {
   	let connect4 = this.state.connect4;
