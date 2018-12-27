@@ -3,9 +3,14 @@ import React, { Component } from 'react';
 class Box extends Component {
 
   selectBox = () => {
-    if (this.props.box["selectedBy"] === "") {
+    if (this.props.box["selectedBy"]==="" && this.props.win==="") {
       this.props.select(this.props.index, "me");
-      this.props.finishTurn();      
+      this.props.checkForThree("me");
+      if (this.props.win!=="") {
+        return;
+      } else {
+        this.props.finishTurn();
+      }   
     }
   }
 

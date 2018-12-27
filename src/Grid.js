@@ -7,42 +7,15 @@ class Grid extends Component {
     computerSymbol: "O",
     win: "",
     boxes: [
-      {
-        index: 0,
-        selectedBy: "",
-      },
-      {
-        index: 1,
-        selectedBy: "",
-      },
-      {
-        index: 2,
-        selectedBy: "",
-      },
-      {
-        index: 3,
-        selectedBy: "",
-      },
-      {
-        index: 4,
-        selectedBy: "",
-      },
-      {
-        index: 5,
-        selectedBy: "",
-      },
-      {
-        index: 6,
-        selectedBy: "",
-      },
-      {
-        index: 7,
-        selectedBy: "",
-      },
-      {
-        index: 8,
-        selectedBy: "",
-      }
+      {index: 0, selectedBy: ""},
+      {index: 1, selectedBy: ""},
+      {index: 2, selectedBy: ""},
+      {index: 3, selectedBy: ""},
+      {index: 4, selectedBy: ""},
+      {index: 5, selectedBy: ""},
+      {index: 6, selectedBy: ""},
+      {index: 7, selectedBy: ""},
+      {index: 8, selectedBy: ""}
     ],
   }
 
@@ -55,39 +28,32 @@ class Grid extends Component {
     });
   }
 
+  checkForThree = (player) => {
+    console.log(this.state.boxes);
+    const possibleThrees = [
+      [0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]
+    ];
+    if (possibleThrees.some(combination => combination.every(boxNumber => this.state.boxes[boxNumber]["selectedBy"]===player))) {
+      this.setState({ win: player });
+    } else if (this.state.boxes.filter(box => box["selectedBy"]!=="").length>8) {
+      this.setState({ win: "draw" });
+    };
+  }
+
   select = (index, player) => {
-    if (this.state.win==="" && this.state.boxes[index]) {
+    if (this.state.win!=="") {
+      return;
+    } else {
       const boxes = [ ...this.state.boxes ];
       boxes[index].selectedBy = player;
       this.setState({ boxes });
     }
   }
 
-  checkForThree = (player) => {
-    const playedBoxes = Object.keys(this.state.boxes).filter(key => this.state.boxes[key]["selectedBy"]===player);
-    const fullBoxes = Object.keys(this.state.boxes).filter(key => this.state.boxes[key]["selectedBy"]!=="");
-    if (fullBoxes.length>8) {
-      this.setState({
-        win: "draw"
-      })
-    }
-    if ((playedBoxes.indexOf("0")>-1 && playedBoxes.indexOf("1")>-1 && playedBoxes.indexOf("2")>-1)
-      || (playedBoxes.indexOf("3")>-1 && playedBoxes.indexOf("4")>-1 && playedBoxes.indexOf("5")>-1)
-      || (playedBoxes.indexOf("6")>-1 && playedBoxes.indexOf("7")>-1 && playedBoxes.indexOf("8")>-1)
-      || (playedBoxes.indexOf("0")>-1 && playedBoxes.indexOf("3")>-1 && playedBoxes.indexOf("6")>-1)
-      || (playedBoxes.indexOf("1")>-1 && playedBoxes.indexOf("4")>-1 && playedBoxes.indexOf("7")>-1)
-      || (playedBoxes.indexOf("2")>-1 && playedBoxes.indexOf("5")>-1 && playedBoxes.indexOf("8")>-1)
-      || (playedBoxes.indexOf("0")>-1 && playedBoxes.indexOf("4")>-1 && playedBoxes.indexOf("8")>-1)
-      || (playedBoxes.indexOf("2")>-1 && playedBoxes.indexOf("4")>-1 && playedBoxes.indexOf("6")>-1)) {
-      this.setState({
-        win: player
-      })
-    }
-    return this.state.win;
-  }
-
   finishTurn = () => {
-    if (this.checkForThree("me")==="") {
+    if (this.state.win!=="") {
+      return;
+    } else {
       const indices = Object.keys(this.state.boxes).filter(key => this.state.boxes[key]["selectedBy"]==="");
       const computerChoice = indices[Math.floor(Math.random() * indices.length)];
       this.select(computerChoice, "computer");
@@ -107,13 +73,14 @@ class Grid extends Component {
           {Object.keys(this.state.boxes).map(key => <Box
             index={key}
             key={key}
-            myTurn={this.props.myTurn}
+            win={this.state.win}
             box={this.state.boxes[key]}
             mySymbol={this.state.mySymbol}
             computerSymbol={this.state.computerSymbol}
             select={this.select}
             checkForThree={this.checkForThree}
-            finishTurn={this.finishTurn} />)}
+            finishTurn={this.finishTurn}
+          />)}
         </div>
       </div>
     );
