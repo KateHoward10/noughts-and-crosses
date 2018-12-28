@@ -51,14 +51,10 @@ class Grid extends Component {
   }
 
   finishTurn = () => {
-    if (this.state.win!=="") {
-      return;
-    } else {
-      const indices = Object.keys(this.state.boxes).filter(key => this.state.boxes[key]["selectedBy"]==="");
-      const computerChoice = indices[Math.floor(Math.random() * indices.length)];
-      this.select(computerChoice, "computer");
-      this.checkForThree("computer");
-    }
+    const indices = Object.keys(this.state.boxes).filter(key => this.state.boxes[key]["selectedBy"]==="");
+    const computerChoice = indices[Math.floor(Math.random() * indices.length)];
+    setTimeout(this.select, 500, computerChoice, "computer");
+    this.checkForThree("computer");
   }
 
   render() {

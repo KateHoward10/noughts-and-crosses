@@ -78,7 +78,6 @@ class Board extends Component {
       cells[fillNumber].selectedBy = player;
       this.setState({ cells });
       this.checkForFour(player);
-      console.log(`${player}: ${fillNumber}`);
     }
   }
 
