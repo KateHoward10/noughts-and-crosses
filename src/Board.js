@@ -24,10 +24,8 @@ class Board extends Component {
   }
 
   findBottomNumber = (columnNumber) => {
-    let columnCells = [+(41 - 6 + columnNumber), +(41 - 13 + columnNumber), +(41 - 20 + columnNumber), +(41 - 27 + columnNumber), +(41 - 34 + columnNumber), columnNumber];
-    console.log(columnCells);
+    let columnCells = [41 - 6 + columnNumber, 41 - 13 + columnNumber, 41 - 20 + columnNumber, 41 - 27 + columnNumber, 41 - 34 + columnNumber, columnNumber];
     let availableCells = columnCells.filter(cell => this.state.cells[cell]["selectedBy"]==="");
-    console.log(availableCells);
     return Math.max(...availableCells);
   }
 
@@ -69,7 +67,8 @@ class Board extends Component {
   }
 
   computerTurn = () => {
-    const computerColumnChoice = Math.floor(Math.random() * 6);
+    const availableColumns = Object.keys(this.state.cells.slice(0,7)).filter(key => this.findBottomNumber(parseFloat(key, 10))>0);
+    const computerColumnChoice = parseFloat(availableColumns[Math.floor(Math.random() * availableColumns.length)], 10);
     setTimeout(this.selectColumn, 1000, computerColumnChoice, "computer");
   }
 
@@ -81,6 +80,7 @@ class Board extends Component {
           {Object.keys(this.state.cells.slice(0,7)).map(key => <Arrow
             index={key}
             key={key}
+            hidden={this.findBottomNumber(parseFloat(key, 10))<0}
             selectColumn={this.selectColumn}
             computerTurn={this.computerTurn}
           />)}
