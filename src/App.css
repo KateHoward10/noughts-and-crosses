@@ -4,7 +4,9 @@
 
 .game {
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin: 50px;
 }
 
@@ -54,5 +56,16 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
+}
+
+.arrows {
+  display: flex;
+  flex-direction: row;
+  grid-template-columns: repeat(7, 80px);
+}
+
+.arrow {
+  font-size: 20px;
+  width: 80px;
   cursor: pointer;
 }

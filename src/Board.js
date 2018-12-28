@@ -1,58 +1,33 @@
 import React, { Component } from 'react';
 import Cell from './Cell';
+import Arrow from './Arrow';
 
 class Board extends Component {
   state = {
     cells: [
-      {index: 0, selectedBy: ""},
-      {index: 1, selectedBy: ""},
-      {index: 2, selectedBy: ""},
-      {index: 3, selectedBy: ""},
-      {index: 4, selectedBy: ""},
-      {index: 5, selectedBy: ""},
-      {index: 6, selectedBy: ""},
-      {index: 7, selectedBy: ""},
-      {index: 8, selectedBy: ""},
-      {index: 9, selectedBy: ""},
-      {index: 10, selectedBy: ""},
-      {index: 11, selectedBy: ""},
-      {index: 12, selectedBy: ""},
-      {index: 13, selectedBy: ""},
-      {index: 14, selectedBy: ""},
-      {index: 15, selectedBy: ""},
-      {index: 16, selectedBy: ""},
-      {index: 17, selectedBy: ""},
-      {index: 18, selectedBy: ""},
-      {index: 19, selectedBy: ""},
-      {index: 20, selectedBy: ""},
-      {index: 21, selectedBy: ""},
-      {index: 22, selectedBy: ""},
-      {index: 23, selectedBy: ""},
-      {index: 24, selectedBy: ""},
-      {index: 25, selectedBy: ""},
-      {index: 26, selectedBy: ""},
-      {index: 27, selectedBy: ""},
-      {index: 28, selectedBy: ""},
-      {index: 29, selectedBy: ""},
-      {index: 30, selectedBy: ""},
-      {index: 31, selectedBy: ""},
-      {index: 32, selectedBy: ""},
-      {index: 33, selectedBy: ""},
-      {index: 34, selectedBy: ""},
-      {index: 35, selectedBy: ""},
-      {index: 36, selectedBy: ""},
-      {index: 37, selectedBy: ""},
-      {index: 38, selectedBy: ""},
-      {index: 39, selectedBy: ""},
-      {index: 40, selectedBy: ""},
-      {index: 41, selectedBy: ""}
+      {index: 0, selectedBy: ""}, {index: 1, selectedBy: ""}, {index: 2, selectedBy: ""},
+      {index: 3, selectedBy: ""}, {index: 4, selectedBy: ""}, {index: 5, selectedBy: ""},
+      {index: 6, selectedBy: ""}, {index: 7, selectedBy: ""}, {index: 8, selectedBy: ""},
+      {index: 9, selectedBy: ""}, {index: 10, selectedBy: ""}, {index: 11, selectedBy: ""},
+      {index: 12, selectedBy: ""}, {index: 13, selectedBy: ""}, {index: 14, selectedBy: ""},
+      {index: 15, selectedBy: ""}, {index: 16, selectedBy: ""}, {index: 17, selectedBy: ""},
+      {index: 18, selectedBy: ""}, {index: 19, selectedBy: ""}, {index: 20, selectedBy: ""},
+      {index: 21, selectedBy: ""}, {index: 22, selectedBy: ""}, {index: 23, selectedBy: ""},
+      {index: 24, selectedBy: ""}, {index: 25, selectedBy: ""}, {index: 26, selectedBy: ""},
+      {index: 27, selectedBy: ""}, {index: 28, selectedBy: ""}, {index: 29, selectedBy: ""},
+      {index: 30, selectedBy: ""}, {index: 31, selectedBy: ""}, {index: 32, selectedBy: ""},
+      {index: 33, selectedBy: ""}, {index: 34, selectedBy: ""}, {index: 35, selectedBy: ""},
+      {index: 36, selectedBy: ""}, {index: 37, selectedBy: ""}, {index: 38, selectedBy: ""},
+      {index: 39, selectedBy: ""}, {index: 40, selectedBy: ""}, {index: 41, selectedBy: ""}
     ],
     winner: ""
   }
 
   findBottomNumber = (columnNumber) => {
-    let columnCells = [41 - 6 + columnNumber, 41 - 13 + columnNumber, 41 - 20 + columnNumber, 41 - 27 + columnNumber, 41 - 34 + columnNumber, columnNumber];
+    let columnCells = [+(41 - 6 + columnNumber), +(41 - 13 + columnNumber), +(41 - 20 + columnNumber), +(41 - 27 + columnNumber), +(41 - 34 + columnNumber), columnNumber];
+    console.log(columnCells);
     let availableCells = columnCells.filter(cell => this.state.cells[cell]["selectedBy"]==="");
+    console.log(availableCells);
     return Math.max(...availableCells);
   }
 
@@ -94,7 +69,6 @@ class Board extends Component {
   }
 
   computerTurn = () => {
-    // const unfilledColumns = Object.keys(this.state.boxes).filter(key => this.state.boxes[key]["selectedBy"]==="");
     const computerColumnChoice = Math.floor(Math.random() * 6);
     setTimeout(this.selectColumn, 1000, computerColumnChoice, "computer");
   }
@@ -103,6 +77,14 @@ class Board extends Component {
     return (
       <div className="game">
         <p>{this.state.winner==="me" ? "You win!" : this.state.winner==="computer" ? "The computer wins!" : ""}</p>
+        <div className="arrows">
+          {Object.keys(this.state.cells.slice(0,7)).map(key => <Arrow
+            index={key}
+            key={key}
+            selectColumn={this.selectColumn}
+            computerTurn={this.computerTurn}
+          />)}
+        </div>
         <div className="board">
           {Object.keys(this.state.cells).map(key => <Cell
             index={key}
