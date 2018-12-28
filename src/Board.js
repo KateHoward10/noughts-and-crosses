@@ -20,7 +20,19 @@ class Board extends Component {
       {index: 36, selectedBy: ""}, {index: 37, selectedBy: ""}, {index: 38, selectedBy: ""},
       {index: 39, selectedBy: ""}, {index: 40, selectedBy: ""}, {index: 41, selectedBy: ""}
     ],
-    winner: ""
+    winner: "",
+    winningCombo: [],
+    myColour: "red",
+    computerColour: "yellow"
+  }
+
+  changeColour = () => {
+    const myColour = this.state.myColour;
+    const computerColour = this.state.computerColour;
+    this.setState({
+      myColour: myColour==="red" ? "yellow" : "red",
+      computerColour: computerColour==="red" ? "yellow" : "red"
+    });
   }
 
   findBottomNumber = (columnNumber) => {
@@ -52,7 +64,10 @@ class Board extends Component {
       [35,29,23,17],[36,30,24,18],[37,31,25,19],[38,32,26,20]
     ]
     if (possibleFours.some(combination => combination.every(cellNumber => this.state.cells[cellNumber]["selectedBy"]===player))) {
-      this.setState({ winner: player });
+      this.setState({
+        winner: player,
+        winningCombo: possibleFours.find(combination => combination.every(cellNumber => this.state.cells[cellNumber]["selectedBy"]===player))
+      })
     }
   }
 
@@ -63,19 +78,22 @@ class Board extends Component {
       cells[fillNumber].selectedBy = player;
       this.setState({ cells });
       this.checkForFour(player);
+      console.log(`${player}: ${fillNumber}`);
     }
   }
 
   computerTurn = () => {
     const availableColumns = Object.keys(this.state.cells.slice(0,7)).filter(key => this.findBottomNumber(parseFloat(key, 10))>0);
     const computerColumnChoice = parseFloat(availableColumns[Math.floor(Math.random() * availableColumns.length)], 10);
-    setTimeout(this.selectColumn, 1000, computerColumnChoice, "computer");
+    setTimeout(this.selectColumn, 500, computerColumnChoice, "computer");
   }
 
   render() {
     return (
       <div className="game">
-        <p>{this.state.winner==="me" ? "You win!" : this.state.winner==="computer" ? "The computer wins!" : ""}</p>
+        <p>Your colour: {this.state.myColour}</p>
+        <button onClick={this.changeColour}>Choose {this.state.computerColour}s instead</button>
+        <h1>{this.state.winner==="me" ? "You win!" : this.state.winner==="computer" ? "The computer wins!" : ""}</h1>
         <div className="arrows">
           {Object.keys(this.state.cells.slice(0,7)).map(key => <Arrow
             index={key}
@@ -90,6 +108,8 @@ class Board extends Component {
             index={key}
             key={key}
             fill={this.state.cells[key]["selectedBy"]}
+            myColour={this.state.myColour}
+            computerColour={this.state.computerColour}
             selectColumn={this.selectColumn}
             computerTurn={this.computerTurn}
           />)}
