@@ -68,6 +68,8 @@ class Board extends Component {
         winner: player,
         winningCombo: possibleFours.find(combination => combination.every(cellNumber => this.state.cells[cellNumber]["selectedBy"]===player))
       })
+    } else if (this.state.cells.every(cell => cell["selectedBy"]!=="")) {
+      this.setState({ winner: "draw" });
     }
   }
 
@@ -92,7 +94,7 @@ class Board extends Component {
       <div className="game">
         <p>Your colour: {this.state.myColour}</p>
         <button onClick={this.changeColour}>Choose {this.state.computerColour}s instead</button>
-        <h1>{this.state.winner==="me" ? "You win!" : this.state.winner==="computer" ? "The computer wins!" : ""}</h1>
+        <h1>{this.state.winner==="me" ? "You win!" : this.state.winner==="computer" ? "The computer wins!" : this.state.winner==="draw" ? "It's a draw" : ""}</h1>
         <div className="arrows">
           {Object.keys(this.state.cells.slice(0,7)).map(key => <Arrow
             index={key}
@@ -103,6 +105,14 @@ class Board extends Component {
           />)}
         </div>
         <div className="board">
+          {this.state.winningCombo.length ? <svg className="path-container" width="560" height="480">
+            <line
+              x1={((this.state.winningCombo[0] % 7) * 80) + 40}
+              y1={(Math.floor(this.state.winningCombo[0] / 7) * 80) + 40}
+              x2={((this.state.winningCombo[3] % 7) * 80) + 40}
+              y2={(Math.floor(this.state.winningCombo[3] / 7) * 80) + 40}
+            />
+          </svg> : null}
           {Object.keys(this.state.cells).map(key => <Cell
             index={key}
             key={key}

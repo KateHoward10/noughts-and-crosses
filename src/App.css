@@ -7,12 +7,24 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 50px;
 }
 
 .container {
   display: grid;
   grid-template-columns: repeat(3, 180px);
   grid-template-rows: repeat(3, 180px);
+}
+
+.path-container {
+  position: absolute;
+}
+
+line {
+  stroke: grey;
+  stroke-width: 5;
+  stroke-linecap: round;
+  z-index: 100;
 }
 
 .box {

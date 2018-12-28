@@ -9,7 +9,6 @@ class Cell extends Component {
         <div
           className="circle"
           style={{backgroundColor: colour}}>
-          {this.props.index}
         </div>
       </div>
     );
