@@ -4,7 +4,8 @@ class Cell extends Component {
 
   selectCell = () => {
     const columnNumber = this.props.index % 7;
-    this.props.selectColumn(columnNumber);
+    this.props.selectColumn(columnNumber, "me");
+    this.props.computerTurn();
   }
 
   render() {

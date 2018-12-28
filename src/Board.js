@@ -51,21 +51,9 @@ class Board extends Component {
   }
 
   findBottomNumber = (columnNumber) => {
-    let fillNumber;
-    if (this.state.cells[41 - 6 + columnNumber]!=="") {
-      fillNumber = 41 - 6 + columnNumber;
-    } else if (this.state.cells[41 - 13 + columnNumber]!=="") {
-      fillNumber = 41 - 13 + columnNumber;
-    } else if (this.state.cells[41 - 20 + columnNumber]!=="") {
-      fillNumber = 41 - 20 + columnNumber;
-    } else if (this.state.cells[41 - 27 + columnNumber]!=="") {
-      fillNumber = 41 - 27 + columnNumber;
-    } else if (this.state.cells[41 - 34 + columnNumber]!=="") {
-      fillNumber = 41 - 34 + columnNumber;
-    } else if (this.state.cells[columnNumber]!=="") {
-      fillNumber = columnNumber;
-    }
-    return fillNumber;
+    let columnCells = [41 - 6 + columnNumber, 41 - 13 + columnNumber, 41 - 20 + columnNumber, 41 - 27 + columnNumber, 41 - 34 + columnNumber, columnNumber];
+    let availableCells = columnCells.filter(cell => this.state.cells[cell]["selectedBy"]==="");
+    return Math.max(...availableCells);
   }
 
   checkForFour = (player) => {
@@ -95,24 +83,33 @@ class Board extends Component {
     }
   }
 
-  selectColumn = (columnNumber) => {
-    const fillNumber = this.findBottomNumber(columnNumber);
-    const cells = [ ...this.state.cells ];
-    cells[fillNumber].selectedBy = "me";
-    this.setState({ cells });
-    this.checkForFour("me");
+  selectColumn = (columnNumber, player) => {
+    if (this.state.winner==="") {
+      const fillNumber = this.findBottomNumber(columnNumber);
+      const cells = [ ...this.state.cells ];
+      cells[fillNumber].selectedBy = player;
+      this.setState({ cells });
+      this.checkForFour(player);
+    }
+  }
+
+  computerTurn = () => {
+    // const unfilledColumns = Object.keys(this.state.boxes).filter(key => this.state.boxes[key]["selectedBy"]==="");
+    const computerColumnChoice = Math.floor(Math.random() * 6);
+    setTimeout(this.selectColumn, 1000, computerColumnChoice, "computer");
   }
 
   render() {
     return (
       <div className="game">
-        <p>{this.state.winner}</p>
+        <p>{this.state.winner==="me" ? "You win!" : this.state.winner==="computer" ? "The computer wins!" : ""}</p>
         <div className="board">
           {Object.keys(this.state.cells).map(key => <Cell
             index={key}
             key={key}
             fill={this.state.cells[key]["selectedBy"]}
             selectColumn={this.selectColumn}
+            computerTurn={this.computerTurn}
           />)}
         </div>
       </div>
