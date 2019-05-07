@@ -92,9 +92,11 @@ class Board extends Component {
   render() {
     return (
       <div className="game">
-        <p>Your colour: {this.state.myColour}</p>
-        <button onClick={this.changeColour}>Choose {this.state.computerColour}s instead</button>
-        <h1>{this.state.winner==="me" ? "You win!" : this.state.winner==="computer" ? "The computer wins!" : this.state.winner==="draw" ? "It's a draw" : ""}</h1>
+        <div className="controls">
+          <p>Your colour: {this.state.myColour}</p>
+          <button onClick={this.changeColour}>Choose {this.state.computerColour}s instead</button>
+        </div>
+        {this.state.winner==="me" ? <h2>You win!</h2> : this.state.winner==="computer" ? <h2>The computer wins!</h2> : this.state.winner==="draw" ? <h2>It's a draw</h2> : null}
         <div className="arrows">
           {Object.keys(this.state.cells.slice(0,7)).map(key => <Arrow
             index={key}

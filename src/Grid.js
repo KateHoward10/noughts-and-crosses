@@ -63,11 +63,11 @@ class Grid extends Component {
   render() {
     return (
       <div className="game">
-        <div>
+        <div className="controls">
           <p>You are: {this.state.mySymbol}s</p>
           <button onClick={this.changeSymbol}>Choose {this.state.computerSymbol}s instead</button>
-          <h1>{this.state.win==="draw" ? "It's a draw" : this.state.win==="me" ? "You win!" : this.state.win==="computer" ? "The computer wins!" : ""}</h1>
         </div>
+          {this.state.win==="draw" ? <h2>It's a draw</h2> : this.state.win==="me" ? <h2>You win!</h2> : this.state.win==="computer" ? <h2>The computer wins!</h2> : null}
           <div className="container">
             {this.state.winningThree.length ? <svg className="path-container" width="540" height="540">
               <line
