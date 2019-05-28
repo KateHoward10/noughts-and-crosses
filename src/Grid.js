@@ -43,12 +43,25 @@ class Grid extends Component {
   }
 
   select = (index, player) => {
-    if (this.state.win!=="") {
+    const { win, boxes } = this.state;
+    if (win !== "") {
       return;
     } else {
-      const boxes = [ ...this.state.boxes ];
       boxes[index].selectedBy = player;
-      this.setState({ boxes });
+      this.setState({ boxes }, () => this.checkForThree(player));
+    }
+  }
+
+  selectBox = key => {
+    const { win, boxes } = this.state;
+    if (boxes[key]["selectedBy"]==="" && win==="") {
+      this.select(key, "me");
+      this.checkForThree("me");
+      if (win!=="") {
+        return;
+      } else {
+        this.finishTurn();
+      }   
     }
   }
 
@@ -68,8 +81,7 @@ class Grid extends Component {
     } else {
       computerChoice = indices[Math.floor(Math.random() * indices.length)];
     }
-    setTimeout(this.select, 100, computerChoice, "computer");
-    this.checkForThree("computer");
+    setTimeout(this.select, 1000, computerChoice, "computer");
   }
 
   render() {
@@ -81,7 +93,7 @@ class Grid extends Component {
         </div>
           {this.state.win==="draw" ? <h2>It's a draw</h2> : this.state.win==="me" ? <h2>You win!</h2> : this.state.win==="computer" ? <h2>The computer wins!</h2> : null}
           <div className="container">
-            {this.state.winningThree.length ? <svg className="path-container" width="540" height="540">
+            {this.state.winningThree.length > 0 ? <svg className="path-container" width="540" height="540">
               <line
                 x1={((this.state.winningThree[0] % 3) * 180) + 90}
                 y1={(Math.floor(this.state.winningThree[0] / 3) * 180) + 90}
@@ -96,9 +108,7 @@ class Grid extends Component {
               box={this.state.boxes[key]}
               mySymbol={this.state.mySymbol}
               computerSymbol={this.state.computerSymbol}
-              select={this.select}
-              checkForThree={this.checkForThree}
-              finishTurn={this.finishTurn}
+              selectBox={() => this.selectBox(key)}
             />)}
         </div>
       </div>
