@@ -5,7 +5,7 @@ import Board from './Board';
 
 class App extends Component {
   state = {
-	  connect4: true,
+	  connect4: false,
   }
 
   switch = () => {

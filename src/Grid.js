@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Box from './Box';
+import { possibleThrees } from './combinations';
 
 class Grid extends Component {
   state = {
@@ -30,13 +31,11 @@ class Grid extends Component {
   }
 
   checkForThree = (player) => {
-    const possibleThrees = [
-      [0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]
-    ];
-    if (possibleThrees.some(combination => combination.every(boxNumber => this.state.boxes[boxNumber]["selectedBy"]===player))) {
+    const { boxes } = this.state;
+    if (possibleThrees.some(combination => combination.every(boxNumber => boxes[boxNumber]["selectedBy"]===player))) {
       this.setState({
         win: player,
-        winningThree: possibleThrees.find(combination => combination.every(boxNumber => this.state.boxes[boxNumber]["selectedBy"]===player))
+        winningThree: possibleThrees.find(combination => combination.every(boxNumber => boxes[boxNumber]["selectedBy"]===player))
       });
     } else if (this.state.boxes.filter(box => box["selectedBy"]!=="").length>8) {
       this.setState({ win: "draw" });
@@ -54,8 +53,21 @@ class Grid extends Component {
   }
 
   finishTurn = () => {
-    const indices = Object.keys(this.state.boxes).filter(key => this.state.boxes[key]["selectedBy"]==="");
-    const computerChoice = indices[Math.floor(Math.random() * indices.length)];
+    const { boxes } = this.state;
+    const indices = Object.keys(boxes).filter(key => boxes[key]["selectedBy"]==="");
+    let computerChoice;
+    if (possibleThrees.some(combination => combination
+      .filter(boxNumber => boxes[boxNumber]["selectedBy"]==="me").length===2
+      && combination.find(boxNumber => indices.includes(boxNumber.toString()))
+    )) {
+      const combos = possibleThrees.filter(combination => combination
+        .filter(boxNumber => boxes[boxNumber]["selectedBy"]==="me").length===2
+        && combination.find(boxNumber => indices.includes(boxNumber.toString())));
+      const randomCombo = combos[Math.floor(Math.random() * combos.length)];
+      computerChoice = (randomCombo.find(boxNumber => indices.includes(boxNumber.toString()))).toString();
+    } else {
+      computerChoice = indices[Math.floor(Math.random() * indices.length)];
+    }
     setTimeout(this.select, 100, computerChoice, "computer");
     this.checkForThree("computer");
   }
