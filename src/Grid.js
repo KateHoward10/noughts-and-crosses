@@ -69,19 +69,21 @@ class Grid extends Component {
     const { boxes } = this.state;
     const indices = Object.keys(boxes).filter(key => boxes[key]["selectedBy"]==="");
     let computerChoice;
-    if (possibleThrees.some(combination => combination
-      .filter(boxNumber => boxes[boxNumber]["selectedBy"]==="me").length===2
+    if (possibleThrees.some(combination => 
+      (combination.filter(boxNumber => boxes[boxNumber]["selectedBy"]==="me").length===2 ||
+      combination.filter(boxNumber => boxes[boxNumber]["selectedBy"]==="computer").length===2)
       && combination.find(boxNumber => indices.includes(boxNumber.toString()))
     )) {
-      const combos = possibleThrees.filter(combination => combination
-        .filter(boxNumber => boxes[boxNumber]["selectedBy"]==="me").length===2
+      const combos = possibleThrees.filter(combination =>
+        (combination.filter(boxNumber => boxes[boxNumber]["selectedBy"]==="me").length===2 ||
+        combination.filter(boxNumber => boxes[boxNumber]["selectedBy"]==="computer").length===2)
         && combination.find(boxNumber => indices.includes(boxNumber.toString())));
       const randomCombo = combos[Math.floor(Math.random() * combos.length)];
       computerChoice = (randomCombo.find(boxNumber => indices.includes(boxNumber.toString()))).toString();
     } else {
       computerChoice = indices[Math.floor(Math.random() * indices.length)];
     }
-    setTimeout(this.select, 1000, computerChoice, "computer");
+    setTimeout(this.select, 100, computerChoice, "computer");
   }
 
   render() {
