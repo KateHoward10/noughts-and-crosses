@@ -27,6 +27,29 @@ class Board extends Component {
     computerColour: "yellow"
   }
 
+  reset = () => {
+    this.setState({
+      cells: [
+        {index: 0, selectedBy: ""}, {index: 1, selectedBy: ""}, {index: 2, selectedBy: ""},
+        {index: 3, selectedBy: ""}, {index: 4, selectedBy: ""}, {index: 5, selectedBy: ""},
+        {index: 6, selectedBy: ""}, {index: 7, selectedBy: ""}, {index: 8, selectedBy: ""},
+        {index: 9, selectedBy: ""}, {index: 10, selectedBy: ""}, {index: 11, selectedBy: ""},
+        {index: 12, selectedBy: ""}, {index: 13, selectedBy: ""}, {index: 14, selectedBy: ""},
+        {index: 15, selectedBy: ""}, {index: 16, selectedBy: ""}, {index: 17, selectedBy: ""},
+        {index: 18, selectedBy: ""}, {index: 19, selectedBy: ""}, {index: 20, selectedBy: ""},
+        {index: 21, selectedBy: ""}, {index: 22, selectedBy: ""}, {index: 23, selectedBy: ""},
+        {index: 24, selectedBy: ""}, {index: 25, selectedBy: ""}, {index: 26, selectedBy: ""},
+        {index: 27, selectedBy: ""}, {index: 28, selectedBy: ""}, {index: 29, selectedBy: ""},
+        {index: 30, selectedBy: ""}, {index: 31, selectedBy: ""}, {index: 32, selectedBy: ""},
+        {index: 33, selectedBy: ""}, {index: 34, selectedBy: ""}, {index: 35, selectedBy: ""},
+        {index: 36, selectedBy: ""}, {index: 37, selectedBy: ""}, {index: 38, selectedBy: ""},
+        {index: 39, selectedBy: ""}, {index: 40, selectedBy: ""}, {index: 41, selectedBy: ""}
+      ],
+      winner: "",
+      winningCombo: []
+    })
+  }
+
   changeColour = () => {
     const myColour = this.state.myColour;
     const computerColour = this.state.computerColour;
@@ -58,14 +81,39 @@ class Board extends Component {
       const fillNumber = this.findBottomNumber(columnNumber);
       const cells = [ ...this.state.cells ];
       cells[fillNumber].selectedBy = player;
-      this.setState({ cells });
-      this.checkForFour(player);
+      this.setState({ cells }, () => this.checkForFour(player));
     }
   }
 
   computerTurn = () => {
-    const availableColumns = Object.keys(this.state.cells.slice(0,7)).filter(key => this.findBottomNumber(parseFloat(key, 10))>0);
-    const computerColumnChoice = parseFloat(availableColumns[Math.floor(Math.random() * availableColumns.length)], 10);
+    const { cells } = this.state;
+    const availableColumns = Object.keys(cells.slice(0,7)).filter(key => this.findBottomNumber(parseFloat(key, 10))>0);
+    let computerColumnChoice;
+    if (possibleFours.some(combination =>
+      combination.filter(cellNumber => cells[cellNumber]["selectedBy"]==="computer").length===3
+      && combination.filter(cellNumber => cells[cellNumber]["selectedBy"]==="").length===1
+      )
+    ) {
+      const combos = possibleFours.filter(combination =>
+        combination.filter(cellNumber => cells[cellNumber]["selectedBy"]==="computer").length===3
+        && combination.filter(cellNumber => cells[cellNumber]["selectedBy"]==="").length===1
+      );
+      const randomCombo = combos[Math.floor(Math.random() * combos.length)];
+      computerColumnChoice = randomCombo.find(cellNumber => cells[cellNumber]["selectedBy"]==="")%7;
+    } else if (possibleFours.some(combination =>
+      combination.filter(cellNumber => cells[cellNumber]["selectedBy"]==="me").length===3
+      && combination.filter(cellNumber => cells[cellNumber]["selectedBy"]==="").length===1
+      )
+    ) {
+      const combos = possibleFours.filter(combination =>
+        combination.filter(cellNumber => cells[cellNumber]["selectedBy"]==="me").length===3
+        && combination.filter(cellNumber => cells[cellNumber]["selectedBy"]==="").length===1
+      );
+      const randomCombo = combos[Math.floor(Math.random() * combos.length)];
+      computerColumnChoice = randomCombo.find(cellNumber => cells[cellNumber]["selectedBy"]==="")%7;
+    } else {
+      computerColumnChoice = parseFloat(availableColumns[Math.floor(Math.random() * availableColumns.length)], 10);
+    }
     setTimeout(this.selectColumn, 500, computerColumnChoice, "computer");
   }
 
@@ -75,6 +123,7 @@ class Board extends Component {
         <div className="controls">
           <p>Your colour: {this.state.myColour}</p>
           <button onClick={this.changeColour}>Choose {this.state.computerColour}s instead</button>
+          <button onClick={this.reset}>New Game</button>
         </div>
         {this.state.winner==="me" ? <h2>You win!</h2> : this.state.winner==="computer" ? <h2>The computer wins!</h2> : this.state.winner==="draw" ? <h2>It's a draw</h2> : null}
         <div className="arrows">
