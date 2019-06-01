@@ -69,21 +69,28 @@ class Grid extends Component {
     const { boxes } = this.state;
     const indices = Object.keys(boxes).filter(key => boxes[key]["selectedBy"]==="");
     let computerChoice;
-    if (possibleThrees.some(combination => 
-      (combination.filter(boxNumber => boxes[boxNumber]["selectedBy"]==="me").length===2 ||
-      combination.filter(boxNumber => boxes[boxNumber]["selectedBy"]==="computer").length===2)
-      && combination.find(boxNumber => indices.includes(boxNumber.toString()))
-    )) {
+    if (possibleThrees.some(combination =>
+      combination.filter(boxNumber => boxes[boxNumber]["selectedBy"]==="computer").length===2
+      && combination.filter(boxNumber => boxes[boxNumber]["selectedBy"]==="").length===1)
+    ) {
       const combos = possibleThrees.filter(combination =>
-        (combination.filter(boxNumber => boxes[boxNumber]["selectedBy"]==="me").length===2 ||
-        combination.filter(boxNumber => boxes[boxNumber]["selectedBy"]==="computer").length===2)
-        && combination.find(boxNumber => indices.includes(boxNumber.toString())));
+        combination.filter(boxNumber => boxes[boxNumber]["selectedBy"]==="computer").length===2
+        && combination.filter(boxNumber => boxes[boxNumber]["selectedBy"]==="").length===1);
       const randomCombo = combos[Math.floor(Math.random() * combos.length)];
-      computerChoice = (randomCombo.find(boxNumber => indices.includes(boxNumber.toString()))).toString();
+      computerChoice = randomCombo.find(boxNumber => boxes[boxNumber]["selectedBy"]==="");
+    } else if (possibleThrees.some(combination =>
+      combination.filter(boxNumber => boxes[boxNumber]["selectedBy"]==="me").length===2
+      && combination.filter(boxNumber => boxes[boxNumber]["selectedBy"]==="").length===1)
+    ) {
+      const combos = possibleThrees.filter(combination =>
+        combination.filter(boxNumber => boxes[boxNumber]["selectedBy"]==="me").length===2
+        && combination.filter(boxNumber => boxes[boxNumber]["selectedBy"]==="").length===1);
+      const randomCombo = combos[Math.floor(Math.random() * combos.length)];
+      computerChoice = randomCombo.find(boxNumber => boxes[boxNumber]["selectedBy"]==="");
     } else {
       computerChoice = indices[Math.floor(Math.random() * indices.length)];
     }
-    setTimeout(this.select, 100, computerChoice, "computer");
+    setTimeout(this.select, 1000, computerChoice, "computer");
   }
 
   render() {
