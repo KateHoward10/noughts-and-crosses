@@ -92,22 +92,24 @@ class Board extends Component {
     if (possibleFours.some(combination =>
       combination.filter(cellNumber => cells[cellNumber]["selectedBy"]==="computer").length===3
       && combination.filter(cellNumber => cells[cellNumber]["selectedBy"]==="").length===1
-      )
-    ) {
+      && combination.find(cellNumber => cells[cellNumber]["selectedBy"]==="")===this.findBottomNumber(combination.find(cellNumber => cells[cellNumber]["selectedBy"]==="")%7)
+    )) {
       const combos = possibleFours.filter(combination =>
         combination.filter(cellNumber => cells[cellNumber]["selectedBy"]==="computer").length===3
         && combination.filter(cellNumber => cells[cellNumber]["selectedBy"]==="").length===1
+        && combination.find(cellNumber => cells[cellNumber]["selectedBy"]==="")===this.findBottomNumber(combination.find(cellNumber => cells[cellNumber]["selectedBy"]==="")%7)
       );
       const randomCombo = combos[Math.floor(Math.random() * combos.length)];
       computerColumnChoice = randomCombo.find(cellNumber => cells[cellNumber]["selectedBy"]==="")%7;
     } else if (possibleFours.some(combination =>
       combination.filter(cellNumber => cells[cellNumber]["selectedBy"]==="me").length===3
       && combination.filter(cellNumber => cells[cellNumber]["selectedBy"]==="").length===1
-      )
-    ) {
+      && combination.find(cellNumber => cells[cellNumber]["selectedBy"]==="")===this.findBottomNumber(combination.find(cellNumber => cells[cellNumber]["selectedBy"]==="")%7)
+    )) {
       const combos = possibleFours.filter(combination =>
         combination.filter(cellNumber => cells[cellNumber]["selectedBy"]==="me").length===3
         && combination.filter(cellNumber => cells[cellNumber]["selectedBy"]==="").length===1
+        && combination.find(cellNumber => cells[cellNumber]["selectedBy"]==="")===this.findBottomNumber(combination.find(cellNumber => cells[cellNumber]["selectedBy"]==="")%7)
       );
       const randomCombo = combos[Math.floor(Math.random() * combos.length)];
       computerColumnChoice = randomCombo.find(cellNumber => cells[cellNumber]["selectedBy"]==="")%7;
