@@ -21,6 +21,24 @@ class Grid extends Component {
     winningThree: []
   }
 
+  reset = () => {
+    this.setState({
+      win: "",
+      boxes: [
+        {index: 0, selectedBy: ""},
+        {index: 1, selectedBy: ""},
+        {index: 2, selectedBy: ""},
+        {index: 3, selectedBy: ""},
+        {index: 4, selectedBy: ""},
+        {index: 5, selectedBy: ""},
+        {index: 6, selectedBy: ""},
+        {index: 7, selectedBy: ""},
+        {index: 8, selectedBy: ""}
+      ],
+      winningThree: []
+    })
+  }
+
   changeSymbol = () => {
     const mySymbol = this.state.mySymbol;
     const computerSymbol = this.state.computerSymbol;
@@ -90,7 +108,7 @@ class Grid extends Component {
     } else {
       computerChoice = indices[Math.floor(Math.random() * indices.length)];
     }
-    setTimeout(this.select, 1000, computerChoice, "computer");
+    setTimeout(this.select, 500, computerChoice, "computer");
   }
 
   render() {
@@ -99,6 +117,7 @@ class Grid extends Component {
         <div className="controls">
           <p>You are: {this.state.mySymbol}s</p>
           <button onClick={this.changeSymbol}>Choose {this.state.computerSymbol}s instead</button>
+          <button onClick={this.reset}>New Game</button>
         </div>
           {this.state.win==="draw" ? <h2>It's a draw</h2> : this.state.win==="me" ? <h2>You win!</h2> : this.state.win==="computer" ? <h2>The computer wins!</h2> : null}
           <div className="container">

@@ -34,8 +34,8 @@ button {
 }
 
 .container {
-  background-color: lightgrey;
-  border: 10px solid blue;
+  background-color: blue;
+  border: 10px solid black;
   border-radius: 10px;
   display: grid;
   grid-template-columns: repeat(3, 180px);
@@ -61,7 +61,12 @@ line {
   font-size: 5em;
 }
 
-.symbol {
+.mySymbol {
+  color: red;
+}
+
+.computerSymbol {
+  color: yellow;
   -webkit-animation: fadein 3s; /* Safari, Chrome and Opera > 12.1 */
    -moz-animation: fadein 3s; /* Firefox < 16 */
     -ms-animation: fadein 3s; /* Internet Explorer */

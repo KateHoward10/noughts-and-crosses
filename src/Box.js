@@ -6,7 +6,7 @@ class Box extends Component {
     const { box, mySymbol, computerSymbol, selectBox } = this.props;
     return (
       <div className="box" onClick={selectBox}>
-        {box.selectedBy==="me" ? <span>{mySymbol}</span> : box.selectedBy==="computer" ? <span className="symbol">{computerSymbol}</span> : null}
+        {box.selectedBy==="me" ? <span className="mySymbol">{mySymbol}</span> : box.selectedBy==="computer" ? <span className="computerSymbol">{computerSymbol}</span> : null}
       </div>
     );
   }
