@@ -62,18 +62,19 @@ class Grid extends Component {
         winningThree: possibleThrees.find(combination => combination.every(boxNumber => boxes[boxNumber]["selectedBy"]===player)),
         playing: false
       });
-    } else if (boxes.filter(box => box["selectedBy"]!=="").length>8) {
+    } else if (boxes.filter(box => box["selectedBy"]!=="").length > 8) {
       this.setState({ win: "draw", playing: false });
     };
   }
 
   select = (index, player) => {
-    const { win, boxes } = this.state;
+    const { win, boxes, myTurn } = this.state;
     if (win !== "") {
       return;
     } else {
       boxes[index].selectedBy = player;
       this.setState({ boxes }, () => this.checkForThree(player));
+      setTimeout(() => this.setState({ myTurn: !myTurn }), 500);
     }
   }
 
@@ -122,33 +123,35 @@ class Grid extends Component {
     const { mySymbol, computerSymbol, win, winningThree, boxes, myTurn, playing } = this.state;
     return (
       <div className="game">
-        <button onClick={this.reset}>New Game</button>
-        {playing && (
-          <div className="controls">
-            <p>{myTurn ? "Your turn" : "The computer's turn"}</p>
-            <p>You are: {this.state.mySymbol}s</p>
-            <button onClick={this.changeSymbol}>Choose {computerSymbol}s instead</button>
-          </div>
-        )}
-          {win==="draw" ? <h2>It's a draw</h2> : win==="me" ? <h2>You win!</h2> : win==="computer" ? <h2>The computer wins!</h2> : null}
-          <div className="container">
-            {winningThree.length > 0 ? <svg className="path-container" width="540" height="540">
-              <line
-                x1={((winningThree[0] % 3) * 180) + 90}
-                y1={(Math.floor(winningThree[0] / 3) * 180) + 90}
-                x2={((winningThree[2] % 3) * 180) + 90}
-                y2={(Math.floor(winningThree[2] / 3) * 180) + 90}
-              />
-            </svg> : null}
-            {Object.keys(boxes).map(key => <Box
-              index={key}
-              key={key}
-              win={win}
-              box={boxes[key]}
-              mySymbol={mySymbol}
-              computerSymbol={computerSymbol}
-              selectBox={() => this.selectBox(key)}
-            />)}
+          <button onClick={this.reset}>New Game</button>
+          {playing && (
+            <React.Fragment>
+              <p>{myTurn ? "Your turn" : "The computer's turn"}</p>
+              <div className="controls">
+                <p>You are: {this.state.mySymbol}s</p>
+                <button onClick={this.changeSymbol}>Choose {computerSymbol}s instead</button>
+              </div>
+            </React.Fragment>
+          )}
+        {win==="draw" ? <h2>It's a draw</h2> : win==="me" ? <h2>You win!</h2> : win==="computer" ? <h2>The computer wins!</h2> : null}
+        <div className="container">
+          {winningThree.length > 0 ? <svg className="path-container" width="540" height="540">
+            <line
+              x1={((winningThree[0] % 3) * 180) + 90}
+              y1={(Math.floor(winningThree[0] / 3) * 180) + 90}
+              x2={((winningThree[2] % 3) * 180) + 90}
+              y2={(Math.floor(winningThree[2] / 3) * 180) + 90}
+            />
+          </svg> : null}
+          {Object.keys(boxes).map(key => <Box
+            index={key}
+            key={key}
+            win={win}
+            box={boxes[key]}
+            mySymbol={mySymbol}
+            computerSymbol={computerSymbol}
+            selectBox={() => this.selectBox(key)}
+          />)}
         </div>
       </div>
     );
