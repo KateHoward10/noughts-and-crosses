@@ -4,8 +4,6 @@ import { possibleThrees } from './combinations';
 
 class Grid extends Component {
   state = {
-    mySymbol: "X",
-    computerSymbol: "O",
     win: "",
     boxes: [
       {index: 0, selectedBy: ""},
@@ -38,6 +36,7 @@ class Grid extends Component {
       ],
       winningThree: [],
       myTurn: Boolean(Math.random() < 0.5),
+      mySymbol: ["O", "X"][Math.round(Math.random())],
       playing: true
     }, () => {
       if (!this.state.myTurn) {
@@ -47,10 +46,9 @@ class Grid extends Component {
   }
 
   changeSymbol = () => {
-    const { mySymbol, computerSymbol } = this.state;
+    const { mySymbol } = this.state;
     this.setState({
       mySymbol: mySymbol==="X" ? "O" : "X",
-      computerSymbol: computerSymbol==="X" ? "O" : "X"
     });
   }
 
@@ -120,7 +118,8 @@ class Grid extends Component {
   }
 
   render() {
-    const { mySymbol, computerSymbol, win, winningThree, boxes, myTurn, playing } = this.state;
+    const { mySymbol, win, winningThree, boxes, myTurn, playing } = this.state;
+    const computerSymbol = mySymbol==="X" ? "O" : "X";
     return (
       <div className="game">
           <button onClick={this.reset}>New Game</button>
