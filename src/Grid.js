@@ -127,7 +127,7 @@ class Grid extends Component {
             <React.Fragment>
               <p>{myTurn ? "Your turn" : "The computer's turn"}</p>
               <div className="controls">
-                <p>You are: {this.state.mySymbol}s</p>
+                <p>You are: {mySymbol}s</p>
                 <button onClick={this.changeSymbol}>Choose {computerSymbol}s instead</button>
               </div>
             </React.Fragment>

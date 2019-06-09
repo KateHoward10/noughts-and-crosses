@@ -23,8 +23,7 @@ class Board extends Component {
     ],
     winner: "",
     winningCombo: [],
-    myColour: "red",
-    computerColour: "yellow"
+    playing: false
   }
 
   reset = () => {
@@ -46,16 +45,21 @@ class Board extends Component {
         {index: 39, selectedBy: ""}, {index: 40, selectedBy: ""}, {index: 41, selectedBy: ""}
       ],
       winner: "",
-      winningCombo: []
+      winningCombo: [],
+      myTurn: Boolean(Math.random() < 0.5),
+      myColour: ["red", "yellow"][Math.round(Math.random())],
+      playing: true
+    }, () => {
+      if (!this.state.myTurn) {
+        this.computerTurn();
+      }
     })
   }
 
   changeColour = () => {
-    const myColour = this.state.myColour;
-    const computerColour = this.state.computerColour;
+    const { myColour } = this.state;
     this.setState({
-      myColour: myColour==="red" ? "yellow" : "red",
-      computerColour: computerColour==="red" ? "yellow" : "red"
+      myColour: myColour==="red" ? "yellow" : "red"
     });
   }
 
@@ -77,11 +81,13 @@ class Board extends Component {
   }
 
   selectColumn = (columnNumber, player) => {
-    if (this.state.winner==="") {
+    const { playing, winner, cells, myTurn } = this.state;
+    if (!playing || winner!=="" || (player==="me" && !myTurn)) {
+      return;
+    } else {
       const fillNumber = this.findBottomNumber(columnNumber);
-      const cells = [ ...this.state.cells ];
       cells[fillNumber].selectedBy = player;
-      this.setState({ cells }, () => this.checkForFour(player));
+      this.setState({ cells, myTurn: !myTurn }, () => this.checkForFour(player));
     }
   }
 
@@ -120,16 +126,23 @@ class Board extends Component {
   }
 
   render() {
+    const { playing, myTurn, myColour, winner, cells, winningCombo } = this.state;
+    const computerColour = myColour==="red" ? "yellow" : "red";
     return (
       <div className="game">
-        <div className="controls">
-          <p>Your colour: {this.state.myColour}</p>
-          <button onClick={this.changeColour}>Choose {this.state.computerColour}s instead</button>
-          <button onClick={this.reset}>New Game</button>
-        </div>
-        {this.state.winner==="me" ? <h2>You win!</h2> : this.state.winner==="computer" ? <h2>The computer wins!</h2> : this.state.winner==="draw" ? <h2>It's a draw</h2> : null}
+        <button onClick={this.reset}>New Game</button>
+        {playing && (
+          <React.Fragment>
+            <p>{myTurn ? "Your turn" : "The computer's turn"}</p>
+            <div className="controls">
+        <p>Your colour: {myColour}</p>
+        <button onClick={this.changeColour}>Choose {computerColour}s instead</button>
+            </div>
+          </React.Fragment>
+        )}
+        {winner==="me" ? <h2>You win!</h2> : winner==="computer" ? <h2>The computer wins!</h2> : winner==="draw" ? <h2>It's a draw</h2> : null}
         <div className="arrows">
-          {Object.keys(this.state.cells.slice(0,7)).map(key => <Arrow
+          {Object.keys(cells.slice(0,7)).map(key => <Arrow
             index={key}
             key={key}
             hidden={this.findBottomNumber(parseFloat(key, 10))<0}
@@ -138,22 +151,20 @@ class Board extends Component {
           />)}
         </div>
         <div className="board">
-          {this.state.winningCombo.length ? <svg className="path-container" width="560" height="480">
+          {winningCombo.length > 0 ? <svg className="path-container" width="560" height="480">
             <line
-              x1={((this.state.winningCombo[0] % 7) * 80) + 40}
-              y1={(Math.floor(this.state.winningCombo[0] / 7) * 80) + 40}
-              x2={((this.state.winningCombo[3] % 7) * 80) + 40}
-              y2={(Math.floor(this.state.winningCombo[3] / 7) * 80) + 40}
+              x1={((winningCombo[0] % 7) * 80) + 40}
+              y1={(Math.floor(winningCombo[0] / 7) * 80) + 40}
+              x2={((winningCombo[3] % 7) * 80) + 40}
+              y2={(Math.floor(winningCombo[3] / 7) * 80) + 40}
             />
           </svg> : null}
-          {Object.keys(this.state.cells).map(key => <Cell
+          {Object.keys(cells).map(key => <Cell
             index={key}
             key={key}
-            fill={this.state.cells[key]["selectedBy"]}
-            myColour={this.state.myColour}
-            computerColour={this.state.computerColour}
-            selectColumn={this.selectColumn}
-            computerTurn={this.computerTurn}
+            fill={cells[key]["selectedBy"]}
+            myColour={myColour}
+            computerColour={computerColour}
           />)}
         </div>
       </div>
