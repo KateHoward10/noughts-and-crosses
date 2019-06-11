@@ -23,7 +23,8 @@ class Board extends Component {
     ],
     winner: "",
     winningCombo: [],
-    playing: false
+    playing: false,
+    rolling: null
   }
 
   reset = () => {
@@ -48,7 +49,8 @@ class Board extends Component {
       winningCombo: [],
       myTurn: Boolean(Math.random() < 0.5),
       myColour: ["red", "yellow"][Math.round(Math.random())],
-      playing: true
+      playing: true,
+      rolling: null
     }, () => {
       if (!this.state.myTurn) {
         this.computerTurn();
@@ -85,9 +87,12 @@ class Board extends Component {
     if (!playing || winner!=="" || (player==="me" && !myTurn)) {
       return;
     } else {
-      const fillNumber = this.findBottomNumber(columnNumber);
-      cells[fillNumber].selectedBy = player;
-      this.setState({ cells, myTurn: !myTurn }, () => this.checkForFour(player));
+      this.setState({ rolling: columnNumber });
+      setTimeout(() => this.setState({ rolling: null }, () => {
+        const fillNumber = this.findBottomNumber(columnNumber);
+        cells[fillNumber].selectedBy = player;
+        this.setState({ cells, myTurn: !myTurn }, () => this.checkForFour(player));
+      }), 1000);
     }
   }
 
@@ -126,7 +131,7 @@ class Board extends Component {
   }
 
   render() {
-    const { playing, myTurn, myColour, winner, cells, winningCombo } = this.state;
+    const { playing, myTurn, myColour, winner, cells, winningCombo, rolling } = this.state;
     const computerColour = myColour==="red" ? "yellow" : "red";
     return (
       <div className="game">
@@ -151,14 +156,19 @@ class Board extends Component {
           />)}
         </div>
         <div className="board">
-          {winningCombo.length > 0 ? <svg className="path-container" width="560" height="480">
-            <line
-              x1={((winningCombo[0] % 7) * 80) + 40}
-              y1={(Math.floor(winningCombo[0] / 7) * 80) + 40}
-              x2={((winningCombo[3] % 7) * 80) + 40}
-              y2={(Math.floor(winningCombo[3] / 7) * 80) + 40}
-            />
-          </svg> : null}
+          <svg className="path-container" width="560" height="480">
+            {winningCombo.length > 0 && (
+              <line
+                x1={((winningCombo[0] % 7) * 80) + 40}
+                y1={(Math.floor(winningCombo[0] / 7) * 80) + 40}
+                x2={((winningCombo[3] % 7) * 80) + 40}
+                y2={(Math.floor(winningCombo[3] / 7) * 80) + 40}
+              />
+            )}
+            {rolling && (
+              <circle cx={(rolling * 80) + 40} cy="40" r="30" className="rolling-counter" fill={myTurn ? myColour : computerColour} />
+            )}
+          </svg>
           {Object.keys(cells).map(key => <Cell
             index={key}
             key={key}
