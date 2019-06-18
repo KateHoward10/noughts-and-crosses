@@ -54,24 +54,6 @@ line {
   z-index: 100;
 }
 
-.rolling-counter {
-  z-index: 0;
-  -webkit-animation: roll 1s; /* Safari, Chrome and Opera > 12.1 */
-   -moz-animation: roll 1s; /* Firefox < 16 */
-    -ms-animation: roll 1s; /* Internet Explorer */
-     -o-animation: roll 1s; /* Opera < 12.1 */
-        animation: roll 1s;
-}
-
-@keyframes roll {
-  0% { transform: translateY(0px) }
-  20% { transform: translateY(80px) }
-  40% { transform: translateY(160px) }
-  60% { transform: translateY(240px) }
-  80% { transform: translateY(320px) }
-  100% { transform: translateY(400px) }
-}
-
 .box {
   border: 1px solid grey;
   display: flex;

@@ -23,8 +23,7 @@ class Board extends Component {
     ],
     winner: "",
     winningCombo: [],
-    playing: false,
-    rolling: null
+    playing: false
   }
 
   reset = () => {
@@ -49,8 +48,7 @@ class Board extends Component {
       winningCombo: [],
       myTurn: Boolean(Math.random() < 0.5),
       myColour: ["red", "yellow"][Math.round(Math.random())],
-      playing: true,
-      rolling: null
+      playing: true
     }, () => {
       if (!this.state.myTurn) {
         this.computerTurn();
@@ -65,9 +63,16 @@ class Board extends Component {
     });
   }
 
+  findAvailableCells = (columnNumber) => {
+    const columnCells = [41 - 6 + columnNumber, 41 - 13 + columnNumber, 41 - 20 + columnNumber, 41 - 27 + columnNumber, 41 - 34 + columnNumber, columnNumber];
+    const availableCells = columnCells.filter(cell => this.state.cells[cell]["selectedBy"]==="");
+    return availableCells.sort((a, b) => {
+      return a - b;
+    });
+  }
+
   findBottomNumber = (columnNumber) => {
-    let columnCells = [41 - 6 + columnNumber, 41 - 13 + columnNumber, 41 - 20 + columnNumber, 41 - 27 + columnNumber, 41 - 34 + columnNumber, columnNumber];
-    let availableCells = columnCells.filter(cell => this.state.cells[cell]["selectedBy"]==="");
+    const availableCells = this.findAvailableCells(columnNumber);
     return Math.max(...availableCells);
   }
 
@@ -84,16 +89,44 @@ class Board extends Component {
 
   selectColumn = (columnNumber, player) => {
     const { playing, winner, cells, myTurn } = this.state;
-    if (!playing || winner!=="" || (player==="me" && !myTurn)) {
+    if (!playing || winner!=="") {
       return;
     } else {
-      this.setState({ rolling: columnNumber });
-      setTimeout(() => this.setState({ rolling: null }, () => {
+      this.roll(columnNumber, player, () => {
         const fillNumber = this.findBottomNumber(columnNumber);
         cells[fillNumber].selectedBy = player;
-        this.setState({ cells, myTurn: !myTurn }, () => this.checkForFour(player));
-      }), 1000);
+        this.setState({ cells, myTurn: !myTurn });
+        this.checkForFour(player);
+      });
     }
+  }
+
+  roll = (columnNumber, player, finishRoll) => {
+    const { cells } = this.state;
+    const numbers = this.findAvailableCells(columnNumber);
+    console.log(numbers);
+    const slowLoop = (array, interval, callback) => {
+      var i = 0;
+      next();
+      function next() {
+        if (callback( array[i], i ) !== false) {
+          if (++i < array.length-1) {
+            setTimeout( next, interval );
+          } else {
+            finishRoll();
+          }
+        }
+      }
+    }
+
+    slowLoop(numbers, 200, i => {
+      cells[i].selectedBy = player;
+      this.setState({ cells });
+      setTimeout(() => {
+        cells[i].selectedBy = "";
+        this.setState({ cells });
+      }, 200);
+    });
   }
 
   computerTurn = () => {
@@ -127,11 +160,11 @@ class Board extends Component {
     } else {
       computerColumnChoice = parseFloat(availableColumns[Math.floor(Math.random() * availableColumns.length)], 10);
     }
-    setTimeout(this.selectColumn, 500, computerColumnChoice, "computer");
+    this.selectColumn(computerColumnChoice, "computer");
   }
 
   render() {
-    const { playing, myTurn, myColour, winner, cells, winningCombo, rolling } = this.state;
+    const { playing, myTurn, myColour, winner, cells, winningCombo } = this.state;
     const computerColour = myColour==="red" ? "yellow" : "red";
     return (
       <div className="game">
@@ -164,9 +197,6 @@ class Board extends Component {
                 x2={((winningCombo[3] % 7) * 80) + 40}
                 y2={(Math.floor(winningCombo[3] / 7) * 80) + 40}
               />
-            )}
-            {rolling && (
-              <circle cx={(rolling * 80) + 40} cy="40" r="30" className="rolling-counter" fill={myTurn ? myColour : computerColour} />
             )}
           </svg>
           {Object.keys(cells).map(key => <Cell
