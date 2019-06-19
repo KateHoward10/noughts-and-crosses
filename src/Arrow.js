@@ -3,9 +3,8 @@ import React, { Component } from 'react';
 class Cell extends Component {
 
   selectArrow = () => {
-    if (!this.props.hidden) {
+    if (!this.props.hidden && this.props.active) {
       this.props.selectColumn(parseFloat(this.props.index, 10), "me");
-      this.props.computerTurn();
     }
   }
 
