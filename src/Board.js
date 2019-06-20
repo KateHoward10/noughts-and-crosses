@@ -80,27 +80,28 @@ class Board extends Component {
 
   checkForFour = (player) => {
     const { cells } = this.state;
+    // If any combination achieved by same player
     if (possibleFours.some(combination => combination.every(cellNumber => cells[cellNumber]["selectedBy"]===player))) {
       this.setState({
+        playing: false,
         winner: player,
         winningCombo: possibleFours.find(combination => combination.every(cellNumber => cells[cellNumber]["selectedBy"]===player))
       })
+    // If every cell filled by someone's counter
     } else if (cells.every(cell => cell["selectedBy"]!=="")) {
-      this.setState({ winner: "draw" });
+      this.setState({ playing: false, winner: "draw" });
     }
   }
 
   selectColumn = (columnNumber, player) => {
-    const { playing, winner, cells, myTurn } = this.state;
+    const { playing, winner, myTurn } = this.state;
     if (!playing || winner!=="") {
       return;
     } else {
       this.roll(columnNumber, player, () => {
-        const fillNumber = this.findBottomNumber(columnNumber);
-        cells[fillNumber].selectedBy = player;
-        this.setState({ cells, myTurn: !myTurn, rolling: false }, () => this.checkForFour(player));
-        if (player==="me") {
-          this.computerTurn();
+        this.setState({ myTurn: !myTurn, rolling: false }, () => this.checkForFour(player));
+        if (player==="me" && playing) {
+          setTimeout(this.computerTurn, Math.random() * 2000);
         }
       });
     }
@@ -111,6 +112,13 @@ class Board extends Component {
     if (rolling) return;
     const numbers = this.findAvailableCells(columnNumber);
     this.setState({ rolling: true });
+    const reachBottomCell = () => {
+      const fillNumber = this.findBottomNumber(columnNumber);
+      cells[fillNumber].selectedBy = player;
+      // For some reason this is needed to make sure it doesn't think you've scored a vertical 4 with only 3 counters
+      cells[fillNumber-7].selectedBy = "";
+      this.setState({ cells }, () => finishRoll());
+    }
     const slowLoop = (array, interval, callback) => {
       var i = 0;
       next();
@@ -119,7 +127,7 @@ class Board extends Component {
           if (++i < array.length-1) {
             setTimeout( next, interval );
           } else {
-            finishRoll();
+            reachBottomCell();
           }
         }
       }
@@ -131,14 +139,16 @@ class Board extends Component {
       setTimeout(() => {
         cells[i].selectedBy = "";
         this.setState({ cells });
-      }, 99);
+      }, 100);
     });
   }
 
   computerTurn = () => {
     const { cells } = this.state;
+    // Find columns which are not full
     const availableColumns = Object.keys(cells.slice(0,7)).filter(key => this.findBottomNumber(parseFloat(key, 10))>0);
     let computerColumnChoice;
+    // If there are any 3/4s for the computer
     if (possibleFours.some(combination =>
       combination.filter(cellNumber => cells[cellNumber]["selectedBy"]==="computer").length===3
       && combination.filter(cellNumber => cells[cellNumber]["selectedBy"]==="").length===1
@@ -151,6 +161,7 @@ class Board extends Component {
       );
       const randomCombo = combos[Math.floor(Math.random() * combos.length)];
       computerColumnChoice = randomCombo.find(cellNumber => cells[cellNumber]["selectedBy"]==="")%7;
+      // If there are any 3/4s for me
     } else if (possibleFours.some(combination =>
       combination.filter(cellNumber => cells[cellNumber]["selectedBy"]==="me").length===3
       && combination.filter(cellNumber => cells[cellNumber]["selectedBy"]==="").length===1
