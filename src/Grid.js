@@ -118,39 +118,43 @@ class Grid extends Component {
   }
 
   render() {
+    const { switchGame } = this.props;
     const { mySymbol, win, winningThree, boxes, myTurn, playing } = this.state;
     const computerSymbol = mySymbol==="X" ? "O" : "X";
     return (
-      <div className="game">
+      <div className="console">
+        <div className="controls">
           <button onClick={this.reset}>New Game</button>
           {playing && (
             <React.Fragment>
               <p>{myTurn ? "Your turn" : "The computer's turn"}</p>
-              <div className="controls">
-                <p>You are: {mySymbol}s</p>
-                <button onClick={this.changeSymbol}>Choose {computerSymbol}s instead</button>
-              </div>
+              <p>You are: {mySymbol}s</p>
+              <button onClick={this.changeSymbol}>Choose {computerSymbol}s instead</button>
             </React.Fragment>
           )}
-        {win==="draw" ? <h2>It's a draw</h2> : win==="me" ? <h2>You win!</h2> : win==="computer" ? <h2>The computer wins!</h2> : null}
-        <div className="container">
-          {winningThree.length > 0 ? <svg className="path-container" width="540" height="540">
-            <line
-              x1={((winningThree[0] % 3) * 180) + 90}
-              y1={(Math.floor(winningThree[0] / 3) * 180) + 90}
-              x2={((winningThree[2] % 3) * 180) + 90}
-              y2={(Math.floor(winningThree[2] / 3) * 180) + 90}
-            />
-          </svg> : null}
-          {Object.keys(boxes).map(key => <Box
-            index={key}
-            key={key}
-            win={win}
-            box={boxes[key]}
-            mySymbol={mySymbol}
-            computerSymbol={computerSymbol}
-            selectBox={() => this.selectBox(key)}
-          />)}
+          <button onClick={switchGame}>Play Connect 4</button>
+          {win==="draw" ? <h2>It's a draw</h2> : win==="me" ? <h2>You win!</h2> : win==="computer" ? <h2>The computer wins!</h2> : null}
+        </div>
+        <div className="game">
+          <div className="container">
+            {winningThree.length > 0 ? <svg className="path-container" width="540" height="540">
+              <line
+                x1={((winningThree[0] % 3) * 180) + 90}
+                y1={(Math.floor(winningThree[0] / 3) * 180) + 90}
+                x2={((winningThree[2] % 3) * 180) + 90}
+                y2={(Math.floor(winningThree[2] / 3) * 180) + 90}
+              />
+            </svg> : null}
+            {Object.keys(boxes).map(key => <Box
+              index={key}
+              key={key}
+              win={win}
+              box={boxes[key]}
+              mySymbol={mySymbol}
+              computerSymbol={computerSymbol}
+              selectBox={() => this.selectBox(key)}
+            />)}
+          </div>
         </div>
       </div>
     );

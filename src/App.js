@@ -18,8 +18,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {this.state.connect4 ? <Board/> : <Grid/>}
-        <button className="switch-button" onClick={this.switch}>{this.state.connect4 ? "Play Noughts & Crosses" : "Play Connect 4"}</button>
+        {this.state.connect4 ? <Board switchGame={this.switch} /> : <Grid switchGame={this.switch} />}
       </div>
     );
   }

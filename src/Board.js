@@ -181,48 +181,52 @@ class Board extends Component {
   }
 
   render() {
+    const { switchGame } = this.props;
     const { playing, myTurn, myColour, winner, cells, winningCombo, rolling } = this.state;
     const computerColour = myColour==="red" ? "yellow" : "red";
     return (
-      <div className="game">
-        <button onClick={this.reset}>New Game</button>
-        {playing && (
-          <React.Fragment>
-            <p>{myTurn ? "Your turn" : "The computer's turn"}</p>
-            <div className="controls">
-              <p>Your colour: {myColour}</p>
-              <button onClick={this.changeColour}>Choose {computerColour}s instead</button>
-            </div>
-          </React.Fragment>
-        )}
-        {winner==="me" ? <h2>You win!</h2> : winner==="computer" ? <h2>The computer wins!</h2> : winner==="draw" ? <h2>It's a draw</h2> : null}
-        <div className="arrows">
-          {Object.keys(cells.slice(0,7)).map(key => <Arrow
-            index={key}
-            key={key}
-            hidden={this.findBottomNumber(parseFloat(key, 10))<0}
-            selectColumn={this.selectColumn}
-            active={!rolling && myTurn}
-          />)}
+      <div className="console">
+        <div className="controls">
+          <button onClick={this.reset}>New Game</button>
+          {playing && (
+            <React.Fragment>
+              <p>{myTurn ? "Your turn" : "The computer's turn"}</p>
+                <p>Your colour: {myColour}</p>
+                <button onClick={this.changeColour}>Choose {computerColour}s instead</button>
+            </React.Fragment>
+          )}
+          <button onClick={switchGame}>Play Noughts & Crosses</button>
+          {winner==="me" ? <h2>You win!</h2> : winner==="computer" ? <h2>The computer wins!</h2> : winner==="draw" ? <h2>It's a draw</h2> : null}
         </div>
-        <div className="board">
-          <svg className="path-container" width="560" height="480">
-            {winningCombo.length > 0 && (
-              <line
-                x1={((winningCombo[0] % 7) * 80) + 40}
-                y1={(Math.floor(winningCombo[0] / 7) * 80) + 40}
-                x2={((winningCombo[3] % 7) * 80) + 40}
-                y2={(Math.floor(winningCombo[3] / 7) * 80) + 40}
-              />
-            )}
-          </svg>
-          {Object.keys(cells).map(key => <Cell
-            index={key}
-            key={key}
-            fill={cells[key]["selectedBy"]}
-            myColour={myColour}
-            computerColour={computerColour}
-          />)}
+        <div className="game">
+          <div className="arrows">
+            {Object.keys(cells.slice(0,7)).map(key => <Arrow
+              index={key}
+              key={key}
+              hidden={this.findBottomNumber(parseFloat(key, 10))<0}
+              selectColumn={this.selectColumn}
+              active={!rolling && myTurn}
+            />)}
+          </div>
+          <div className="board">
+            <svg className="path-container" width="560" height="480">
+              {winningCombo.length > 0 && (
+                <line
+                  x1={((winningCombo[0] % 7) * 80) + 40}
+                  y1={(Math.floor(winningCombo[0] / 7) * 80) + 40}
+                  x2={((winningCombo[3] % 7) * 80) + 40}
+                  y2={(Math.floor(winningCombo[3] / 7) * 80) + 40}
+                />
+              )}
+            </svg>
+            {Object.keys(cells).map(key => <Cell
+              index={key}
+              key={key}
+              fill={cells[key]["selectedBy"]}
+              myColour={myColour}
+              computerColour={computerColour}
+            />)}
+          </div>
         </div>
       </div>
     );

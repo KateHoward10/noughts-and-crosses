@@ -4,7 +4,7 @@ class Cell extends Component {
 
   render() {
     const { fill, myColour, computerColour } = this.props;
-    const colour = fill==="me" ? myColour : fill==="computer" ? computerColour : "#9f7062";
+    const colour = fill==="me" ? myColour : fill==="computer" ? computerColour : "#80acf2";
     const image = fill==="" ? "initial !important" : "none";
     return (
       <div className="cell">
