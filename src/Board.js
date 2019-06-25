@@ -111,14 +111,16 @@ class Board extends Component {
     const { cells, rolling } = this.state;
     if (rolling) return;
     const numbers = this.findAvailableCells(columnNumber);
+    const lastNumber = this.findBottomNumber(columnNumber);
     this.setState({ rolling: true });
     const reachBottomCell = () => {
-      const fillNumber = this.findBottomNumber(columnNumber);
-      cells[fillNumber].selectedBy = player;
+      cells[lastNumber].selectedBy = player;
       // For some reason this is needed to make sure it doesn't think you've scored a vertical 4 with only 3 counters
-      cells[fillNumber-7].selectedBy = "";
+      if (lastNumber >= 7) {
+        cells[lastNumber-7].selectedBy = "";
+      };
       this.setState({ cells }, () => finishRoll());
-    }
+    };
     const slowLoop = (array, interval, callback) => {
       var i = 0;
       next();
@@ -131,16 +133,19 @@ class Board extends Component {
           }
         }
       }
-    }
-
-    slowLoop(numbers, 100, i => {
-      cells[i].selectedBy = player;
-      this.setState({ cells });
-      setTimeout(() => {
-        cells[i].selectedBy = "";
+    };
+    if (numbers.length===1 && numbers[0]===lastNumber) {
+      reachBottomCell();
+    } else {
+      slowLoop(numbers, 100, i => {
+        cells[i].selectedBy = player;
         this.setState({ cells });
-      }, 100);
-    });
+        setTimeout(() => {
+          cells[i].selectedBy = "";
+          this.setState({ cells });
+        }, 100);
+      });
+    };
   }
 
   computerTurn = () => {
