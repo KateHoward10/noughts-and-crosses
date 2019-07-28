@@ -121,6 +121,7 @@ class Grid extends Component {
     const { switchGame } = this.props;
     const { mySymbol, win, winningThree, boxes, myTurn, playing } = this.state;
     const computerSymbol = mySymbol==="X" ? "O" : "X";
+    const boxSideLength = Math.min(window.innerWidth, window.innerHeight) / 4;
     return (
       <div className="console">
         <div className="controls">
@@ -136,13 +137,15 @@ class Grid extends Component {
           {win==="draw" ? <h2>It's a draw</h2> : win==="me" ? <h2>You win!</h2> : win==="computer" ? <h2>The computer wins!</h2> : null}
         </div>
         <div className="game">
-          <div className="container">
+          <div className="container" style={{
+            gridTemplateColumns: `repeat(3, ${boxSideLength}px)`,
+            gridTemplateRows: `repeat(3, ${boxSideLength}px)` }}>
             {winningThree.length > 0 ? <svg className="path-container" width="540" height="540">
               <line
-                x1={((winningThree[0] % 3) * 180) + 90}
-                y1={(Math.floor(winningThree[0] / 3) * 180) + 90}
-                x2={((winningThree[2] % 3) * 180) + 90}
-                y2={(Math.floor(winningThree[2] / 3) * 180) + 90}
+                x1={((winningThree[0] % 3) * boxSideLength) + boxSideLength / 2}
+                y1={(Math.floor(winningThree[0] / 3) * boxSideLength) + boxSideLength / 2}
+                x2={((winningThree[2] % 3) * boxSideLength) + boxSideLength / 2}
+                y2={(Math.floor(winningThree[2] / 3) * boxSideLength) + boxSideLength / 2}
               />
             </svg> : null}
             {Object.keys(boxes).map(key => <Box
