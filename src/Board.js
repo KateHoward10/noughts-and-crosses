@@ -189,6 +189,7 @@ class Board extends Component {
     const { switchGame } = this.props;
     const { playing, myTurn, myColour, winner, cells, winningCombo, rolling } = this.state;
     const computerColour = myColour==="red" ? "yellow" : "red";
+    const cellSideLength = Math.min(window.innerWidth, window.innerHeight) / 8;
     return (
       <div className="console">
         <div className="controls">
@@ -212,23 +213,29 @@ class Board extends Component {
           {winner==="me" ? <h2>You win!</h2> : winner==="computer" ? <h2>The computer wins!</h2> : winner==="draw" ? <h2>It's a draw</h2> : null}
         </div>
         <div className="game">
-          <div className="arrows">
+          <div className="arrows" style={{ gridTemplateColumns: `repeat(7, ${cellSideLength}px)` }}>
             {Object.keys(cells.slice(0,7)).map(key => <Arrow
               index={key}
               key={key}
               hidden={this.findBottomNumber(parseFloat(key, 10))<0}
               selectColumn={this.selectColumn}
               active={!rolling && myTurn}
+              cellSideLength={cellSideLength}
             />)}
           </div>
-          <div className="board">
+          <div
+            className="board"
+            style={{
+              gridTemplateRows: `repeat(6, ${cellSideLength}px)`,
+              gridTemplateColumns: `repeat(7, ${cellSideLength}px)`
+            }}>
             <svg className="path-container" width="560" height="480">
               {winningCombo.length > 0 && (
                 <line
-                  x1={((winningCombo[0] % 7) * 80) + 40}
-                  y1={(Math.floor(winningCombo[0] / 7) * 80) + 40}
-                  x2={((winningCombo[3] % 7) * 80) + 40}
-                  y2={(Math.floor(winningCombo[3] / 7) * 80) + 40}
+                  x1={((winningCombo[0] % 7) * cellSideLength) + cellSideLength / 2}
+                  y1={(Math.floor(winningCombo[0] / 7) * cellSideLength) + cellSideLength / 2}
+                  x2={((winningCombo[3] % 7) * cellSideLength) + cellSideLength / 2}
+                  y2={(Math.floor(winningCombo[3] / 7) * cellSideLength) + cellSideLength / 2}
                 />
               )}
             </svg>
@@ -238,6 +245,7 @@ class Board extends Component {
               fill={cells[key]["selectedBy"]}
               myColour={myColour}
               computerColour={computerColour}
+              cellSideLength={cellSideLength}
             />)}
           </div>
         </div>

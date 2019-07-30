@@ -9,9 +9,14 @@ class Cell extends Component {
   }
 
   render() {
-    const hidden = this.props.hidden ? "none" : "block";
+    const { cellSideLength, hidden } = this.props;
     return (
-      <div className="arrow" onClick={this.selectArrow}><span style={{display: hidden}}>↓</span></div>
+      <div
+        onClick={this.selectArrow}
+        style={{ fontSize: `${cellSideLength / 2}px`, width: `${cellSideLength}px`, cursor: "pointer" }}
+      >
+        <span style={{display: hidden ? "none" : "block"}}>↓</span>
+      </div>
     );
   }
 }

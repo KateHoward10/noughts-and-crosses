@@ -3,15 +3,19 @@ import React, { Component } from 'react';
 class Cell extends Component {
 
   render() {
-    const { fill, myColour, computerColour } = this.props;
+    const { fill, myColour, computerColour, cellSideLength } = this.props;
     const colour = fill==="me" ? myColour : fill==="computer" ? computerColour : "#80acf2";
-    const image = fill==="" ? "initial !important" : "none";
     return (
       <div className="cell">
         <div
           className="circle"
-          style={{ backgroundColor: colour, backgroundImage: image }}>
-        </div>
+          style={{
+            width: `${cellSideLength * 0.75}px`,
+            height: `${cellSideLength * 0.75}px`,
+            backgroundColor: colour,
+            borderRadius: "50%"
+          }}
+        />
       </div>
     );
   }
