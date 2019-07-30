@@ -197,10 +197,18 @@ class Board extends Component {
             <React.Fragment>
               <p>{myTurn ? "Your turn" : "The computer's turn"}</p>
                 <p>Your colour: {myColour}</p>
-                <button onClick={this.changeColour}>Choose {computerColour}s instead</button>
+                <button
+                  onClick={this.changeColour}
+                  style={{
+                    backgroundColor: computerColour,
+                    color: computerColour === "yellow" ? "black" : "white"
+                  }}
+                >
+                  Choose {computerColour}s instead
+                </button>
             </React.Fragment>
           )}
-          <button onClick={switchGame}>Play Noughts & Crosses</button>
+          <button onClick={switchGame} className="secondary-button">Play Noughts & Crosses</button>
           {winner==="me" ? <h2>You win!</h2> : winner==="computer" ? <h2>The computer wins!</h2> : winner==="draw" ? <h2>It's a draw</h2> : null}
         </div>
         <div className="game">

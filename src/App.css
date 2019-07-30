@@ -6,10 +6,24 @@
 }
 
 button {
-  background-color: #fff;
+  background-color: green;
+  color: white;
   font-size: 16px;
+  font-weight: bold;
   border-radius: 5px;
+  border: 2px solid black;
+  padding: 5px;
   margin: 5px;
+  -webkit-backface-visibility: hidden;
+}
+
+.secondary-button {
+  background-color: purple;
+}
+
+button:hover {
+  box-shadow: 0 0 1px 1px grey;
+  transform: scale(0.95);
 }
 
 .game {

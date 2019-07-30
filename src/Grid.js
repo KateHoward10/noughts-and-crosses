@@ -130,10 +130,18 @@ class Grid extends Component {
             <React.Fragment>
               <p>{myTurn ? "Your turn" : "The computer's turn"}</p>
               <p>You are: {mySymbol}s</p>
-              <button onClick={this.changeSymbol}>Choose {computerSymbol}s instead</button>
+              <button
+                onClick={this.changeSymbol}
+                style={{
+                  backgroundColor: computerSymbol === "O" ? "yellow" : "red",
+                  color: computerSymbol === "O" ? "black" : "white"
+                }}
+              >
+                Choose {computerSymbol}s instead
+              </button>
             </React.Fragment>
           )}
-          <button onClick={switchGame}>Play Connect 4</button>
+          <button onClick={switchGame} className="secondary-button">Play Connect 4</button>
           {win==="draw" ? <h2>It's a draw</h2> : win==="me" ? <h2>You win!</h2> : win==="computer" ? <h2>The computer wins!</h2> : null}
         </div>
         <div className="game">
