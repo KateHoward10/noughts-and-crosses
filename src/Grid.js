@@ -156,10 +156,7 @@ class Grid extends Component {
                 <p>You are: {mySymbol}s</p>
                 <button
                   onClick={this.changeSymbol}
-                  style={{
-                    backgroundColor: computerSymbol === "O" ? "yellow" : "red",
-                    color: computerSymbol === "O" ? "black" : "white"
-                  }}
+                  style={{ backgroundColor: "yellow", color: "black" }}
                 >
                   Choose {computerSymbol}s
                 </button>
