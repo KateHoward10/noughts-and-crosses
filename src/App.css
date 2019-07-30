@@ -1,8 +1,8 @@
 .App {
   text-align: center;
   background-color: #80acf2;
-  height: 200vh;
-  padding: 2vw;
+  height: 150vh;
+  padding: 20px;
 }
 
 button {
@@ -31,7 +31,7 @@ button:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 }
 
 .controls {
@@ -73,19 +73,25 @@ line {
 
 .computerSymbol {
   color: yellow;
-  -webkit-animation: fadein 3s; /* Safari, Chrome and Opera > 12.1 */
-  -moz-animation: fadein 3s; /* Firefox < 16 */
-  -ms-animation: fadein 3s; /* Internet Explorer */
-  -o-animation: fadein 3s; /* Opera < 12.1 */
-  animation: fadein 3s;
+  -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadein 2s; /* Firefox < 16 */
+  -ms-animation: fadein 2s; /* Internet Explorer */
+  -o-animation: fadein 2s; /* Opera < 12.1 */
+  animation: fadein 2s;
 }
 
 @keyframes fadein {
   0% {
     opacity: 0;
   }
+  25% {
+    opacity: 0.25;
+  }
   50% {
     opacity: 0.5;
+  }
+  75% {
+    opacity: 0.75;
   }
   100% {
     opacity: 1;
@@ -114,4 +120,11 @@ line {
 .arrows {
   display: flex;
   flex-direction: row;
+}
+
+@media screen and (max-width: 500px) {
+  .console {
+    flex-direction: column;
+    justify-content: center;
+  }
 }

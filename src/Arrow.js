@@ -13,7 +13,7 @@ class Cell extends Component {
     return (
       <div
         onClick={this.selectArrow}
-        style={{ fontSize: `${cellSideLength / 2}px`, width: `${cellSideLength}px`, cursor: "pointer" }}
+        style={{ fontSize: `${cellSideLength / 2}px`, fontWeight: "bold", width: `${cellSideLength}px`, cursor: "pointer" }}
       >
         <span style={{display: hidden ? "none" : "block"}}>↓</span>
       </div>

@@ -124,26 +124,6 @@ class Grid extends Component {
     const boxSideLength = Math.min(window.innerWidth, window.innerHeight) / 4;
     return (
       <div className="console">
-        <div className="controls">
-          <button onClick={this.reset}>New Game</button>
-          {playing && (
-            <React.Fragment>
-              <p>{myTurn ? "Your turn" : "The computer's turn"}</p>
-              <p>You are: {mySymbol}s</p>
-              <button
-                onClick={this.changeSymbol}
-                style={{
-                  backgroundColor: computerSymbol === "O" ? "yellow" : "red",
-                  color: computerSymbol === "O" ? "black" : "white"
-                }}
-              >
-                Choose {computerSymbol}s instead
-              </button>
-            </React.Fragment>
-          )}
-          <button onClick={switchGame} className="secondary-button">Play Connect 4</button>
-          {win==="draw" ? <h2>It's a draw</h2> : win==="me" ? <h2>You win!</h2> : win==="computer" ? <h2>The computer wins!</h2> : null}
-        </div>
         <div className="game">
           <div className="container" style={{
             gridTemplateColumns: `repeat(3, ${boxSideLength}px)`,
@@ -166,6 +146,26 @@ class Grid extends Component {
               selectBox={() => this.selectBox(key)}
             />)}
           </div>
+        </div>
+        <div className="controls">
+          <button onClick={this.reset}>New Game</button>
+          {playing && (
+            <React.Fragment>
+              <p>{myTurn ? "Your turn" : "The computer's turn"}</p>
+              <p>You are: {mySymbol}s</p>
+              <button
+                onClick={this.changeSymbol}
+                style={{
+                  backgroundColor: computerSymbol === "O" ? "yellow" : "red",
+                  color: computerSymbol === "O" ? "black" : "white"
+                }}
+              >
+                Choose {computerSymbol}s instead
+              </button>
+            </React.Fragment>
+          )}
+          <button onClick={switchGame} className="secondary-button">Play Connect 4</button>
+          {win==="draw" ? <h2>It's a draw</h2> : win==="me" ? <h2>You win!</h2> : win==="computer" ? <h2>The computer wins!</h2> : null}
         </div>
       </div>
     );

@@ -192,26 +192,6 @@ class Board extends Component {
     const cellSideLength = Math.min(window.innerWidth, window.innerHeight) / 8;
     return (
       <div className="console">
-        <div className="controls">
-          <button onClick={this.reset}>New Game</button>
-          {playing && (
-            <React.Fragment>
-              <p>{myTurn ? "Your turn" : "The computer's turn"}</p>
-                <p>Your colour: {myColour}</p>
-                <button
-                  onClick={this.changeColour}
-                  style={{
-                    backgroundColor: computerColour,
-                    color: computerColour === "yellow" ? "black" : "white"
-                  }}
-                >
-                  Choose {computerColour}s instead
-                </button>
-            </React.Fragment>
-          )}
-          <button onClick={switchGame} className="secondary-button">Play Noughts & Crosses</button>
-          {winner==="me" ? <h2>You win!</h2> : winner==="computer" ? <h2>The computer wins!</h2> : winner==="draw" ? <h2>It's a draw</h2> : null}
-        </div>
         <div className="game">
           <div className="arrows" style={{ gridTemplateColumns: `repeat(7, ${cellSideLength}px)` }}>
             {Object.keys(cells.slice(0,7)).map(key => <Arrow
@@ -248,6 +228,26 @@ class Board extends Component {
               cellSideLength={cellSideLength}
             />)}
           </div>
+        </div>
+        <div className="controls">
+          <button onClick={this.reset}>New Game</button>
+          {playing && (
+            <React.Fragment>
+              <p>{myTurn ? "Your turn" : "The computer's turn"}</p>
+                <p>Your colour: {myColour}</p>
+                <button
+                  onClick={this.changeColour}
+                  style={{
+                    backgroundColor: computerColour,
+                    color: computerColour === "yellow" ? "black" : "white"
+                  }}
+                >
+                  Choose {computerColour}s instead
+                </button>
+            </React.Fragment>
+          )}
+          <button onClick={switchGame} className="secondary-button">Play Noughts & Crosses</button>
+          {winner==="me" ? <h2>You win!</h2> : winner==="computer" ? <h2>The computer wins!</h2> : winner==="draw" ? <h2>It's a draw</h2> : null}
         </div>
       </div>
     );
