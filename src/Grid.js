@@ -128,7 +128,7 @@ class Grid extends Component {
           <div className="container" style={{
             gridTemplateColumns: `repeat(3, ${boxSideLength}px)`,
             gridTemplateRows: `repeat(3, ${boxSideLength}px)` }}>
-            {winningThree.length > 0 ? <svg className="path-container" width="540" height="540">
+            {winningThree.length > 0 ? <svg className="path-container" width={boxSideLength * 3} height={boxSideLength * 3}>
               <line
                 x1={((winningThree[0] % 3) * boxSideLength) + boxSideLength / 2}
                 y1={(Math.floor(winningThree[0] / 3) * boxSideLength) + boxSideLength / 2}
@@ -152,16 +152,18 @@ class Grid extends Component {
           {playing && (
             <React.Fragment>
               <p>{myTurn ? "Your turn" : "The computer's turn"}</p>
-              <p>You are: {mySymbol}s</p>
-              <button
-                onClick={this.changeSymbol}
-                style={{
-                  backgroundColor: computerSymbol === "O" ? "yellow" : "red",
-                  color: computerSymbol === "O" ? "black" : "white"
-                }}
-              >
-                Choose {computerSymbol}s instead
-              </button>
+              <div className="option-picker">
+                <p>You are: {mySymbol}s</p>
+                <button
+                  onClick={this.changeSymbol}
+                  style={{
+                    backgroundColor: computerSymbol === "O" ? "yellow" : "red",
+                    color: computerSymbol === "O" ? "black" : "white"
+                  }}
+                >
+                  Choose {computerSymbol}s
+                </button>
+              </div>
             </React.Fragment>
           )}
           <button onClick={switchGame} className="secondary-button">Play Connect 4</button>

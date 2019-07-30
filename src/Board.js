@@ -209,7 +209,7 @@ class Board extends Component {
               gridTemplateRows: `repeat(6, ${cellSideLength}px)`,
               gridTemplateColumns: `repeat(7, ${cellSideLength}px)`
             }}>
-            <svg className="path-container" width="560" height="480">
+            <svg className="path-container" width={cellSideLength * 7} height={cellSideLength * 6}>
               {winningCombo.length > 0 && (
                 <line
                   x1={((winningCombo[0] % 7) * cellSideLength) + cellSideLength / 2}
@@ -234,6 +234,7 @@ class Board extends Component {
           {playing && (
             <React.Fragment>
               <p>{myTurn ? "Your turn" : "The computer's turn"}</p>
+              <div className="option-picker">
                 <p>Your colour: {myColour}</p>
                 <button
                   onClick={this.changeColour}
@@ -242,8 +243,9 @@ class Board extends Component {
                     color: computerColour === "yellow" ? "black" : "white"
                   }}
                 >
-                  Choose {computerColour}s instead
+                  Choose {computerColour}
                 </button>
+              </div>
             </React.Fragment>
           )}
           <button onClick={switchGame} className="secondary-button">Play Noughts & Crosses</button>

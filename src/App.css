@@ -2,7 +2,11 @@
   text-align: center;
   background-color: #80acf2;
   height: 150vh;
-  padding: 20px;
+  padding: 15px;
+}
+
+p {
+  margin: 5px;
 }
 
 button {
@@ -126,5 +130,10 @@ line {
   .console {
     flex-direction: column;
     justify-content: center;
+  }
+  .option-picker {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
   }
 }
