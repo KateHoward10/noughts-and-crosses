@@ -3,12 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/core": "^7.5.5",
+    "babel": "^6.23.0",
     "immutable": "^4.0.0-rc.12",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
+    "lodash": "^4.17.15",
+    "lodash.template": "^4.5.0",
+    "react": "^16.8.6",
+    "react-dev-utils": "^9.0.1",
+    "react-dom": "^16.8.6",
     "react-redux": "^5.1.1",
-    "react-scripts": "2.1.1",
-    "redux": "^4.0.1"
+    "react-scripts": "^3.0.1",
+    "redux": "^4.0.1",
+    "typescript": "^3.5.3"
   },
   "scripts": {
     "start": "react-scripts start",

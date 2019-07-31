@@ -1,24 +1,27 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Cell extends Component {
+function Arrow(props) {
+  const { cellSideLength, hidden, active, index, selectColumn } = props;
 
-  selectArrow = () => {
-    if (!this.props.hidden && this.props.active) {
-      this.props.selectColumn(parseFloat(this.props.index, 10), "me");
+  function selectArrow() {
+    if (!hidden && active) {
+      selectColumn(parseFloat(index, 10), 'me');
     }
   }
 
-  render() {
-    const { cellSideLength, hidden } = this.props;
-    return (
-      <div
-        onClick={this.selectArrow}
-        style={{ fontSize: `${cellSideLength / 2}px`, fontWeight: "bold", width: `${cellSideLength}px`, cursor: "pointer" }}
-      >
-        <span style={{display: hidden ? "none" : "block"}}>↓</span>
-      </div>
-    );
-  }
+  return (
+    <div
+      onClick={selectArrow}
+      style={{
+        fontSize: `${cellSideLength / 2}px`,
+        fontWeight: 'bold',
+        width: `${cellSideLength}px`,
+        cursor: 'pointer'
+      }}
+    >
+      <span style={{ display: hidden ? 'none' : 'block' }}>↓</span>
+    </div>
+  );
 }
 
-export default Cell;
+export default Arrow;
