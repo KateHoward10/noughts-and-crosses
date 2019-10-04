@@ -1,15 +1,21 @@
 {
   "files": {
-    "main.css": "/noughts-and-crosses/static/css/main.390b3512.chunk.css",
-    "main.js": "/noughts-and-crosses/static/js/main.d16665db.chunk.js",
-    "main.js.map": "/noughts-and-crosses/static/js/main.d16665db.chunk.js.map",
-    "runtime~main.js": "/noughts-and-crosses/static/js/runtime~main.2782f76b.js",
-    "runtime~main.js.map": "/noughts-and-crosses/static/js/runtime~main.2782f76b.js.map",
-    "static/js/2.15b92679.chunk.js": "/noughts-and-crosses/static/js/2.15b92679.chunk.js",
-    "static/js/2.15b92679.chunk.js.map": "/noughts-and-crosses/static/js/2.15b92679.chunk.js.map",
-    "index.html": "/noughts-and-crosses/index.html",
-    "precache-manifest.63f989988dc6fe8c0c19cce63c1e00ef.js": "/noughts-and-crosses/precache-manifest.63f989988dc6fe8c0c19cce63c1e00ef.js",
-    "service-worker.js": "/noughts-and-crosses/service-worker.js",
-    "static/css/main.390b3512.chunk.css.map": "/noughts-and-crosses/static/css/main.390b3512.chunk.css.map"
-  }
+    "main.css": "/games-with-lines/static/css/main.390b3512.chunk.css",
+    "main.js": "/games-with-lines/static/js/main.72c5d194.chunk.js",
+    "main.js.map": "/games-with-lines/static/js/main.72c5d194.chunk.js.map",
+    "runtime-main.js": "/games-with-lines/static/js/runtime-main.68e753bb.js",
+    "runtime-main.js.map": "/games-with-lines/static/js/runtime-main.68e753bb.js.map",
+    "static/js/2.175985b0.chunk.js": "/games-with-lines/static/js/2.175985b0.chunk.js",
+    "static/js/2.175985b0.chunk.js.map": "/games-with-lines/static/js/2.175985b0.chunk.js.map",
+    "index.html": "/games-with-lines/index.html",
+    "precache-manifest.818bbe7910ba94cdce829ebb18ed31e9.js": "/games-with-lines/precache-manifest.818bbe7910ba94cdce829ebb18ed31e9.js",
+    "service-worker.js": "/games-with-lines/service-worker.js",
+    "static/css/main.390b3512.chunk.css.map": "/games-with-lines/static/css/main.390b3512.chunk.css.map"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.68e753bb.js",
+    "static/js/2.175985b0.chunk.js",
+    "static/css/main.390b3512.chunk.css",
+    "static/js/main.72c5d194.chunk.js"
+  ]
 }
