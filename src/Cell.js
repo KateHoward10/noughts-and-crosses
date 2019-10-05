@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const Cell = ({ fill, myColour, computerColour, cellSideLength }) => (
   <div className="cell">

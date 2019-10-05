@@ -42,6 +42,7 @@ button:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 40vw;
 }
 
 .container {
@@ -126,10 +127,13 @@ line {
   flex-direction: row;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 600px) {
   .console {
     flex-direction: column;
     justify-content: center;
+  }
+  .controls {
+    width: 100vw;
   }
   .option-picker {
     display: flex;

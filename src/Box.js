@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const Box = ({ box, mySymbol, computerSymbol, selectBox }) => (
 	<div className="box" onClick={selectBox}>
