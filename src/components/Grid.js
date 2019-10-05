@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Box from './Box';
-import { possibleThrees } from './combinations';
+import { possibleThrees } from '../combinations';
 
 class Grid extends Component {
   state = {

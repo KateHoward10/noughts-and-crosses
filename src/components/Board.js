@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Cell from './Cell';
 import Arrow from './Arrow';
-import { possibleFours } from './combinations';
+import { possibleFours } from '../combinations';
 
 class Board extends Component {
   state = {

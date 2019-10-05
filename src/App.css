@@ -2,7 +2,6 @@
   text-align: center;
   background-color: #80acf2;
   height: 150vh;
-  padding: 15px;
 }
 
 p {
@@ -30,12 +29,30 @@ button:hover {
   transform: scale(0.95);
 }
 
+nav {
+  width: 100%;
+  background-image: linear-gradient(blue, purple);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.nav-link {
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+  margin: 10px;
+}
+
+.console {
+  padding: 15px;
+}
+
 .game {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
 }
 
 .controls {
