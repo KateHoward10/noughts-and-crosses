@@ -15,6 +15,7 @@
     "react-dev-utils": "^9.0.1",
     "react-dom": "^16.8.6",
     "react-redux": "^5.1.1",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "^3.0.1",
     "redux": "^4.0.1",
     "typescript": "^3.5.3"

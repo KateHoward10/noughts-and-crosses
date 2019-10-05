@@ -1,18 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import Grid from './Grid';
 import Board from './Board';
 
 function App() {
-  const [connect4, toggleConnect4] = useState(false);
-
   return (
     <div className="App">
-      {connect4 ?
-        <Board switchGame={() => toggleConnect4(false)} />
-        :
-        <Grid switchGame={() => toggleConnect4(true)} />
-      }
+      <Switch>
+        <Route exact path="/" component={Grid} />
+        <Route path="/connect4" component={Board} />
+      </Switch>
     </div>
   );
 }

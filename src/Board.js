@@ -272,7 +272,6 @@ class Board extends Component {
   };
 
   render() {
-    const { switchGame } = this.props;
     const { playing, myTurn, myColour, winner, cells, winningCombo, rolling } = this.state;
     const computerColour = myColour === 'red' ? 'yellow' : 'red';
     const cellSideLength = Math.min(window.innerWidth, window.innerHeight) / 8;
@@ -339,9 +338,6 @@ class Board extends Component {
               </div>
             </React.Fragment>
           )}
-          <button onClick={switchGame} className="secondary-button">
-            Play Noughts & Crosses
-          </button>
           {winner === 'me' ? (
             <h2>You win!</h2>
           ) : winner === 'computer' ? (
