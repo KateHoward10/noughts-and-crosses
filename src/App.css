@@ -142,6 +142,15 @@ line {
   flex-direction: row;
 }
 
+/*Battleships*/
+.sea {
+  display: grid;
+}
+
+.tile {
+  border: 1px solid black;
+}
+
 @media screen and (max-width: 800px) {
   .App {
     flex-direction: column;
