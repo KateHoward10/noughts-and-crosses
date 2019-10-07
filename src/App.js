@@ -10,8 +10,8 @@ function App() {
     <div className="App">
       <Nav />
       <Switch>
-        <Route exact path="/" component={Grid} />
-        <Route path="/connect4" component={Board} />
+        <Route exact path="/games-with-lines" component={Grid} />
+        <Route path="/games-with-lines/connect4" component={Board} />
       </Switch>
     </div>
   );

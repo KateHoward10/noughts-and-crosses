@@ -298,7 +298,7 @@ class Board extends Component {
             }}
           >
             <svg className="path-container" width={cellSideLength * 7} height={cellSideLength * 6}>
-              {winningCombo.length > 0 && (
+              {winningCombo.length === 4 && (
                 <line
                   x1={(winningCombo[0] % 7) * cellSideLength + cellSideLength / 2}
                   y1={Math.floor(winningCombo[0] / 7) * cellSideLength + cellSideLength / 2}
