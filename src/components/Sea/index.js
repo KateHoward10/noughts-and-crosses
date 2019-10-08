@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Tile from './Tile';
+import Tile from '../Tile';
 
 function Sea() {
   const tileSideLength = Math.min(window.innerWidth, window.innerHeight) / 9;
@@ -10,6 +10,22 @@ function Sea() {
     const lengths = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
     for (let i = 0; i < lengths.length; i++) {
       let latestShip = placeShip(lengths[i]);
+      if (
+        latestShip.find(
+          index =>
+            newShips.flat().includes(index) ||
+            newShips.flat().includes(index - 1) ||
+            newShips.flat().includes(index + 1) ||
+            newShips.flat().includes(index - 8) ||
+            newShips.flat().includes(index + 8) ||
+            newShips.flat().includes(index - 9) ||
+            newShips.flat().includes(index + 9) ||
+            newShips.flat().includes(index - 7) ||
+            newShips.flat().includes(index + 7)
+        )
+      ) {
+        latestShip = placeShip(lengths[i]);
+      }
       newShips.push(latestShip);
     }
     setShips(newShips);
@@ -39,7 +55,7 @@ function Sea() {
           }}
         >
           {Array.from(Array(64).keys()).map(tile => (
-            <Tile key={tile} ship={ships && ships.find(ship => ship.includes(tile))} />
+            <Tile key={tile} tile={tile} ships={ships} />
           ))}
         </div>
       </div>
