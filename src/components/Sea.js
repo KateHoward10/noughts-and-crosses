@@ -2,14 +2,31 @@ import React, { useState } from 'react';
 import Tile from './Tile';
 
 function Sea() {
-  const tiles = Array.from(Array(8), () => new Array(8).fill(''));
   const tileSideLength = Math.min(window.innerWidth, window.innerHeight) / 9;
-  const ships = {
-    a: [[0, 0, 0], [0, 'a', 0], [0, 0, 0]],
-    b: [[0, 0, 0, 0], [0, 'b', 'b', 0], [0, 0, 0, 0]],
-    c: [[0, 0, 0, 0, 0], [0, 'c', 'c', 'c', 0], [0, 0, 0, 0, 0]],
-    d: [[0, 0, 0, 0, 0, 0], [0, 'd', 'd', 'd', 'd', 0], [0, 0, 0, 0, 0, 0]]
-  };
+  const [ships, setShips] = useState([]);
+
+  function generateShips() {
+    let newShips = [];
+    const lengths = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
+    for (let i = 0; i < lengths.length; i++) {
+      let latestShip = placeShip(lengths[i]);
+      newShips.push(latestShip);
+    }
+    setShips(newShips);
+  }
+
+  function placeShip(length) {
+    const dir = Math.random() > 0.5 ? 'horizontal' : 'vertical';
+    const firstPos =
+      dir === 'horizontal'
+        ? Math.floor(Math.random() * (9 - length)) + 8 * Math.ceil(Math.random() * 7)
+        : Math.floor(Math.random() * (length + 1) * 8);
+    let ship = [firstPos];
+    for (let i = 1; i < length; i++) {
+      ship.push(dir === 'horizontal' ? firstPos + i : firstPos + i * 8);
+    }
+    return ship;
+  }
 
   return (
     <div className="console">
@@ -21,10 +38,14 @@ function Sea() {
             gridTemplateRows: `repeat(8, ${tileSideLength}px)`
           }}
         >
-          {tiles.map(row => row.map((tile, index) => <Tile index={index}>{tile}</Tile>))}
+          {Array.from(Array(64).keys()).map(tile => (
+            <Tile key={tile} ship={ships && ships.find(ship => ship.includes(tile))} />
+          ))}
         </div>
       </div>
-      <div className="controls"></div>
+      <div className="controls">
+        <button onClick={generateShips}>New Game</button>
+      </div>
     </div>
   );
 }
