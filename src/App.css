@@ -147,6 +147,10 @@ line {
   display: grid;
 }
 
+.numbers {
+  display: grid;
+}
+
 .tile {
   border: 1px solid black;
 }

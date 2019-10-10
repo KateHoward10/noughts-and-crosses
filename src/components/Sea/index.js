@@ -4,6 +4,7 @@ import Tile from '../Tile';
 function Sea() {
   const tileSideLength = Math.min(window.innerWidth, window.innerHeight) / 9;
   const [ships, setShips] = useState([]);
+  const [topNumbers, setTopNumbers] = useState([]);
 
   function generateShips() {
     let newShips = [];
@@ -13,6 +14,12 @@ function Sea() {
       newShips.push(latestShip);
     }
     setShips(newShips);
+    let numbers = [];
+    for (let i = 0; i < 8; i++) {
+      console.log(newShips.flat().filter(part => part % 8 === i).length);
+      numbers.push(newShips.flat().filter(part => part % 8 === i).length);
+    }
+    setTopNumbers(numbers);
   }
 
   function placeShip(length, existingShips) {
@@ -57,6 +64,17 @@ function Sea() {
   return (
     <div className="console">
       <div className="game">
+        <div
+          className="numbers"
+          style={{
+            gridTemplateColumns: `repeat(8, ${tileSideLength}px)`,
+            gridTemplateRows: `repeat(1, ${tileSideLength}px)`
+          }}
+        >
+          {topNumbers.map(number => (
+            <div>{number}</div>
+          ))}
+        </div>
         <div
           className="sea"
           style={{
