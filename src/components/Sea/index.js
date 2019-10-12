@@ -15,6 +15,7 @@ function Sea() {
       newShips.push(latestShip);
     }
     setShips(newShips);
+    console.log(newShips);
     let topNumbers = [];
     let sideNumbers = [];
     for (let i = 0; i < 7; i++) {
@@ -28,30 +29,30 @@ function Sea() {
     const dir = Math.random() > 0.5 ? 'horizontal' : 'vertical';
     const firstPos =
       dir === 'horizontal'
-        ? Math.floor(Math.random() * (8 - length)) + 6 * Math.ceil(Math.random() * 6)
-        : Math.floor(Math.random() * (length + 1) * 6);
+        ? Math.floor(Math.random() * (8 - length)) + 7 * Math.ceil(Math.random() * 6)
+        : Math.floor(Math.random() * (length + 1) * 7);
     let ship = [firstPos];
     for (let i = 1; i < length; i++) {
-      ship.push(dir === 'horizontal' ? firstPos + i : firstPos + i * 6);
+      ship.push(dir === 'horizontal' ? firstPos + i : firstPos + i * 7);
     }
     function isTooClose(ship) {
       let adjacentTiles = [...ship];
       if (dir === 'horizontal') {
         adjacentTiles.push(
-          ...(ship[0] > 6 ? ship.map(part => part - 6) : []),
-          ...(ship[0] < 42 ? ship.map(part => part + 6) : []),
-          ...(ship[0] % 6 !== 0 ? [ship[0] - 8, ship[0] - 1, ship[0] + 6] : []),
-          ...(ship[ship.length - 1] % 6 !== 6
+          ...(ship[0] > 7 ? ship.map(part => part - 7) : []),
+          ...(ship[0] < 42 ? ship.map(part => part + 7) : []),
+          ...(ship[0] % 7 !== 0 ? [ship[0] - 8, ship[0] - 1, ship[0] + 6] : []),
+          ...(ship[ship.length - 1] % 7 !== 7
             ? [ship[ship.length - 1] + 8, ship[ship.length - 1] + 1, ship[ship.length - 1] - 6]
             : [])
         );
       } else {
         adjacentTiles.push(
-          ...(ship[0] % 6 !== 0 ? ship.map(part => part - 1) : []),
-          ...(ship[0] % 6 !== 6 ? ship.map(part => part + 1) : []),
-          ...(ship[0] > 6 ? [ship[0] - 8, ship[0] - 6, ship[0] - 6] : []),
-          ...(ship[ship.length - 1] < 56
-            ? [ship[ship.length - 1] + 8, ship[ship.length - 1] + 6, ship[ship.length - 1] + 6]
+          ...(ship[0] % 7 !== 0 ? ship.map(part => part - 1) : []),
+          ...(ship[0] % 7 !== 7 ? ship.map(part => part + 1) : []),
+          ...(ship[0] > 7 ? [ship[0] - 8, ship[0] - 7, ship[0] - 6] : []),
+          ...(ship[ship.length - 1] < 42
+            ? [ship[ship.length - 1] + 8, ship[ship.length - 1] + 7, ship[ship.length - 1] + 6]
             : [])
         );
       }
