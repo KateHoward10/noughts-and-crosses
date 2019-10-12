@@ -147,8 +147,22 @@ line {
   display: grid;
 }
 
-.numbers {
-  display: grid;
+.sea-game {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inner-sea {
+  display: flex;
+  flex-direction: row;
 }
 
 .tile {

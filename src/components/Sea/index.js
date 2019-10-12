@@ -4,7 +4,7 @@ import Tile from '../Tile';
 function Sea() {
   const tileSideLength = Math.min(window.innerWidth, window.innerHeight) / 9;
   const [ships, setShips] = useState([]);
-  const [topNumbers, setTopNumbers] = useState([]);
+  const [numbers, setNumbers] = useState([[], []]);
 
   function generateShips() {
     let newShips = [];
@@ -14,12 +14,13 @@ function Sea() {
       newShips.push(latestShip);
     }
     setShips(newShips);
-    let numbers = [];
+    let topNumbers = [];
+    let sideNumbers = [];
     for (let i = 0; i < 8; i++) {
-      console.log(newShips.flat().filter(part => part % 8 === i).length);
-      numbers.push(newShips.flat().filter(part => part % 8 === i).length);
+      topNumbers.push(newShips.flat().filter(part => part % 8 === i).length);
+      sideNumbers.push(newShips.flat().filter(part => Math.floor(part / 8) === i).length);
     }
-    setTopNumbers(numbers);
+    setNumbers([topNumbers, sideNumbers]);
   }
 
   function placeShip(length, existingShips) {
@@ -63,28 +64,45 @@ function Sea() {
 
   return (
     <div className="console">
-      <div className="game">
-        <div
-          className="numbers"
-          style={{
-            gridTemplateColumns: `repeat(8, ${tileSideLength}px)`,
-            gridTemplateRows: `repeat(1, ${tileSideLength}px)`
-          }}
-        >
-          {topNumbers.map(number => (
-            <div>{number}</div>
-          ))}
-        </div>
+      <div className="sea-game">
         <div
           className="sea"
           style={{
             gridTemplateColumns: `repeat(8, ${tileSideLength}px)`,
-            gridTemplateRows: `repeat(8, ${tileSideLength}px)`
+            gridTemplateRows: `repeat(1, ${tileSideLength / 2}px)`
           }}
         >
-          {Array.from(Array(64).keys()).map(tile => (
-            <Tile key={tile} tile={tile} ships={ships} />
+          {numbers[0].map((number, index) => (
+            <div key={index} className="number">
+              {number}
+            </div>
           ))}
+        </div>
+        <div className="inner-sea">
+          <div
+            className="sea"
+            style={{
+              gridTemplateColumns: `repeat(1, ${tileSideLength / 2}px)`,
+              gridTemplateRows: `repeat(8, ${tileSideLength}px)`
+            }}
+          >
+            {numbers[1].map((number, index) => (
+              <div key={index} className="number">
+                {number}
+              </div>
+            ))}
+          </div>
+          <div
+            className="sea"
+            style={{
+              gridTemplateColumns: `repeat(8, ${tileSideLength}px)`,
+              gridTemplateRows: `repeat(8, ${tileSideLength}px)`
+            }}
+          >
+            {Array.from(Array(64).keys()).map(tile => (
+              <Tile key={tile} tile={tile} ships={ships} />
+            ))}
+          </div>
         </div>
       </div>
       <div className="controls">
