@@ -31,7 +31,7 @@ button:hover {
 }
 
 nav {
-  background-image: linear-gradient(blue, purple);
+  background-color: purple;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const Tile = ({ ships, tile }) => {
+const Tile = ({ ships, tile, selectingWater }) => {
   const thisShip = ships.find(ship => ship.includes(tile));
-  return <div className="tile">{thisShip && thisShip.indexOf(tile)}</div>;
+  const [selected, setSelected] = useState(null);
+
+  function setTile() {
+    setSelected(selectingWater ? '~' : 'O');
+  }
+
+  return (
+    <div className="tile" onClick={setTile}>
+      {selected}
+    </div>
+  );
 };
 export default Tile;
