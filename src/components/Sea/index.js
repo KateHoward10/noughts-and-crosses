@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Tile from '../Tile';
 
 function Sea() {
@@ -7,6 +7,8 @@ function Sea() {
   const [numbers, setNumbers] = useState([[], []]);
   const [selectingWater, toggleSelectingWater] = useState(true);
   const [visiblePositions, setVisiblePositions] = useState([]);
+  const [selectedAsShips, setSelectedAsShips] = useState([]);
+  const [message, setMessage] = useState('');
 
   function generateShips() {
     let newShips = [];
@@ -18,6 +20,7 @@ function Sea() {
     setShips(newShips);
     let randomised = newShips.flat().sort(() => Math.random() - 0.5);
     setVisiblePositions(randomised.slice(-3));
+    setSelectedAsShips(randomised.slice(-3));
     let topNumbers = [];
     let sideNumbers = [];
     for (let i = 0; i < 7; i++) {
@@ -66,6 +69,24 @@ function Sea() {
     return ship;
   }
 
+  function selectAsShip(index) {
+    const newSelected = [...selectedAsShips, index];
+    setSelectedAsShips(newSelected);
+    if (
+      newSelected.sort((a, b) => a - b).join('') ===
+      ships
+        .flat()
+        .sort((a, b) => a - b)
+        .join('')
+    ) {
+      setMessage("That's it, well done!");
+    }
+  }
+
+  function unselectAsShip(index) {
+    setSelectedAsShips(selectedAsShips.filter(selected => selected !== index));
+  }
+
   return (
     <div className="console">
       <div className="sea-game">
@@ -110,6 +131,8 @@ function Sea() {
                 ships={ships}
                 selectingWater={selectingWater}
                 initialValue={visiblePositions.includes(tile) ? 'ship' : null}
+                selectAsShip={selectAsShip}
+                unselectAsShip={unselectAsShip}
               />
             ))}
           </div>
@@ -121,6 +144,7 @@ function Sea() {
         <button className="secondary-button" onClick={() => toggleSelectingWater(!selectingWater)}>
           Select {selectingWater ? 'ship' : 'water'} instead
         </button>
+        <p>{message}</p>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { SeaTile, BitOfShip } from './styles';
 
-function Tile({ ships, tile, selectingWater, initialValue }) {
+function Tile({ ships, tile, selectingWater, initialValue, selectAsShip, unselectAsShip }) {
   const thisShip = ships.find(ship => ship.includes(tile));
   const indexInShip = thisShip ? thisShip.indexOf(tile) : null;
   const solo = thisShip && thisShip.length === 1;
@@ -22,8 +22,10 @@ function Tile({ ships, tile, selectingWater, initialValue }) {
     if (initialValue) return;
     if (selected) {
       setSelected(null);
+      if (selected === 'ship') unselectAsShip(tile);
     } else {
       setSelected(selectingWater ? 'water' : 'ship');
+      if (!selectingWater) selectAsShip(tile);
     }
   }
 
