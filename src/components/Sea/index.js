@@ -31,8 +31,8 @@ function Sea() {
     const dir = Math.random() > 0.5 ? 'horizontal' : 'vertical';
     const firstPos =
       dir === 'horizontal'
-        ? Math.floor(Math.random() * (8 - length)) + 7 * Math.ceil(Math.random() * 6)
-        : Math.floor(Math.random() * (length + 1) * 7);
+        ? Math.floor(Math.random() * (7 - length)) + 7 * Math.ceil(Math.random() * 6)
+        : Math.floor(Math.random() * length * 7);
     let ship = [firstPos];
     for (let i = 1; i < length; i++) {
       ship.push(dir === 'horizontal' ? firstPos + i : firstPos + i * 7);

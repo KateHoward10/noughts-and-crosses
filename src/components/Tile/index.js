@@ -5,20 +5,15 @@ function Tile({ ships, tile, selectingWater, initialValue }) {
   const thisShip = ships.find(ship => ship.includes(tile));
   const indexInShip = thisShip ? thisShip.indexOf(tile) : null;
   const solo = thisShip && thisShip.length === 1;
-  const position = thisShip
-    ? indexInShip === 0
-      ? 'start'
-      : indexInShip === thisShip.length - 1
-      ? 'end'
-      : 'middle'
-    : null;
+  const position =
+    thisShip && !solo ? (indexInShip === 0 ? 'start' : indexInShip === thisShip.length - 1 ? 'end' : 'middle') : null;
   const [selected, setSelected] = useState(initialValue);
 
   function getDirection() {
     if (position === 'start') {
-      return thisShip[indexInShip + 1] - indexInShip === 7 ? 'vertical' : 'horizontal';
+      return thisShip[1] - tile === 7 ? 'vertical' : 'horizontal';
     } else if (position === 'end') {
-      return indexInShip - thisShip[indexInShip - 1] === 7 ? 'vertical' : 'horizontal';
+      return tile - thisShip[indexInShip - 1] === 7 ? 'vertical' : 'horizontal';
     }
     return null;
   }
@@ -34,7 +29,7 @@ function Tile({ ships, tile, selectingWater, initialValue }) {
 
   return (
     <SeaTile onClick={setTile} selected={initialValue || selected}>
-      {(selected === 'ship' || initialValue === 'ship') && (
+      {(initialValue === 'ship' || selected === 'ship') && (
         <BitOfShip position={position} direction={getDirection()} solo={solo} />
       )}
     </SeaTile>
