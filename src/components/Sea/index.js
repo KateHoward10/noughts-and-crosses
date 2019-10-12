@@ -6,6 +6,7 @@ function Sea() {
   const [ships, setShips] = useState([]);
   const [numbers, setNumbers] = useState([[], []]);
   const [selectingWater, toggleSelectingWater] = useState(true);
+  const [visiblePositions, setVisiblePositions] = useState([]);
 
   function generateShips() {
     let newShips = [];
@@ -15,7 +16,8 @@ function Sea() {
       newShips.push(latestShip);
     }
     setShips(newShips);
-    console.log(newShips);
+    let randomised = newShips.flat().sort(() => Math.random() - 0.5);
+    setVisiblePositions(randomised.slice(-3));
     let topNumbers = [];
     let sideNumbers = [];
     for (let i = 0; i < 7; i++) {
@@ -102,7 +104,13 @@ function Sea() {
             }}
           >
             {Array.from(Array(49).keys()).map(tile => (
-              <Tile key={tile} tile={tile} ships={ships} selectingWater={selectingWater} />
+              <Tile
+                key={tile}
+                tile={tile}
+                ships={ships}
+                selectingWater={selectingWater}
+                initialValue={visiblePositions.includes(tile) ? 'ship' : null}
+              />
             ))}
           </div>
         </div>

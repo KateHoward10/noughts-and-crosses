@@ -165,10 +165,6 @@ line {
   flex-direction: row;
 }
 
-.tile {
-  border: 1px solid black;
-}
-
 @media screen and (max-width: 800px) {
   .App {
     flex-direction: column;

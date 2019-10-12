@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
+import { SeaTile } from './styles';
 
-const Tile = ({ ships, tile, selectingWater }) => {
+function Tile({ ships, tile, selectingWater, initialValue }) {
   const thisShip = ships.find(ship => ship.includes(tile));
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState(initialValue);
 
   function setTile() {
-    setSelected(selectingWater ? '~' : 'O');
+    if (initialValue) return;
+    if (selected) {
+      setSelected(null);
+    } else {
+      setSelected(selectingWater ? 'water' : 'ship');
+    }
   }
 
-  return (
-    <div className="tile" onClick={setTile}>
-      {selected}
-    </div>
-  );
-};
+  return <SeaTile onClick={setTile} selected={initialValue || selected} />;
+}
+
 export default Tile;
