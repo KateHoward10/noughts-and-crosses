@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Tile from '../Tile';
 
 function Sea() {
-  const tileSideLength = Math.min(window.innerWidth, window.innerHeight) / 8;
+  const tileSideLength = Math.min(window.innerWidth, window.innerHeight) / 9;
+  const lengths = [4, 3, 2, 2, 1, 1, 1];
   const [ships, setShips] = useState([]);
   const [numbers, setNumbers] = useState([[], []]);
   const [selectingWater, toggleSelectingWater] = useState(true);
@@ -12,7 +13,9 @@ function Sea() {
 
   function generateShips() {
     let newShips = [];
-    const lengths = [4, 3, 2, 2, 1, 1, 1];
+    setNumbers([[], []]);
+    setSelectedAsShips([]);
+    setMessage('');
     for (let i = 0; i < lengths.length; i++) {
       let latestShip = placeShip(lengths[i], newShips.flat());
       newShips.push(latestShip);
@@ -145,6 +148,11 @@ function Sea() {
           Select {selectingWater ? 'ship' : 'water'} instead
         </button>
         <p>{message}</p>
+        {ships.map(ship => (
+          <p style={{ color: ship.every(part => selectedAsShips.includes(part)) ? 'grey' : 'black' }}>
+            {ship.map(part => 'O')}
+          </p>
+        ))}
       </div>
     </div>
   );
