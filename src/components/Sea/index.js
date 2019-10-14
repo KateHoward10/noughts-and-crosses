@@ -9,13 +9,13 @@ function Sea() {
   const [selectingWater, toggleSelectingWater] = useState(true);
   const [visiblePositions, setVisiblePositions] = useState([]);
   const [selectedAsShips, setSelectedAsShips] = useState([]);
-  const [message, setMessage] = useState('');
+  const [completed, setCompleted] = useState(false);
 
   function generateShips() {
     let newShips = [];
     setNumbers([[], []]);
     setSelectedAsShips([]);
-    setMessage('');
+    setCompleted(false);
     for (let i = 0; i < lengths.length; i++) {
       let latestShip = placeShip(lengths[i], newShips.flat());
       newShips.push(latestShip);
@@ -82,7 +82,7 @@ function Sea() {
         .sort((a, b) => a - b)
         .join('')
     ) {
-      setMessage("That's it, well done!");
+      setCompleted(true);
     }
   }
 
@@ -136,6 +136,7 @@ function Sea() {
                 initialValue={visiblePositions.includes(tile) ? 'ship' : null}
                 selectAsShip={selectAsShip}
                 unselectAsShip={unselectAsShip}
+                completed={completed}
               />
             ))}
           </div>
@@ -147,9 +148,9 @@ function Sea() {
         <button className="secondary-button" onClick={() => toggleSelectingWater(!selectingWater)}>
           Select {selectingWater ? 'ship' : 'water'} instead
         </button>
-        <p>{message}</p>
-        {ships.map(ship => (
-          <p style={{ color: ship.every(part => selectedAsShips.includes(part)) ? 'grey' : 'black' }}>
+        <p>{completed && "That's it, well done!"}</p>
+        {ships.map((ship, index) => (
+          <p key={index} style={{ color: ship.every(part => selectedAsShips.includes(part)) ? 'grey' : 'black' }}>
             {ship.map(part => 'O')}
           </p>
         ))}

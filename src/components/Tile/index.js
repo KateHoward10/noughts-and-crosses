@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { SeaTile, BitOfShip } from './styles';
 
-function Tile({ ships, tile, selectingWater, initialValue, selectAsShip, unselectAsShip }) {
+function Tile({ ships, tile, selectingWater, initialValue, selectAsShip, unselectAsShip, completed }) {
   const thisShip = ships.find(ship => ship.includes(tile));
   const indexInShip = thisShip ? thisShip.indexOf(tile) : null;
   const solo = thisShip && thisShip.length === 1;
@@ -32,7 +32,13 @@ function Tile({ ships, tile, selectingWater, initialValue, selectAsShip, unselec
   return (
     <SeaTile onClick={setTile} selected={initialValue || selected}>
       {(initialValue === 'ship' || selected === 'ship') && (
-        <BitOfShip position={position} direction={getDirection()} solo={solo} />
+        <BitOfShip
+          position={position}
+          direction={getDirection()}
+          solo={solo}
+          visible={initialValue === 'ship'}
+          completed={completed}
+        />
       )}
     </SeaTile>
   );
