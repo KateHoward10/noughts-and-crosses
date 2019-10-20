@@ -35,14 +35,22 @@ function Sea() {
 
   function placeShip(length, existingShips) {
     const dir = Math.random() > 0.5 ? 'horizontal' : 'vertical';
-    const firstPos =
-      dir === 'horizontal'
+
+    function getFirstPos() {
+      return dir === 'horizontal'
         ? Math.floor(Math.random() * (7 - length)) + 7 * Math.ceil(Math.random() * 6)
         : Math.floor(Math.random() * length * 7);
+    }
+
+    let firstPos = getFirstPos();
+    if (existingShips.includes(firstPos)) {
+      firstPos = getFirstPos();
+    }
     let ship = [firstPos];
     for (let i = 1; i < length; i++) {
       ship.push(dir === 'horizontal' ? firstPos + i : firstPos + i * 7);
     }
+
     function isTooClose(ship) {
       let adjacentTiles = [...ship];
       if (dir === 'horizontal') {
@@ -66,6 +74,7 @@ function Sea() {
       }
       return adjacentTiles.some(tile => existingShips.indexOf(tile) >= 0);
     }
+
     if (isTooClose(ship)) {
       ship = placeShip(length, existingShips);
     }
