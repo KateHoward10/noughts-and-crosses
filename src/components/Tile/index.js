@@ -38,7 +38,9 @@ function Tile({ ships, tile, selectingWater, initialValue, selectAsShip, unselec
           solo={solo}
           visible={initialValue === 'ship'}
           completed={completed}
-        />
+        >
+          {!initialValue && !completed && '?'}
+        </BitOfShip>
       )}
     </SeaTile>
   );

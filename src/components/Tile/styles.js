@@ -9,6 +9,10 @@ export const BitOfShip = styled.div`
   background-color: yellow;
   width: 100%;
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
   ${props =>
     (props.visible || props.completed) &&
     css`
