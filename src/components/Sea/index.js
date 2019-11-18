@@ -3,7 +3,7 @@ import Tile from '../Tile';
 
 function Sea() {
   const tileSideLength = Math.min(window.innerWidth, window.innerHeight) / 9;
-  const lengths = [4, 3, 2, 2, 1, 1, 1];
+  const lengths = [4, 3, 2, 2, 1, 1];
   const [ships, setShips] = useState([]);
   const [numbers, setNumbers] = useState([[], []]);
   const [selectingWater, toggleSelectingWater] = useState(true);
@@ -17,7 +17,7 @@ function Sea() {
     setSelectedAsShips([]);
     setCompleted(false);
     for (let i = 0; i < lengths.length; i++) {
-      let latestShip = placeShip(lengths[i], newShips.flat());
+      let latestShip = placeShip(lengths[i], newShips);
       newShips.push(latestShip);
     }
     setShips(newShips);
@@ -33,49 +33,58 @@ function Sea() {
     setNumbers([topNumbers, sideNumbers]);
   }
 
+  function getForbiddenTiles(ship) {
+    let tiles = [...ship];
+    if (ship[1] - ship[0] === 1) {
+      tiles.push(
+        ...(ship[0] > 7 ? ship.map(part => part - 7) : []),
+        ...(ship[0] < 42 ? ship.map(part => part + 7) : []),
+        ...(ship[0] % 7 !== 0 ? [ship[0] - 8, ship[0] - 1, ship[0] + 6] : []),
+        ...(ship[ship.length - 1] % 7 !== 7
+          ? [ship[ship.length - 1] + 8, ship[ship.length - 1] + 1, ship[ship.length - 1] - 6]
+          : [])
+      );
+    } else {
+      tiles.push(
+        ...(ship[0] % 7 !== 0 ? ship.map(part => part - 1) : []),
+        ...(ship[0] % 7 !== 7 ? ship.map(part => part + 1) : []),
+        ...(ship[0] > 7 ? [ship[0] - 8, ship[0] - 7, ship[0] - 6] : []),
+        ...(ship[ship.length - 1] < 42
+          ? [ship[ship.length - 1] + 8, ship[ship.length - 1] + 7, ship[ship.length - 1] + 6]
+          : [])
+      );
+    }
+    return tiles.filter(tile => 0 <= tile && tile <= 48);
+  }
+
   function placeShip(length, existingShips) {
-    const dir = Math.random() > 0.5 ? 'horizontal' : 'vertical';
+    const filledTiles = [...new Set(existingShips.map(ship => getForbiddenTiles(ship)).flat())];
+    const horizontalPossibilities = Array.from(Array(49).keys())
+      .filter(number => number % 7 < 8 - length)
+      .filter(tile => filledTiles.indexOf(tile) === -1);
+    const verticalPossibilities = Array.from(Array(length * 7).keys()).filter(tile => filledTiles.indexOf(tile) === -1);
+
+    function getDirection() {
+      if (horizontalPossibilities.length === 0) {
+        return 'vertical';
+      } else if (verticalPossibilities.length === 0) {
+        return 'horizontal';
+      } else return Math.random() > 0.5 ? 'horizontal' : 'vertical';
+    }
+    const dir = getDirection();
 
     function getFirstPos() {
       return dir === 'horizontal'
-        ? Math.floor(Math.random() * (7 - length)) + 7 * Math.ceil(Math.random() * 6)
-        : Math.floor(Math.random() * length * 7);
+        ? horizontalPossibilities[Math.floor(Math.random() * horizontalPossibilities.length)]
+        : verticalPossibilities[Math.floor(Math.random() * verticalPossibilities.length)];
     }
 
-    let firstPos = getFirstPos();
-    if (existingShips.includes(firstPos)) {
-      firstPos = getFirstPos();
-    }
+    const firstPos = getFirstPos();
     let ship = [firstPos];
     for (let i = 1; i < length; i++) {
       ship.push(dir === 'horizontal' ? firstPos + i : firstPos + i * 7);
     }
-
-    function isTooClose(ship) {
-      let adjacentTiles = [...ship];
-      if (dir === 'horizontal') {
-        adjacentTiles.push(
-          ...(ship[0] > 7 ? ship.map(part => part - 7) : []),
-          ...(ship[0] < 42 ? ship.map(part => part + 7) : []),
-          ...(ship[0] % 7 !== 0 ? [ship[0] - 8, ship[0] - 1, ship[0] + 6] : []),
-          ...(ship[ship.length - 1] % 7 !== 7
-            ? [ship[ship.length - 1] + 8, ship[ship.length - 1] + 1, ship[ship.length - 1] - 6]
-            : [])
-        );
-      } else {
-        adjacentTiles.push(
-          ...(ship[0] % 7 !== 0 ? ship.map(part => part - 1) : []),
-          ...(ship[0] % 7 !== 7 ? ship.map(part => part + 1) : []),
-          ...(ship[0] > 7 ? [ship[0] - 8, ship[0] - 7, ship[0] - 6] : []),
-          ...(ship[ship.length - 1] < 42
-            ? [ship[ship.length - 1] + 8, ship[ship.length - 1] + 7, ship[ship.length - 1] + 6]
-            : [])
-        );
-      }
-      return adjacentTiles.some(tile => existingShips.indexOf(tile) >= 0);
-    }
-
-    if (isTooClose(ship)) {
+    if (ship.some(tile => filledTiles.indexOf(tile) >= 0)) {
       ship = placeShip(length, existingShips);
     }
     return ship;
@@ -97,6 +106,11 @@ function Sea() {
 
   function unselectAsShip(index) {
     setSelectedAsShips(selectedAsShips.filter(selected => selected !== index));
+  }
+
+  function clear() {
+    setSelectedAsShips([]);
+    setVisiblePositions([]);
   }
 
   return (
@@ -163,6 +177,9 @@ function Sea() {
             {ship.map(part => 'O')}
           </p>
         ))}
+        <button className="secondary-button" onClick={clear}>
+          Start again
+        </button>
       </div>
     </div>
   );
