@@ -11,11 +11,12 @@ function Sea() {
   const [selectedAsShips, setSelectedAsShips] = useState([]);
   const [selectedAsWater, setSelectedAsWater] = useState([]);
   const [completed, setCompleted] = useState(false);
+  const [mouseDown, toggleMouseDown] = useState(false);
 
   function generateShips() {
     let newShips = [];
     setNumbers([[], []]);
-    setSelectedAsShips([]);
+    setSelectedAsWater([]);
     setCompleted(false);
     for (let i = 0; i < lengths.length; i++) {
       let latestShip = placeShip(lengths[i], newShips);
@@ -166,6 +167,8 @@ function Sea() {
                   unselectAsWater={index => setSelectedAsWater(selectedAsWater.filter(selected => selected !== index))}
                   selected={selected}
                   completed={completed}
+                  toggleMouseDown={toggleMouseDown}
+                  mouseDown={mouseDown}
                 />
               );
             })}

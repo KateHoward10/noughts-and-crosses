@@ -11,7 +11,9 @@ function Tile({
   selectAsWater,
   unselectAsWater,
   selected,
-  completed
+  completed,
+  mouseDown,
+  toggleMouseDown
 }) {
   const thisShip = ships.find(ship => ship.includes(tile));
   const indexInShip = thisShip ? thisShip.indexOf(tile) : null;
@@ -38,7 +40,17 @@ function Tile({
   }
 
   return (
-    <SeaTile onClick={setTile} selected={initialValue || selected}>
+    <SeaTile
+      onMouseDown={() => {
+        toggleMouseDown(true);
+        setTile();
+      }}
+      onMouseUp={() => toggleMouseDown(false)}
+      onMouseEnter={() => {
+        if (mouseDown) setTile();
+      }}
+      selected={initialValue || selected}
+    >
       {(initialValue === 'ship' || selected === 'ship') && (
         <BitOfShip
           position={position}
