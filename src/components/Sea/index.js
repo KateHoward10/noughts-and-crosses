@@ -9,6 +9,7 @@ function Sea() {
   const [selectingWater, toggleSelectingWater] = useState(true);
   const [visiblePositions, setVisiblePositions] = useState([]);
   const [selectedAsShips, setSelectedAsShips] = useState([]);
+  const [selectedAsWater, setSelectedAsWater] = useState([]);
   const [completed, setCompleted] = useState(false);
 
   function generateShips() {
@@ -104,13 +105,9 @@ function Sea() {
     }
   }
 
-  function unselectAsShip(index) {
-    setSelectedAsShips(selectedAsShips.filter(selected => selected !== index));
-  }
-
   function clear() {
     setSelectedAsShips([]);
-    setVisiblePositions([]);
+    setSelectedAsWater([]);
   }
 
   return (
@@ -150,18 +147,28 @@ function Sea() {
               gridTemplateRows: `repeat(7, ${tileSideLength}px)`
             }}
           >
-            {Array.from(Array(49).keys()).map(tile => (
-              <Tile
-                key={tile}
-                tile={tile}
-                ships={ships}
-                selectingWater={selectingWater}
-                initialValue={visiblePositions.includes(tile) ? 'ship' : null}
-                selectAsShip={selectAsShip}
-                unselectAsShip={unselectAsShip}
-                completed={completed}
-              />
-            ))}
+            {Array.from(Array(49).keys()).map(tile => {
+              const selected = selectedAsShips.includes(tile)
+                ? 'ship'
+                : selectedAsWater.includes(tile)
+                ? 'water'
+                : null;
+              return (
+                <Tile
+                  key={tile}
+                  tile={tile}
+                  ships={ships}
+                  selectingWater={selectingWater}
+                  initialValue={visiblePositions.includes(tile) ? 'ship' : null}
+                  selectAsShip={selectAsShip}
+                  unselectAsShip={index => setSelectedAsShips(selectedAsShips.filter(selected => selected !== index))}
+                  selectAsWater={index => setSelectedAsWater([...selectedAsWater, index])}
+                  unselectAsWater={index => setSelectedAsWater(selectedAsWater.filter(selected => selected !== index))}
+                  selected={selected}
+                  completed={completed}
+                />
+              );
+            })}
           </div>
         </div>
       </div>
