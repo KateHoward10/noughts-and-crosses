@@ -3,6 +3,10 @@ import styled, { css } from 'styled-components';
 export const SeaTile = styled.div`
   background-color: ${props => (props.selected ? 'blue' : 'transparent')};
   border: 1px solid black;
+  display: flex;
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const BitOfShip = styled.div`
@@ -13,6 +17,7 @@ export const BitOfShip = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 20px;
+  border: 1px solid grey;
   ${props =>
     (props.visible || props.completed) &&
     css`
