@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/games-with-lines/static/css/main.2362da32.chunk.css",
-    "main.js": "/games-with-lines/static/js/main.1976d41e.chunk.js",
-    "main.js.map": "/games-with-lines/static/js/main.1976d41e.chunk.js.map",
+    "main.js": "/games-with-lines/static/js/main.12d73696.chunk.js",
+    "main.js.map": "/games-with-lines/static/js/main.12d73696.chunk.js.map",
     "runtime-main.js": "/games-with-lines/static/js/runtime-main.835ca5d6.js",
     "runtime-main.js.map": "/games-with-lines/static/js/runtime-main.835ca5d6.js.map",
     "static/js/2.0d6a2c9d.chunk.js": "/games-with-lines/static/js/2.0d6a2c9d.chunk.js",
     "static/js/2.0d6a2c9d.chunk.js.map": "/games-with-lines/static/js/2.0d6a2c9d.chunk.js.map",
     "index.html": "/games-with-lines/index.html",
-    "precache-manifest.c5986e9ffca702209f2039544daacf15.js": "/games-with-lines/precache-manifest.c5986e9ffca702209f2039544daacf15.js",
+    "precache-manifest.7a1eb12fbc1136d3688ff4f0739ad344.js": "/games-with-lines/precache-manifest.7a1eb12fbc1136d3688ff4f0739ad344.js",
     "service-worker.js": "/games-with-lines/service-worker.js",
     "static/css/main.2362da32.chunk.css.map": "/games-with-lines/static/css/main.2362da32.chunk.css.map",
     "static/js/2.0d6a2c9d.chunk.js.LICENSE": "/games-with-lines/static/js/2.0d6a2c9d.chunk.js.LICENSE",
@@ -20,6 +20,6 @@
     "static/js/runtime-main.835ca5d6.js",
     "static/js/2.0d6a2c9d.chunk.js",
     "static/css/main.2362da32.chunk.css",
-    "static/js/main.1976d41e.chunk.js"
+    "static/js/main.12d73696.chunk.js"
   ]
 }

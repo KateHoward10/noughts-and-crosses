@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "d5c00eeb4361f447511f876d80b6265c",
+    "revision": "847e5d339c05d46539aed2173efa8125",
     "url": "/games-with-lines/index.html"
   },
   {
-    "revision": "405f35cf14d1ae1bc58b",
+    "revision": "2ad23e55859f98f772d7",
     "url": "/games-with-lines/static/css/main.2362da32.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/games-with-lines/static/js/2.0d6a2c9d.chunk.js.LICENSE"
   },
   {
-    "revision": "405f35cf14d1ae1bc58b",
-    "url": "/games-with-lines/static/js/main.1976d41e.chunk.js"
+    "revision": "2ad23e55859f98f772d7",
+    "url": "/games-with-lines/static/js/main.12d73696.chunk.js"
   },
   {
     "revision": "926ce514cafc19d464f5",
