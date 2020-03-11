@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Box from './Box';
-import { possibleThrees } from '../combinations';
+import { possibleThrees } from '../../combinations';
 
-class Grid extends Component {
+class Noughts extends Component {
   state = {
     win: '',
     boxes: [
@@ -195,4 +195,4 @@ class Grid extends Component {
   }
 }
 
-export default Grid;
+export default Noughts;

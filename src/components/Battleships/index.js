@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Tile from '../Tile';
+import Tile from './Tile';
 
 function Sea() {
   const tileSideLength = Math.min(window.innerWidth, window.innerHeight) / 9;
