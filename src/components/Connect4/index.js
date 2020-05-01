@@ -3,7 +3,7 @@ import Cell from './Cell';
 import Arrow from './Arrow';
 import { possibleFours } from '../../combinations';
 
-class Board extends Component {
+class Connect4 extends Component {
   state = {
     cells: [
       { index: 0, selectedBy: '' },
@@ -351,4 +351,4 @@ class Board extends Component {
   }
 }
 
-export default Board;
+export default Connect4;

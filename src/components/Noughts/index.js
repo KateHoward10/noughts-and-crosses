@@ -136,7 +136,7 @@ class Noughts extends Component {
     const { mySymbol, win, winningThree, boxes, myTurn, playing } = this.state;
     const computerSymbol = mySymbol === 'X' ? 'O' : 'X';
     const boxSideLength = Math.min(window.innerWidth, window.innerHeight) / 4;
-    return (
+    return playing ? (
       <div className="console">
         <div className="game">
           <div
@@ -171,17 +171,6 @@ class Noughts extends Component {
         </div>
         <div className="controls">
           <button onClick={this.reset}>New Game</button>
-          {playing && (
-            <React.Fragment>
-              <p>{myTurn ? 'Your turn' : "The computer's turn"}</p>
-              <div className="option-picker">
-                <p>You are: {mySymbol}s</p>
-                <button onClick={this.changeSymbol} style={{ backgroundColor: 'yellow', color: 'black' }}>
-                  Choose {computerSymbol}s
-                </button>
-              </div>
-            </React.Fragment>
-          )}
           {win === 'draw' ? (
             <h2>It's a draw</h2>
           ) : win === 'me' ? (
@@ -190,6 +179,17 @@ class Noughts extends Component {
             <h2>The computer wins!</h2>
           ) : null}
         </div>
+      </div>
+    ) : (
+      <div className="controls">
+        <p>{myTurn ? 'Your turn' : "The computer's turn"}</p>
+        <div className="option-picker">
+          <p>You are: {mySymbol}s</p>
+          <button onClick={this.changeSymbol} style={{ backgroundColor: 'yellow', color: 'black' }}>
+            Choose {computerSymbol}s
+          </button>
+        </div>
+        <button onClick={this.reset}>New Game</button>
       </div>
     );
   }

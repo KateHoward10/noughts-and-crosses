@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Tile from './Tile';
 
-function Sea() {
+function Battleships() {
   const tileSideLength = Math.min(window.innerWidth, window.innerHeight) / 9;
   const lengths = [4, 3, 2, 2, 1, 1];
   const [ships, setShips] = useState([]);
@@ -195,4 +195,4 @@ function Sea() {
   );
 }
 
-export default Sea;
+export default Battleships;
