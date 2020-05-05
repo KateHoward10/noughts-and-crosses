@@ -1,54 +1,11 @@
 import React, { Component } from 'react';
 import Cell from './Cell';
 import Arrow from './Arrow';
-import { possibleFours } from '../../combinations';
+import { emptyCells, possibleFours } from '../../combinations';
 
 class Connect4 extends Component {
   state = {
-    cells: [
-      { index: 0, selectedBy: '' },
-      { index: 1, selectedBy: '' },
-      { index: 2, selectedBy: '' },
-      { index: 3, selectedBy: '' },
-      { index: 4, selectedBy: '' },
-      { index: 5, selectedBy: '' },
-      { index: 6, selectedBy: '' },
-      { index: 7, selectedBy: '' },
-      { index: 8, selectedBy: '' },
-      { index: 9, selectedBy: '' },
-      { index: 10, selectedBy: '' },
-      { index: 11, selectedBy: '' },
-      { index: 12, selectedBy: '' },
-      { index: 13, selectedBy: '' },
-      { index: 14, selectedBy: '' },
-      { index: 15, selectedBy: '' },
-      { index: 16, selectedBy: '' },
-      { index: 17, selectedBy: '' },
-      { index: 18, selectedBy: '' },
-      { index: 19, selectedBy: '' },
-      { index: 20, selectedBy: '' },
-      { index: 21, selectedBy: '' },
-      { index: 22, selectedBy: '' },
-      { index: 23, selectedBy: '' },
-      { index: 24, selectedBy: '' },
-      { index: 25, selectedBy: '' },
-      { index: 26, selectedBy: '' },
-      { index: 27, selectedBy: '' },
-      { index: 28, selectedBy: '' },
-      { index: 29, selectedBy: '' },
-      { index: 30, selectedBy: '' },
-      { index: 31, selectedBy: '' },
-      { index: 32, selectedBy: '' },
-      { index: 33, selectedBy: '' },
-      { index: 34, selectedBy: '' },
-      { index: 35, selectedBy: '' },
-      { index: 36, selectedBy: '' },
-      { index: 37, selectedBy: '' },
-      { index: 38, selectedBy: '' },
-      { index: 39, selectedBy: '' },
-      { index: 40, selectedBy: '' },
-      { index: 41, selectedBy: '' }
-    ],
+    cells: emptyCells(),
     winner: '',
     winningCombo: [],
     playing: false,
@@ -58,50 +15,7 @@ class Connect4 extends Component {
   reset = () => {
     this.setState(
       {
-        cells: [
-          { index: 0, selectedBy: '' },
-          { index: 1, selectedBy: '' },
-          { index: 2, selectedBy: '' },
-          { index: 3, selectedBy: '' },
-          { index: 4, selectedBy: '' },
-          { index: 5, selectedBy: '' },
-          { index: 6, selectedBy: '' },
-          { index: 7, selectedBy: '' },
-          { index: 8, selectedBy: '' },
-          { index: 9, selectedBy: '' },
-          { index: 10, selectedBy: '' },
-          { index: 11, selectedBy: '' },
-          { index: 12, selectedBy: '' },
-          { index: 13, selectedBy: '' },
-          { index: 14, selectedBy: '' },
-          { index: 15, selectedBy: '' },
-          { index: 16, selectedBy: '' },
-          { index: 17, selectedBy: '' },
-          { index: 18, selectedBy: '' },
-          { index: 19, selectedBy: '' },
-          { index: 20, selectedBy: '' },
-          { index: 21, selectedBy: '' },
-          { index: 22, selectedBy: '' },
-          { index: 23, selectedBy: '' },
-          { index: 24, selectedBy: '' },
-          { index: 25, selectedBy: '' },
-          { index: 26, selectedBy: '' },
-          { index: 27, selectedBy: '' },
-          { index: 28, selectedBy: '' },
-          { index: 29, selectedBy: '' },
-          { index: 30, selectedBy: '' },
-          { index: 31, selectedBy: '' },
-          { index: 32, selectedBy: '' },
-          { index: 33, selectedBy: '' },
-          { index: 34, selectedBy: '' },
-          { index: 35, selectedBy: '' },
-          { index: 36, selectedBy: '' },
-          { index: 37, selectedBy: '' },
-          { index: 38, selectedBy: '' },
-          { index: 39, selectedBy: '' },
-          { index: 40, selectedBy: '' },
-          { index: 41, selectedBy: '' }
-        ],
+        cells: emptyCells(),
         winner: '',
         winningCombo: [],
         myTurn: Boolean(Math.random() < 0.5),
@@ -134,7 +48,7 @@ class Connect4 extends Component {
       columnNumber
     ];
     const availableCells = columnCells.filter(
-      cell => this.state.cells[cell] && this.state.cells[cell]['selectedBy'] === ''
+      cell => this.state.cells[cell] === ''
     );
     return availableCells.sort((a, b) => {
       return a - b;
@@ -150,17 +64,17 @@ class Connect4 extends Component {
     const { cells } = this.state;
     // If any combination achieved by same player
     if (
-      possibleFours.some(combination => combination.every(cellNumber => cells[cellNumber]['selectedBy'] === player))
+      possibleFours.some(combination => combination.every(cellNumber => cells[cellNumber] === player))
     ) {
       this.setState({
         playing: false,
         winner: player,
         winningCombo: possibleFours.find(combination =>
-          combination.every(cellNumber => cells[cellNumber]['selectedBy'] === player)
+          combination.every(cellNumber => cells[cellNumber] === player)
         )
       });
       // If every cell filled by someone's counter
-    } else if (cells.every(cell => cell['selectedBy'] !== '')) {
+    } else if (cells.every(cell => cell !== '')) {
       this.setState({ playing: false, winner: 'draw' });
     }
   };
@@ -186,10 +100,10 @@ class Connect4 extends Component {
     const lastNumber = this.findBottomNumber(columnNumber);
     this.setState({ rolling: true });
     const reachBottomCell = () => {
-      cells[lastNumber].selectedBy = player;
+      cells[lastNumber] = player;
       // For some reason this is needed to make sure it doesn't think you've scored a vertical 4 with only 3 counters
       if (lastNumber >= 7) {
-        cells[lastNumber - 7].selectedBy = '';
+        cells[lastNumber - 7] = '';
       }
       this.setState({ cells }, () => finishRoll());
     };
@@ -210,10 +124,10 @@ class Connect4 extends Component {
       reachBottomCell();
     } else {
       slowLoop(numbers, 100, i => {
-        cells[i].selectedBy = player;
+        cells[i] = player;
         this.setState({ cells });
         setTimeout(() => {
-          cells[i].selectedBy = '';
+          cells[i] = '';
           this.setState({ cells });
         }, 100);
       });
@@ -231,40 +145,40 @@ class Connect4 extends Component {
     if (
       possibleFours.some(
         combination =>
-          combination.filter(cellNumber => cells[cellNumber]['selectedBy'] === 'computer').length === 3 &&
-          combination.filter(cellNumber => cells[cellNumber]['selectedBy'] === '').length === 1 &&
-          combination.find(cellNumber => cells[cellNumber]['selectedBy'] === '') ===
-            this.findBottomNumber(combination.find(cellNumber => cells[cellNumber]['selectedBy'] === '') % 7)
+          combination.filter(cellNumber => cells[cellNumber] === 'computer').length === 3 &&
+          combination.filter(cellNumber => cells[cellNumber] === '').length === 1 &&
+          combination.find(cellNumber => cells[cellNumber] === '') ===
+            this.findBottomNumber(combination.find(cellNumber => cells[cellNumber] === '') % 7)
       )
     ) {
       const combos = possibleFours.filter(
         combination =>
-          combination.filter(cellNumber => cells[cellNumber]['selectedBy'] === 'computer').length === 3 &&
-          combination.filter(cellNumber => cells[cellNumber]['selectedBy'] === '').length === 1 &&
-          combination.find(cellNumber => cells[cellNumber]['selectedBy'] === '') ===
-            this.findBottomNumber(combination.find(cellNumber => cells[cellNumber]['selectedBy'] === '') % 7)
+          combination.filter(cellNumber => cells[cellNumber] === 'computer').length === 3 &&
+          combination.filter(cellNumber => cells[cellNumber] === '').length === 1 &&
+          combination.find(cellNumber => cells[cellNumber] === '') ===
+            this.findBottomNumber(combination.find(cellNumber => cells[cellNumber] === '') % 7)
       );
       const randomCombo = combos[Math.floor(Math.random() * combos.length)];
-      computerColumnChoice = randomCombo.find(cellNumber => cells[cellNumber]['selectedBy'] === '') % 7;
+      computerColumnChoice = randomCombo.find(cellNumber => cells[cellNumber] === '') % 7;
       // If there are any 3/4s for me
     } else if (
       possibleFours.some(
         combination =>
-          combination.filter(cellNumber => cells[cellNumber]['selectedBy'] === 'me').length === 3 &&
-          combination.filter(cellNumber => cells[cellNumber]['selectedBy'] === '').length === 1 &&
-          combination.find(cellNumber => cells[cellNumber]['selectedBy'] === '') ===
-            this.findBottomNumber(combination.find(cellNumber => cells[cellNumber]['selectedBy'] === '') % 7)
+          combination.filter(cellNumber => cells[cellNumber] === 'me').length === 3 &&
+          combination.filter(cellNumber => cells[cellNumber] === '').length === 1 &&
+          combination.find(cellNumber => cells[cellNumber] === '') ===
+            this.findBottomNumber(combination.find(cellNumber => cells[cellNumber] === '') % 7)
       )
     ) {
       const combos = possibleFours.filter(
         combination =>
-          combination.filter(cellNumber => cells[cellNumber]['selectedBy'] === 'me').length === 3 &&
-          combination.filter(cellNumber => cells[cellNumber]['selectedBy'] === '').length === 1 &&
-          combination.find(cellNumber => cells[cellNumber]['selectedBy'] === '') ===
-            this.findBottomNumber(combination.find(cellNumber => cells[cellNumber]['selectedBy'] === '') % 7)
+          combination.filter(cellNumber => cells[cellNumber] === 'me').length === 3 &&
+          combination.filter(cellNumber => cells[cellNumber] === '').length === 1 &&
+          combination.find(cellNumber => cells[cellNumber] === '') ===
+            this.findBottomNumber(combination.find(cellNumber => cells[cellNumber] === '') % 7)
       );
       const randomCombo = combos[Math.floor(Math.random() * combos.length)];
-      computerColumnChoice = randomCombo.find(cellNumber => cells[cellNumber]['selectedBy'] === '') % 7;
+      computerColumnChoice = randomCombo.find(cellNumber => cells[cellNumber] === '') % 7;
     } else {
       computerColumnChoice = parseFloat(availableColumns[Math.floor(Math.random() * availableColumns.length)], 10);
     }
@@ -275,6 +189,7 @@ class Connect4 extends Component {
     const { playing, myTurn, myColour, winner, cells, winningCombo, rolling } = this.state;
     const computerColour = myColour === 'red' ? 'yellow' : 'red';
     const cellSideLength = Math.min(window.innerWidth, window.innerHeight) / 8;
+
     return (
       <div className="console">
         <div className="game">
@@ -307,11 +222,11 @@ class Connect4 extends Component {
                 />
               )}
             </svg>
-            {Object.keys(cells).map(key => (
+            {cells.map((cell, index) => (
               <Cell
-                index={key}
-                key={key}
-                fill={cells[key]['selectedBy']}
+                index={index}
+                key={index}
+                fill={cell}
                 myColour={myColour}
                 computerColour={computerColour}
                 cellSideLength={cellSideLength}
