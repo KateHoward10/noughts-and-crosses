@@ -1,22 +1,13 @@
 import React, { Component } from 'react';
 import Box from './Box';
-import { possibleThrees } from '../../combinations';
+import { emptyBoard, possibleThrees } from '../../combinations';
 
 class Noughts extends Component {
   state = {
     win: '',
-    boxes: [
-      { index: 0, selectedBy: '' },
-      { index: 1, selectedBy: '' },
-      { index: 2, selectedBy: '' },
-      { index: 3, selectedBy: '' },
-      { index: 4, selectedBy: '' },
-      { index: 5, selectedBy: '' },
-      { index: 6, selectedBy: '' },
-      { index: 7, selectedBy: '' },
-      { index: 8, selectedBy: '' }
-    ],
+    boxes: emptyBoard(),
     winningThree: [],
+    mySymbol: ['O', 'X'][Math.round(Math.random())],
     playing: false
   };
 
@@ -24,20 +15,21 @@ class Noughts extends Component {
     this.setState(
       {
         win: '',
-        boxes: [
-          { index: 0, selectedBy: '' },
-          { index: 1, selectedBy: '' },
-          { index: 2, selectedBy: '' },
-          { index: 3, selectedBy: '' },
-          { index: 4, selectedBy: '' },
-          { index: 5, selectedBy: '' },
-          { index: 6, selectedBy: '' },
-          { index: 7, selectedBy: '' },
-          { index: 8, selectedBy: '' }
-        ],
+        boxes: emptyBoard(),
+        winningThree: [],
+        mySymbol: ['O', 'X'][Math.round(Math.random())],
+        playing: false
+      }
+    );
+  };
+
+  start = () => {
+    this.setState(
+      {
+        win: '',
+        boxes: emptyBoard(),
         winningThree: [],
         myTurn: Boolean(Math.random() < 0.5),
-        mySymbol: ['O', 'X'][Math.round(Math.random())],
         playing: true
       },
       () => {
@@ -57,15 +49,15 @@ class Noughts extends Component {
 
   checkForThree = player => {
     const { boxes } = this.state;
-    if (possibleThrees.some(combination => combination.every(boxNumber => boxes[boxNumber]['selectedBy'] === player))) {
+    if (possibleThrees.some(combination => combination.every(boxNumber => boxes[boxNumber] === player))) {
       this.setState({
         win: player,
         winningThree: possibleThrees.find(combination =>
-          combination.every(boxNumber => boxes[boxNumber]['selectedBy'] === player)
+          combination.every(boxNumber => boxes[boxNumber] === player)
         ),
         playing: false
       });
-    } else if (boxes.filter(box => box['selectedBy'] !== '').length > 8) {
+    } else if (boxes.filter(box => box !== '').length > 8) {
       this.setState({ win: 'draw', playing: false });
     }
   };
@@ -75,7 +67,7 @@ class Noughts extends Component {
     if (win !== '') {
       return;
     } else {
-      boxes[index].selectedBy = player;
+      boxes[index] = player;
       this.setState({ boxes }, () => this.checkForThree(player));
       setTimeout(() => this.setState({ myTurn: !myTurn }), 500);
     }
@@ -83,7 +75,7 @@ class Noughts extends Component {
 
   selectBox = key => {
     const { win, boxes, myTurn, playing } = this.state;
-    if (playing && myTurn && boxes[key]['selectedBy'] === '' && win === '') {
+    if (playing && myTurn && boxes[key] === '' && win === '') {
       this.select(key, 'me');
       this.checkForThree('me');
       if (win !== '') {
@@ -96,36 +88,36 @@ class Noughts extends Component {
 
   finishTurn = () => {
     const { boxes } = this.state;
-    const indices = Object.keys(boxes).filter(key => boxes[key]['selectedBy'] === '');
+    const indices = Object.keys(boxes).filter(key => boxes[key] === '');
     let computerChoice;
     if (
       possibleThrees.some(
         combination =>
-          combination.filter(boxNumber => boxes[boxNumber]['selectedBy'] === 'computer').length === 2 &&
-          combination.filter(boxNumber => boxes[boxNumber]['selectedBy'] === '').length === 1
+          combination.filter(boxNumber => boxes[boxNumber] === 'computer').length === 2 &&
+          combination.filter(boxNumber => boxes[boxNumber] === '').length === 1
       )
     ) {
       const combos = possibleThrees.filter(
         combination =>
-          combination.filter(boxNumber => boxes[boxNumber]['selectedBy'] === 'computer').length === 2 &&
-          combination.filter(boxNumber => boxes[boxNumber]['selectedBy'] === '').length === 1
+          combination.filter(boxNumber => boxes[boxNumber] === 'computer').length === 2 &&
+          combination.filter(boxNumber => boxes[boxNumber] === '').length === 1
       );
       const randomCombo = combos[Math.floor(Math.random() * combos.length)];
-      computerChoice = randomCombo.find(boxNumber => boxes[boxNumber]['selectedBy'] === '');
+      computerChoice = randomCombo.find(boxNumber => boxes[boxNumber] === '');
     } else if (
       possibleThrees.some(
         combination =>
-          combination.filter(boxNumber => boxes[boxNumber]['selectedBy'] === 'me').length === 2 &&
-          combination.filter(boxNumber => boxes[boxNumber]['selectedBy'] === '').length === 1
+          combination.filter(boxNumber => boxes[boxNumber] === 'me').length === 2 &&
+          combination.filter(boxNumber => boxes[boxNumber] === '').length === 1
       )
     ) {
       const combos = possibleThrees.filter(
         combination =>
-          combination.filter(boxNumber => boxes[boxNumber]['selectedBy'] === 'me').length === 2 &&
-          combination.filter(boxNumber => boxes[boxNumber]['selectedBy'] === '').length === 1
+          combination.filter(boxNumber => boxes[boxNumber] === 'me').length === 2 &&
+          combination.filter(boxNumber => boxes[boxNumber] === '').length === 1
       );
       const randomCombo = combos[Math.floor(Math.random() * combos.length)];
-      computerChoice = randomCombo.find(boxNumber => boxes[boxNumber]['selectedBy'] === '');
+      computerChoice = randomCombo.find(boxNumber => boxes[boxNumber] === '');
     } else {
       computerChoice = indices[Math.floor(Math.random() * indices.length)];
     }
@@ -136,7 +128,18 @@ class Noughts extends Component {
     const { mySymbol, win, winningThree, boxes, myTurn, playing } = this.state;
     const computerSymbol = mySymbol === 'X' ? 'O' : 'X';
     const boxSideLength = Math.min(window.innerWidth, window.innerHeight) / 4;
-    return playing ? (
+
+    return !playing && win === '' ? (
+      <div className="setup">
+        <div className="option-picker">
+          <p>You are: {mySymbol}s</p>
+          <button onClick={this.changeSymbol} style={{ backgroundColor: 'yellow', color: 'black' }}>
+            Choose {computerSymbol}s
+          </button>
+        </div>
+        <button onClick={this.start}>Start Game</button>
+      </div>
+    ) : (
       <div className="console">
         <div className="game">
           <div
@@ -156,9 +159,9 @@ class Noughts extends Component {
                 />
               </svg>
             ) : null}
-            {Object.keys(boxes).map(key => (
+            {boxes.map((index, key) => (
               <Box
-                index={key}
+                index={index}
                 key={key}
                 win={win}
                 box={boxes[key]}
@@ -170,6 +173,7 @@ class Noughts extends Component {
           </div>
         </div>
         <div className="controls">
+          <p>{myTurn ? 'Your turn' : "The computer's turn"}</p>
           <button onClick={this.reset}>New Game</button>
           {win === 'draw' ? (
             <h2>It's a draw</h2>
@@ -179,17 +183,6 @@ class Noughts extends Component {
             <h2>The computer wins!</h2>
           ) : null}
         </div>
-      </div>
-    ) : (
-      <div className="controls">
-        <p>{myTurn ? 'Your turn' : "The computer's turn"}</p>
-        <div className="option-picker">
-          <p>You are: {mySymbol}s</p>
-          <button onClick={this.changeSymbol} style={{ backgroundColor: 'yellow', color: 'black' }}>
-            Choose {computerSymbol}s
-          </button>
-        </div>
-        <button onClick={this.reset}>New Game</button>
       </div>
     );
   }

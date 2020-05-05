@@ -90,6 +90,18 @@ nav {
   width: 250px;
 }
 
+.setup {
+  width: 50%;
+  margin: auto;
+  background-color: #eee;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .container {
   background-color: blue;
   border: 10px solid black;
