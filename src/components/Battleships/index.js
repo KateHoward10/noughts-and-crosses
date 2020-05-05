@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Button from '../Button';
 import Tile from './Tile';
 
 function Battleships() {
@@ -176,20 +177,20 @@ function Battleships() {
         </div>
       </div>
       <div className="controls">
-        <button onClick={generateShips}>New Game</button>
+        <Button onClick={generateShips}>New Game</Button>
         <p>Selecting: {selectingWater ? 'water' : 'ship'}</p>
-        <button className="secondary-button" onClick={() => toggleSelectingWater(!selectingWater)}>
+        <Button colour="purple" onClick={() => toggleSelectingWater(!selectingWater)}>
           Select {selectingWater ? 'ship' : 'water'} instead
-        </button>
+        </Button>
         <p>{completed && "That's it, well done!"}</p>
         {ships.map((ship, index) => (
           <p key={index} style={{ color: ship.every(part => selectedAsShips.includes(part)) ? 'grey' : 'black' }}>
             {ship.map(part => 'O')}
           </p>
         ))}
-        <button className="secondary-button" onClick={clear}>
+        <Button colour="purple" onClick={clear}>
           Start again
-        </button>
+        </Button>
       </div>
     </div>
   );

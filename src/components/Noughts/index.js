@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Button from '../Button';
 import Box from './Box';
 import { emptyBoard, possibleThrees } from '../../combinations';
 
@@ -133,11 +134,11 @@ class Noughts extends Component {
       <div className="setup">
         <div className="option-picker">
           <p>You are: {mySymbol}s</p>
-          <button onClick={this.changeSymbol} style={{ backgroundColor: 'yellow', color: 'black' }}>
+          <Button onClick={this.changeSymbol} colour='yellow'>
             Choose {computerSymbol}s
-          </button>
+          </Button>
         </div>
-        <button onClick={this.start}>Start Game</button>
+        <Button onClick={this.start}>Start Game</Button>
       </div>
     ) : (
       <div className="console">
@@ -174,7 +175,7 @@ class Noughts extends Component {
         </div>
         <div className="controls">
           <p>{myTurn ? 'Your turn' : "The computer's turn"}</p>
-          <button onClick={this.reset}>New Game</button>
+          <Button onClick={this.reset}>New Game</Button>
           {win === 'draw' ? (
             <h2>It's a draw</h2>
           ) : win === 'me' ? (

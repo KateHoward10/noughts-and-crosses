@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Button from '../Button';
 import Cell from './Cell';
 import Arrow from './Arrow';
 import { emptyCells, possibleFours } from '../../combinations';
@@ -206,17 +207,14 @@ class Connect4 extends Component {
       <div className="setup">
         <div className="option-picker">
           <p>Your colour: {myColour}</p>
-          <button
+          <Button
             onClick={this.changeColour}
-            style={{
-              backgroundColor: computerColour,
-              color: computerColour === 'yellow' ? 'black' : 'white'
-            }}
+            colour={computerColour}
           >
             Choose {computerColour}
-          </button>
+          </Button>
         </div>
-        <button onClick={this.start}>Start Game</button>
+        <Button onClick={this.start}>Start Game</Button>
       </div>
     ) : (
       <div className="console">
@@ -263,7 +261,7 @@ class Connect4 extends Component {
           </div>
         </div>
         <div className="controls">
-          <button onClick={this.reset}>New Game</button>
+          <Button onClick={this.reset}>New Game</Button>
           {playing && (
             <p>{myTurn ? 'Your turn' : "The computer's turn"}</p>
           )}
