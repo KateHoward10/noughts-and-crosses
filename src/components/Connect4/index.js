@@ -8,6 +8,7 @@ class Connect4 extends Component {
     cells: emptyCells(),
     winner: '',
     winningCombo: [],
+    myColour: ['red', 'yellow'][Math.round(Math.random())],
     playing: false,
     rolling: false
   };
@@ -18,8 +19,19 @@ class Connect4 extends Component {
         cells: emptyCells(),
         winner: '',
         winningCombo: [],
+        playing: false,
+        rolling: false
+      }
+    );
+  };
+
+  start = () => {
+    this.setState(
+      {
+        cells: emptyCells(),
+        winner: '',
+        winningCombo: [],
         myTurn: Boolean(Math.random() < 0.5),
-        myColour: ['red', 'yellow'][Math.round(Math.random())],
         playing: true,
         rolling: false
       },
@@ -190,7 +202,23 @@ class Connect4 extends Component {
     const computerColour = myColour === 'red' ? 'yellow' : 'red';
     const cellSideLength = Math.min(window.innerWidth, window.innerHeight) / 8;
 
-    return (
+    return !playing && winner === '' ? (
+      <div className="setup">
+        <div className="option-picker">
+          <p>Your colour: {myColour}</p>
+          <button
+            onClick={this.changeColour}
+            style={{
+              backgroundColor: computerColour,
+              color: computerColour === 'yellow' ? 'black' : 'white'
+            }}
+          >
+            Choose {computerColour}
+          </button>
+        </div>
+        <button onClick={this.start}>Start Game</button>
+      </div>
+    ) : (
       <div className="console">
         <div className="game">
           <div className="arrows" style={{ gridTemplateColumns: `repeat(7, ${cellSideLength}px)` }}>
@@ -237,21 +265,7 @@ class Connect4 extends Component {
         <div className="controls">
           <button onClick={this.reset}>New Game</button>
           {playing && (
-            <React.Fragment>
-              <p>{myTurn ? 'Your turn' : "The computer's turn"}</p>
-              <div className="option-picker">
-                <p>Your colour: {myColour}</p>
-                <button
-                  onClick={this.changeColour}
-                  style={{
-                    backgroundColor: computerColour,
-                    color: computerColour === 'yellow' ? 'black' : 'white'
-                  }}
-                >
-                  Choose {computerColour}
-                </button>
-              </div>
-            </React.Fragment>
+            <p>{myTurn ? 'Your turn' : "The computer's turn"}</p>
           )}
           {winner === 'me' ? (
             <h2>You win!</h2>
