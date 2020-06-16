@@ -14,7 +14,7 @@ const OptionToggle = ({ options, firstOptionSelected, setOption }) => (
         type="checkbox"
         onChange={e => setOption(e.target.checked)}
       />
-      <Slider />
+      <Slider firstOptionSelected={firstOptionSelected} />
     </Toggle>
     {options[1]}
   </ToggleContainer>

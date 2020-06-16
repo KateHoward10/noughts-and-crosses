@@ -4,6 +4,7 @@ export const ToggleContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
 `;
 
 export const Toggle = styled.label`
@@ -30,5 +31,5 @@ export const Slider = styled.div`
   border-radius: 50%;
   margin: 3px;
   box-shadow: 0 0 5px grey;
-  background-color: indigo;
+  background-color: ${props => props.firstOptionSelected ? "yellow" : "red"};
 `;

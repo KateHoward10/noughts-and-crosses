@@ -134,7 +134,7 @@ class Noughts extends Component {
     return !playing && win === '' ? (
       <div className="setup">
         <div className="option-picker">
-          <p>You are: {mySymbol}s</p>
+          <p>Select your pieces:</p>
           <OptionToggle options={['O', 'X']} firstOptionSelected={mySymbol === 'O'} setOption={this.changeSymbol} />
         </div>
         <Button onClick={this.start}>Start Game</Button>

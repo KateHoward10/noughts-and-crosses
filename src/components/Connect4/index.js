@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import Button from '../Button';
 import Cell from './Cell';
 import Arrow from './Arrow';
+import Button from '../Button';
+import OptionToggle from '../OptionToggle';
 import { emptyCells, possibleFours } from '../../combinations';
 
 class Connect4 extends Component {
@@ -206,13 +207,8 @@ class Connect4 extends Component {
     return !playing && winner === '' ? (
       <div className="setup">
         <div className="option-picker">
-          <p>Your colour: {myColour}</p>
-          <Button
-            onClick={this.changeColour}
-            colour={computerColour}
-          >
-            Choose {computerColour}
-          </Button>
+          <p>Select your colour:</p>
+          <OptionToggle options={['yellow', 'red']} firstOptionSelected={myColour === 'yellow'} setOption={this.changeColour} />
         </div>
         <Button onClick={this.start}>Start Game</Button>
       </div>
