@@ -41,8 +41,8 @@ function Battleships() {
     let tiles = [...ship];
     if (ship[1] - ship[0] === 1) {
       tiles.push(
-        ...(ship[0] > 7 ? ship.map(part => part - 7) : []),
-        ...(ship[0] < 42 ? ship.map(part => part + 7) : []),
+        ...(ship[0] >= 7 ? ship.map(part => part - 7) : []),
+        ...(ship[0] <= 42 ? ship.map(part => part + 7) : []),
         ...(ship[0] % 7 !== 0 ? [ship[0] - 8, ship[0] - 1, ship[0] + 6] : []),
         ...(ship[ship.length - 1] % 7 !== 7
           ? [ship[ship.length - 1] + 8, ship[ship.length - 1] + 1, ship[ship.length - 1] - 6]
@@ -52,8 +52,8 @@ function Battleships() {
       tiles.push(
         ...(ship[0] % 7 !== 0 ? ship.map(part => part - 1) : []),
         ...(ship[0] % 7 !== 7 ? ship.map(part => part + 1) : []),
-        ...(ship[0] > 7 ? [ship[0] - 8, ship[0] - 7, ship[0] - 6] : []),
-        ...(ship[ship.length - 1] < 42
+        ...(ship[0] >= 7 ? [ship[0] - 8, ship[0] - 7, ship[0] - 6] : []),
+        ...(ship[ship.length - 1] <= 42
           ? [ship[ship.length - 1] + 8, ship[ship.length - 1] + 7, ship[ship.length - 1] + 6]
           : [])
       );
