@@ -31,7 +31,7 @@ function Tile({
   }
 
   function setTile() {
-    if (initialValue) return;
+    if (initialValue || !ships.length) return;
     if (selected) {
       selected === 'ship' ? unselectAsShip(tile) : unselectAsWater(tile);
     } else {
