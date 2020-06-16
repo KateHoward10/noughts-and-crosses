@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/games-with-lines/static/css/main.886baba6.chunk.css",
-    "main.js": "/games-with-lines/static/js/main.d7f7220f.chunk.js",
-    "main.js.map": "/games-with-lines/static/js/main.d7f7220f.chunk.js.map",
-    "runtime-main.js": "/games-with-lines/static/js/runtime-main.1ca3320d.js",
-    "runtime-main.js.map": "/games-with-lines/static/js/runtime-main.1ca3320d.js.map",
-    "static/js/2.adde59f6.chunk.js": "/games-with-lines/static/js/2.adde59f6.chunk.js",
-    "static/js/2.adde59f6.chunk.js.map": "/games-with-lines/static/js/2.adde59f6.chunk.js.map",
+    "main.css": "/games-with-lines/static/css/main.854bcccb.chunk.css",
+    "main.js": "/games-with-lines/static/js/main.4d858d6a.chunk.js",
+    "main.js.map": "/games-with-lines/static/js/main.4d858d6a.chunk.js.map",
+    "runtime-main.js": "/games-with-lines/static/js/runtime-main.f89a779e.js",
+    "runtime-main.js.map": "/games-with-lines/static/js/runtime-main.f89a779e.js.map",
+    "static/js/2.c211a61b.chunk.js": "/games-with-lines/static/js/2.c211a61b.chunk.js",
+    "static/js/2.c211a61b.chunk.js.map": "/games-with-lines/static/js/2.c211a61b.chunk.js.map",
     "index.html": "/games-with-lines/index.html",
-    "precache-manifest.068e877d30a8caa03693c519189cd74c.js": "/games-with-lines/precache-manifest.068e877d30a8caa03693c519189cd74c.js",
+    "precache-manifest.7bb98d76f29321e608f561a2232c34b9.js": "/games-with-lines/precache-manifest.7bb98d76f29321e608f561a2232c34b9.js",
     "service-worker.js": "/games-with-lines/service-worker.js",
-    "static/css/main.886baba6.chunk.css.map": "/games-with-lines/static/css/main.886baba6.chunk.css.map",
-    "static/js/2.adde59f6.chunk.js.LICENSE.txt": "/games-with-lines/static/js/2.adde59f6.chunk.js.LICENSE.txt",
+    "static/css/main.854bcccb.chunk.css.map": "/games-with-lines/static/css/main.854bcccb.chunk.css.map",
+    "static/js/2.c211a61b.chunk.js.LICENSE.txt": "/games-with-lines/static/js/2.c211a61b.chunk.js.LICENSE.txt",
     "static/media/battleships.png": "/games-with-lines/static/media/battleships.555f39a7.png",
     "static/media/connect4.png": "/games-with-lines/static/media/connect4.de3839ad.png",
     "static/media/noughts&crosses.png": "/games-with-lines/static/media/noughts&crosses.6b73ade5.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.1ca3320d.js",
-    "static/js/2.adde59f6.chunk.js",
-    "static/css/main.886baba6.chunk.css",
-    "static/js/main.d7f7220f.chunk.js"
+    "static/js/runtime-main.f89a779e.js",
+    "static/js/2.c211a61b.chunk.js",
+    "static/css/main.854bcccb.chunk.css",
+    "static/js/main.4d858d6a.chunk.js"
   ]
 }
