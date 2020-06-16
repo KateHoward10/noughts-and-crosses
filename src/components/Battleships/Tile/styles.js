@@ -4,9 +4,12 @@ export const SeaTile = styled.div`
   background-color: ${props => (props.selected ? 'blue' : 'transparent')};
   border: 1px solid black;
   display: flex;
-  padding: 10px;
+  padding: 5px;
   align-items: center;
   justify-content: center;
+  @media screen and (min-width: 600px) {
+    padding: 10px;
+  }
 `;
 
 export const BitOfShip = styled.div`
@@ -16,7 +19,8 @@ export const BitOfShip = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-family: Verdana, sans-serif;
+  font-size: 16px;
   border: 1px solid grey;
   ${props =>
     (props.visible || props.completed) &&
@@ -38,4 +42,7 @@ export const BitOfShip = styled.div`
     css`
       border-radius: 50%;
     `}
+  @media screen and (min-width: 600px) {
+    font-size: 20px;
+  }
 `;
