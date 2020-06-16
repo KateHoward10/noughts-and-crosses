@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from '../Button';
 import Tile from './Tile';
+import OptionToggle from '../OptionToggle';
 
 function Battleships() {
   const tileSideLength = Math.min(window.innerWidth, window.innerHeight) / 9;
@@ -178,10 +179,8 @@ function Battleships() {
       </div>
       <div className="controls">
         <Button onClick={generateShips}>New Game</Button>
-        <p>Selecting: {selectingWater ? 'water' : 'ship'}</p>
-        <Button colour="purple" onClick={() => toggleSelectingWater(!selectingWater)}>
-          Select {selectingWater ? 'ship' : 'water'} instead
-        </Button>
+        <p>Selecting:</p>
+        <OptionToggle options={['water', 'ship']} colours={['blue', 'yellow']} firstOptionSelected={selectingWater} setOption={() => toggleSelectingWater(!selectingWater)} />
         <p>{completed && "That's it, well done!"}</p>
         {ships.map((ship, index) => (
           <p key={index} style={{ color: ship.every(part => selectedAsShips.includes(part)) ? 'grey' : 'black' }}>

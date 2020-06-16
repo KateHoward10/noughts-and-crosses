@@ -6,7 +6,7 @@ import {
   Slider,
 } from "./styles";
 
-const OptionToggle = ({ options, firstOptionSelected, setOption }) => (
+const OptionToggle = ({ options, colours, firstOptionSelected, setOption }) => (
   <ToggleContainer>
     {options[0]}
     <Toggle firstOptionSelected={firstOptionSelected}>
@@ -14,7 +14,7 @@ const OptionToggle = ({ options, firstOptionSelected, setOption }) => (
         type="checkbox"
         onChange={e => setOption(e.target.checked)}
       />
-      <Slider firstOptionSelected={firstOptionSelected} />
+      <Slider colours={colours} firstOptionSelected={firstOptionSelected} />
     </Toggle>
     {options[1]}
   </ToggleContainer>

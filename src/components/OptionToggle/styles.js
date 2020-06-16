@@ -24,12 +24,12 @@ export const Hidden = styled.input`
   display: none;
 `;
 
-export const Slider = styled.div`
+export const Slider = styled.div(({ colours, firstOptionSelected }) =>`
   cursor: pointer;
   width: 30px;
   height: 30px;
   border-radius: 50%;
   margin: 3px;
   box-shadow: 0 0 5px grey;
-  background-color: ${props => props.firstOptionSelected ? "yellow" : "red"};
-`;
+  background-color: ${colours ? colours[Number(!firstOptionSelected)] : ["yellow", "red"][Number(!firstOptionSelected)] };
+`);
