@@ -172,11 +172,6 @@ line {
   .controls {
     width: 100%;
   }
-  .option-picker {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
   .box {
     font-size: 15vw;
   }

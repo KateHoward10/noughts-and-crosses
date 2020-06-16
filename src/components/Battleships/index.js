@@ -120,7 +120,8 @@ function Battleships() {
           className="sea"
           style={{
             gridTemplateColumns: `repeat(7, ${tileSideLength}px)`,
-            gridTemplateRows: `repeat(1, ${tileSideLength / 2}px)`
+            gridTemplateRows: `repeat(1, ${tileSideLength / 2}px)`,
+            marginLeft: `${tileSideLength / 2}px`
           }}
         >
           {numbers[0].map((number, index) => (
