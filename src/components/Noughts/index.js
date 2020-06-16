@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import Button from '../Button';
 import Box from './Box';
+import Button from '../Button';
+import OptionToggle from '../OptionToggle';
 import { emptyBoard, possibleThrees } from '../../combinations';
 
 class Noughts extends Component {
@@ -134,9 +135,7 @@ class Noughts extends Component {
       <div className="setup">
         <div className="option-picker">
           <p>You are: {mySymbol}s</p>
-          <Button onClick={this.changeSymbol} colour='yellow'>
-            Choose {computerSymbol}s
-          </Button>
+          <OptionToggle options={['O', 'X']} firstOptionSelected={mySymbol === 'O'} setOption={this.changeSymbol} />
         </div>
         <Button onClick={this.start}>Start Game</Button>
       </div>
