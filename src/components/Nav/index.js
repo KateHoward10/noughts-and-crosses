@@ -1,10 +1,15 @@
-import React, { Component } from 'react';
-import { NavBar, Link } from './styles';
+import React, { useState } from 'react';
+import { NavBar, SmallMenu, LinkContainer, Link, MenuIcon } from './styles';
 
-class Nav extends Component {
-  render() {
-    return (
-      <NavBar>
+function Nav() {
+  const [isOpen, toggleOpen] = useState(false);
+  return (
+    <NavBar>
+      <SmallMenu>
+        <Link to="/games-with-lines">Home</Link>
+        <MenuIcon onClick={() => toggleOpen(!isOpen)}>{isOpen ? '✕' : '☰'}</MenuIcon>
+      </SmallMenu>
+      <LinkContainer isOpen={isOpen} >
         <Link to="/noughts&crosses">
           0s & Xs
         </Link>
@@ -14,9 +19,9 @@ class Nav extends Component {
         <Link to="/battleships">
           Battleships
         </Link>
-      </NavBar>
-    );
-  }
-}
+      </LinkContainer>
+    </NavBar>
+  );
+} 
 
 export default Nav;
