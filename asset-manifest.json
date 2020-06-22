@@ -1,25 +1,25 @@
 {
   "files": {
     "main.css": "/games-with-lines/static/css/main.9c5e1fd2.chunk.css",
-    "main.js": "/games-with-lines/static/js/main.e81ccc5c.chunk.js",
-    "main.js.map": "/games-with-lines/static/js/main.e81ccc5c.chunk.js.map",
+    "main.js": "/games-with-lines/static/js/main.99e10937.chunk.js",
+    "main.js.map": "/games-with-lines/static/js/main.99e10937.chunk.js.map",
     "runtime-main.js": "/games-with-lines/static/js/runtime-main.f89a779e.js",
     "runtime-main.js.map": "/games-with-lines/static/js/runtime-main.f89a779e.js.map",
-    "static/js/2.81bdb7d4.chunk.js": "/games-with-lines/static/js/2.81bdb7d4.chunk.js",
-    "static/js/2.81bdb7d4.chunk.js.map": "/games-with-lines/static/js/2.81bdb7d4.chunk.js.map",
+    "static/js/2.dc69aff4.chunk.js": "/games-with-lines/static/js/2.dc69aff4.chunk.js",
+    "static/js/2.dc69aff4.chunk.js.map": "/games-with-lines/static/js/2.dc69aff4.chunk.js.map",
     "index.html": "/games-with-lines/index.html",
-    "precache-manifest.ac78555d52a964fa3797d2cb8d817a94.js": "/games-with-lines/precache-manifest.ac78555d52a964fa3797d2cb8d817a94.js",
+    "precache-manifest.d92488d948210c6eb8534f6f3fd3e9e8.js": "/games-with-lines/precache-manifest.d92488d948210c6eb8534f6f3fd3e9e8.js",
     "service-worker.js": "/games-with-lines/service-worker.js",
     "static/css/main.9c5e1fd2.chunk.css.map": "/games-with-lines/static/css/main.9c5e1fd2.chunk.css.map",
-    "static/js/2.81bdb7d4.chunk.js.LICENSE.txt": "/games-with-lines/static/js/2.81bdb7d4.chunk.js.LICENSE.txt",
+    "static/js/2.dc69aff4.chunk.js.LICENSE.txt": "/games-with-lines/static/js/2.dc69aff4.chunk.js.LICENSE.txt",
     "static/media/battleships.png": "/games-with-lines/static/media/battleships.555f39a7.png",
     "static/media/connect4.png": "/games-with-lines/static/media/connect4.de3839ad.png",
     "static/media/noughts&crosses.png": "/games-with-lines/static/media/noughts&crosses.6b73ade5.png"
   },
   "entrypoints": [
     "static/js/runtime-main.f89a779e.js",
-    "static/js/2.81bdb7d4.chunk.js",
+    "static/js/2.dc69aff4.chunk.js",
     "static/css/main.9c5e1fd2.chunk.css",
-    "static/js/main.e81ccc5c.chunk.js"
+    "static/js/main.99e10937.chunk.js"
   ]
 }
