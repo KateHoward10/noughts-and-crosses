@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { HashRouter, Route } from 'react-router-dom';
 import './App.css';
 import Nav from './components/Nav';
 import Menu from './components/Menu';
@@ -10,13 +10,13 @@ import Battleships from './components/Battleships';
 function App() {
   return (
     <div className="App">
-      <Nav />
-      <Switch>
-        <Route exact path="/games-with-lines" component={Menu} />
+      <HashRouter basename="/">
+        <Nav />
+        <Route exact path="/" component={Menu} />
         <Route exact path="/noughts&crosses" component={Noughts} />
         <Route exact path="/connect4" component={Connect4} />
         <Route exact path="/battleships" component={Battleships} />
-      </Switch>
+      </HashRouter>
     </div>
   );
 }

@@ -6,7 +6,7 @@ function Nav() {
   return (
     <NavBar>
       <SmallMenu>
-        <Link to="/games-with-lines">Home</Link>
+        <Link to="/">Home</Link>
         <MenuIcon onClick={() => toggleOpen(!isOpen)}>{isOpen ? '✕' : '☰'}</MenuIcon>
       </SmallMenu>
       <LinkContainer isOpen={isOpen} >
