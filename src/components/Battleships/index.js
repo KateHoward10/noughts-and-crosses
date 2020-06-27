@@ -191,6 +191,8 @@ function Battleships() {
         <Button colour="purple" onClick={clear}>
           Start again
         </Button>
+        <p><small>Numbers beside the grid represent how many parts of ships are in the corresponding row or column. Parts of different ships cannot be found in a square adjacent to one another, even diagonally.</small></p>
+        <p><small>Click on a square to mark it as water, or part of a ship, and click again to remove.</small></p>
       </div>
     </div>
   );
